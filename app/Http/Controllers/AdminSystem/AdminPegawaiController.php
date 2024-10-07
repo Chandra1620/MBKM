@@ -49,9 +49,11 @@ class AdminPegawaiController extends Controller
             'nip' => 'required',
             'email' => 'required',
         ]);
+        
         $pegawai->name = $attrs['name'];
         $pegawai->email = $attrs['email'];
         $pegawai->nip = $attrs['nip'];
+
         if($request->password){
             $pegawai->password = $request->password;
         }

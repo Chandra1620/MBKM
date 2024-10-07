@@ -104,6 +104,7 @@ class PerizinanController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $user = Auth::user();
         $pegawaiFungsional = PegawaiFungsional::with('unit_kerja_has_jabatan_fungsional.unitkerja')
             ->where('user_id', $user->id)
@@ -376,10 +377,10 @@ class PerizinanController extends Controller
 
         // Pass the QR code to the view
         $host = request()->getHost();
-$port = request()->getPort();
+        $port = request()->getPort();
 
-$qrCodeUrl = 'http://' . $host . ':' . $port . '/perizinan-cuti/' . $perizinanCuti->id . '/scan';
-// dd($qrCodeUrl);
+        $qrCodeUrl = 'http://' . $host . ':' . $port . '/perizinan-cuti/' . $perizinanCuti->id . '/scan';
+        // dd($qrCodeUrl);
 
         $qrCodePerizinan = base64_encode(
             QrCode::format('svg')
@@ -387,7 +388,7 @@ $qrCodeUrl = 'http://' . $host . ':' . $port . '/perizinan-cuti/' . $perizinanCu
                 ->errorCorrection('H')
                 ->generate($qrCodeUrl),
         );
-        
+
 
         // $qrCodeUser = $host.'/'.$perizinanCuti->id.'/scan';
         // $qrCodeAtasanLangsung = $host.'/'.$perizinanCuti->id.'/scan';
@@ -395,7 +396,7 @@ $qrCodeUrl = 'http://' . $host . ':' . $port . '/perizinan-cuti/' . $perizinanCu
 
         // dd($qrCodeUser);
 
-        $pdf = PDF::loadView('admin.template.pdf_perizinan', compact('namaAtasanLangsung','nipAtasanLangsung','namaPejabatBerwenang','nipPejabatBerwenang','qrCodePerizinan', 'createdAtIndo', 'perizinanCuti', 'jeniscuti', 'sisaCuti', 'sisaCutiN1', 'sisaCutiN2', 'totalLamanyaCuti'));
+        $pdf = PDF::loadView('admin.template.pdf_perizinan', compact('namaAtasanLangsung', 'nipAtasanLangsung', 'namaPejabatBerwenang', 'nipPejabatBerwenang', 'qrCodePerizinan', 'createdAtIndo', 'perizinanCuti', 'jeniscuti', 'sisaCuti', 'sisaCutiN1', 'sisaCutiN2', 'totalLamanyaCuti'));
         // Download the PDF
         return $pdf->download('periznan-cuti.pdf');
     }
@@ -473,7 +474,7 @@ $qrCodeUrl = 'http://' . $host . ':' . $port . '/perizinan-cuti/' . $perizinanCu
         if (!$perizinanCuti) {
             dd('nothing');
         }
-        $year = now()->year; 
+        $year = now()->year;
         //! tahun now
         $totalRiwayatCuti = PerizinanCuti::where('user_id', $perizinanCuti->user_id)
             ->where('keputusan_pejabat_berwenang', 'diizinkan')
@@ -523,13 +524,11 @@ $qrCodeUrl = 'http://' . $host . ':' . $port . '/perizinan-cuti/' . $perizinanCu
             }
         }
         $sisaCutiTahunN1 = 12 - $cutiTahunN1;
-        if ($sisaCutiTahunN1 >= 6 ) {
+        if ($sisaCutiTahunN1 >= 6) {
             $sisaCutiTahunN1 = 6;
-        } 
-        else if($sisaCutiTahunN1 <= 0){
+        } else if ($sisaCutiTahunN1 <= 0) {
             $sisaCutiTahunN1 = 0;
-        }
-        else {
+        } else {
             $sisaCutiTahunN1 = $cutiTahunN1;
         }
         //! tahun 1 sebelum now
@@ -557,18 +556,16 @@ $qrCodeUrl = 'http://' . $host . ':' . $port . '/perizinan-cuti/' . $perizinanCu
             }
         }
         $sisaCutiTahunN2 = 12 - $cutiTahunN2;
-        if ($sisaCutiTahunN2 >= 6 ) {
+        if ($sisaCutiTahunN2 >= 6) {
             $sisaCutiTahunN2 = 6;
-        } 
-        else if($sisaCutiTahunN2 <= 0){
+        } else if ($sisaCutiTahunN2 <= 0) {
             $sisaCutiTahunN2 = 0;
-        }
-        else {
+        } else {
             $sisaCutiTahunN2 = $cutiTahunN2;
         }
         //! tahun 1 sebelum now
         // dd($sisaCutiTahunN2);
 
-        return view('pegawai.perizinan.scan', compact('perizinanCuti','sisaCutiTahunIni','sisaCutiTahunN1','sisaCutiTahunN2'));
+        return view('pegawai.perizinan.scan', compact('perizinanCuti', 'sisaCutiTahunIni', 'sisaCutiTahunN1', 'sisaCutiTahunN2'));
     }
 }
