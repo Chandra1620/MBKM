@@ -17,6 +17,8 @@ use App\Models\RiwayatKependudukan;
 use App\Models\RiwayatLainlain;
 use App\Models\RiwayatProfile;
 use App\Models\TandaTangan;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage; 
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -100,7 +102,7 @@ class ProfileController extends Controller
     public function storeProfile(Request $request)
     {
         // dd($request->file_pendukung);
-
+        // dd($request->all());
         $attrs = $request->validate([
             'name' => 'required',
             'nip' => 'required',
@@ -109,7 +111,8 @@ class ProfileController extends Controller
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
             'nama_ibu' => 'required',
-            'file' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+            'file' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'status' => 'required'
         ]);
         
 
@@ -117,8 +120,6 @@ class ProfileController extends Controller
         $imageName = '';
         if($request->file()){
             if($request->file){
-
-    
                 $imageName = time() . '.' . $request->file->extension();
                 $request->file->move(public_path('images/photo/'), $imageName);
             }
@@ -132,6 +133,7 @@ class ProfileController extends Controller
         'tempat_lahir' => $attrs['tempat_lahir'] ,
         'tanggal_lahir' => $attrs['tanggal_lahir'],
         'nama_ibu' => $attrs['nama_ibu'] ,
+        'status'=> $attrs['status'] ,
         'photo' => $imageName ,
         ]);
         //!end

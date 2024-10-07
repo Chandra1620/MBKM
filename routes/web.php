@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 use App\Http\Controllers\Admin\MengelolaRolePermissionController;
 use App\Http\Controllers\AdminKepegawaian\AdminPangkatGolonganController;

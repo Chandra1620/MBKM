@@ -99,7 +99,16 @@
                                      dark:border-gray-700 dark:text-gray-400"
                                     placeholder="Nama Ibu ">
                             </div>
-
+                            <div>
+                                <label class="inline-block text-sm font-medium dark:text-white">
+                                    Status
+                                </label>
+                                <input name="status" type="text" value="{{ $user->status }}"
+                                    class="px-3 pr-11 block w-full border-gray-200 shadow-sm 
+                                    text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900
+                                     dark:border-gray-700 dark:text-gray-400"
+                                    placeholder="Status">
+                            </div>
                             <label class="inline-block text-sm font-medium dark:text-white">
                                 Foto Profil
                             </label>
@@ -133,7 +142,6 @@
                     </div>
 
                 </form>
-
 
             </div>
             <!-- End Card -->

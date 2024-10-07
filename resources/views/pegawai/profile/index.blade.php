@@ -62,6 +62,10 @@
                             <p class="max-w-[200px] w-full">Nama Ibu Kandung</p>
                             <P>: {{ $user->nama_ibu }}</P>
                         </div>
+                        <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
+                            <p class="max-w-[200px] w-full">Status Pegawai</p>
+                            <P>: {{ $user->status }}</P>
+                        </div>
                         {{-- <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
                             <p class="max-w-[200px] w-full">File Pendukung</p>
                             @if ($user->file_pendukung)
