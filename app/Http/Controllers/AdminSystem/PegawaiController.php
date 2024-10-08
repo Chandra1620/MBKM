@@ -27,7 +27,7 @@ class PegawaiController extends Controller
     }
     public function store(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $attrs = $request->validate([
             'name' => 'required',
             'nip' => 'required',

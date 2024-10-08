@@ -14,7 +14,6 @@ class RiwayatKependudukan extends Model
         'agama', 
         'kewarganegaraan',
         'file_pendukung',
-        'status'
     ];
 
     public function user()

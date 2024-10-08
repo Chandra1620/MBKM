@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 use App\Http\Controllers\Admin\MengelolaRolePermissionController;
 use App\Http\Controllers\AdminKepegawaian\AdminPangkatGolonganController;
@@ -72,7 +72,7 @@ Route::middleware('auth')->group(function () {
 
     //!: admin
     Route::middleware(['checkUserRole:admin'])->group(function () {
-        
+
 
         Route::get('/admin/pegawai', [PegawaiController::class, 'index'])->name('pegawai.index');
         Route::get('/admin/pegawai/create', [PegawaiController::class, 'create'])->name('pegawai.create');
@@ -92,24 +92,24 @@ Route::middleware('auth')->group(function () {
     //!: ROLE PERMISSIN
 
 
-        Route::middleware(['permission:mengelola-role-permission'])->group(function () {
+    Route::middleware(['permission:mengelola-role-permission'])->group(function () {
 
-            Route::get('/mengelola-role', [MengelolaRolePermissionController::class, 'role'])->name('mengelola-role.index');
-            Route::post('/mengelola-role', [MengelolaRolePermissionController::class, 'store_role'])->name('mengelola-role.store');
-            Route::put('/mengelola-role/{id}/update', [MengelolaRolePermissionController::class, 'update_role'])->name('mengelola-role.update');
-            Route::put('/mengelola-role/{id}/update-role-permission', [MengelolaRolePermissionController::class, 'update_role_permission'])->name('mengelola-role-permission.update');
-        
-            Route::get('/mengelola-permission', [MengelolaRolePermissionController::class, 'permission'])->name('mengelola-permission.index');
+        Route::get('/mengelola-role', [MengelolaRolePermissionController::class, 'role'])->name('mengelola-role.index');
+        Route::post('/mengelola-role', [MengelolaRolePermissionController::class, 'store_role'])->name('mengelola-role.store');
+        Route::put('/mengelola-role/{id}/update', [MengelolaRolePermissionController::class, 'update_role'])->name('mengelola-role.update');
+        Route::put('/mengelola-role/{id}/update-role-permission', [MengelolaRolePermissionController::class, 'update_role_permission'])->name('mengelola-role-permission.update');
 
-            // Route::post('/mengelola-permission', [MengelolaRolePermissionController::class, 'store_permission'])->name('mengelola-permission.store');
-            // Route::delete('/mengelola-permission/{id}/delete', [MengelolaRolePermissionController::class, 'delete_permission'])->name('mengelola-permission.delete');
-            // Route::put('/mengelola-permission/{id}/update', [MengelolaRolePermissionController::class, 'update_permission'])->name('mengelola-permission.update');
-        
-            Route::get('/mengelola-user-role', [MengelolaRolePermissionController::class, 'userHasRole'])->name('mengelola-user-role.index');
-            // Route::delete('/mengelola-user-role/{id}/delete', [MengelolaRolePermissionController::class, 'deletedUserHasRole'])->name('mengelola-user-role.delete');
-            });
+        Route::get('/mengelola-permission', [MengelolaRolePermissionController::class, 'permission'])->name('mengelola-permission.index');
 
-    
+        // Route::post('/mengelola-permission', [MengelolaRolePermissionController::class, 'store_permission'])->name('mengelola-permission.store');
+        // Route::delete('/mengelola-permission/{id}/delete', [MengelolaRolePermissionController::class, 'delete_permission'])->name('mengelola-permission.delete');
+        // Route::put('/mengelola-permission/{id}/update', [MengelolaRolePermissionController::class, 'update_permission'])->name('mengelola-permission.update');
+
+        Route::get('/mengelola-user-role', [MengelolaRolePermissionController::class, 'userHasRole'])->name('mengelola-user-role.index');
+        // Route::delete('/mengelola-user-role/{id}/delete', [MengelolaRolePermissionController::class, 'deletedUserHasRole'])->name('mengelola-user-role.delete');
+    });
+
+
     //!: END ROLE PERMISSION
 
     //TODO: ADMIN PEGAWAI
@@ -326,7 +326,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/management-update-profile', [UpdateProfileController::class, 'index'])->name('update-profile.index');
     Route::post('/management-update-profile/{id}/verifikasi', [UpdateProfileController::class, 'verifikasi'])->name('update-profile.verifikasi');
     Route::post('/management-update-profile/{id}/ditolak', [UpdateProfileController::class, 'ditolak'])->name('update-profile.ditolak');
-    
+
     Route::get('/management-update-kependudukan', [UpdateKependudukanController::class, 'index'])->name('update-kependudukan.index');
     Route::post('/management-update-kependudukan/{id}/verifikasi', [UpdateKependudukanController::class, 'verifikasi'])->name('update-kependudukan.verifikasi');
     Route::post('/management-update-kependudukan/{id}/ditolak', [UpdateKependudukanController::class, 'ditolak'])->name('update-kependudukan.ditolak');
@@ -353,22 +353,22 @@ Route::middleware('auth')->group(function () {
     Route::get('/management-update-pelatihan', [UpdatePelatihanController::class, 'index'])->name('update-pelatihan.index');
     Route::post('/management-update-pelatihan/{id}/verifikasi', [UpdatePelatihanController::class, 'verifikasi'])->name('update-pelatihan.verifikasi');
     Route::post('/management-update-pelatihan/{id}/ditolak', [UpdatePelatihanController::class, 'ditolak'])->name('update-pelatihan.ditolak');
-    
+
     Route::get('/management-update-pendidikan-formal', [UpdatePendidikanFormalController::class, 'index'])->name('update-pendidikanformal.index');
     Route::post('/management-update-pendidikan-formal/{id}/verifikasi', [UpdatePendidikanFormalController::class, 'verifikasi'])->name('update-pendidikanformal.verifikasi');
     Route::post('/management-update-pendidikan-formal/{id}/ditolak', [UpdatePendidikanFormalController::class, 'ditolak'])->name('update-pendidikanformal.ditolak');
-    
+
     Route::get('/management-update-riwayat-pekerjaan', [UpdateRiwayatPekerjaanController::class, 'index'])->name('update-riwayatpekerjaan.index');
     Route::post('/management-update-riwayat-pekerjaan/{id}/verifikasi', [UpdateRiwayatPekerjaanController::class, 'verifikasi'])->name('update-riwayatpekerjaan.verifikasi');
     Route::post('/management-update-riwayat-pekerjaan/{id}/ditolak', [UpdateRiwayatPekerjaanController::class, 'ditolak'])->name('update-riwayatpekerjaan.ditolak');
-    
+
 
     //? belum ada permission yg bener
 
 
     Route::middleware(['checkUserRole:atasan-langsung,admin-pegawai,pegawai,wadir,direktur'])->group(function () {
 
-        
+
         Route::get('/pangkat-golongan', [PangkatGolonganController::class, 'index'])->name('pangkat-golongan.index');
         Route::get('/pangkat-golongan/tambah', [PangkatGolonganController::class, 'create'])->name('pangkat-golongan.create');
         Route::post('/pangkat-golongan/store', [PangkatGolonganController::class, 'store'])->name('pangkat-golongan.store');
@@ -413,7 +413,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/diklat', [DiklatController::class, 'store'])->name('diklat.store');
         Route::get('/diklat/create', [DiklatController::class, 'create'])->name('diklat.create');
         Route::delete('/diklat/{id}/delete', [DiklatController::class, 'delete'])->name('diklat.delete');
-   
+
 
         Route::get('/riwayat-pendidikan', [RiwayatPendidikanController::class, 'index'])->name('riwayat-pendidikan.index');
 
@@ -422,7 +422,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/riwayat-pekerjaan/create', [RiwayatPekerjaanController::class, 'create'])->name('riwayat-pekerjaan.create');
         Route::post('/riwayat-pekerjaan/store', [RiwayatPekerjaanController::class, 'store'])->name('riwayat-pekerjaan.store');
         Route::delete('/riwayat-pekerjaan/{id}/delete', [RiwayatPekerjaanController::class, 'delete'])->name('riwayat-pekerjaan.delete');
-        
+
         //! RIWAYAT PEKERJAAN
 
 
@@ -441,7 +441,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/tes', [TesController::class, 'index'])->name('tes.index');
         Route::get('/tes-create', [TesController::class, 'create'])->name('tes.create');
-        Route::post('/tes',[TesController::class, 'store'])->name('tes.store');
+        Route::post('/tes', [TesController::class, 'store'])->name('tes.store');
         Route::get('/tes/{id}/edit', [TesController::class, 'edit'])->name('tes.edit');
         Route::put('/tes/{id}/update', [TesController::class, 'update'])->name('tes.update');
         Route::delete('/tes/{id}/delete', [TesController::class, 'destroy'])->name('tes.delete');

@@ -17,9 +17,12 @@ use App\Models\RiwayatKependudukan;
 use App\Models\RiwayatLainlain;
 use App\Models\RiwayatProfile;
 use App\Models\TandaTangan;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage; 
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Colors\Profile;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ProfileController extends Controller
@@ -27,58 +30,86 @@ class ProfileController extends Controller
     public function index(Request $request)
     {
         // dd($request->input('tahun'));
+
         $user = Auth::user();
-        $kependudukan = Kependudukan::where('user_id', $user->id)->first();
-        $keluarga = Keluarga::where('user_id', $user->id)->first();
-        $kepegawaian = Kepegawaian::where('user_id', $user->id)->first();
-        $alamatdankontak = AlamatdanKontak::where('user_id', $user->id)->first();
-        $lainlain = Lainlain::where('user_id', $user->id)->first();
-        $pangkatgolongan = pangkat_golongan::where('user_id', $user->id)->latest()->first();
-        $tandaTangan = TandaTangan::where('user_id', $user->id)->first();
 
-        $pegawaiFungsional = PegawaiFungsional::with('unit_kerja_has_jabatan_fungsional.unitkerja')->where('user_id', $user->id)->first();
-        $pegawaiStruktural = PegawaiHasStruktural::with('jabatanStruktural')->where('users_id', $user->id)->first();
-        //    dd($pegawaiStruktural);
+        $getUser = $user->toArray();
 
-        if ($tandaTangan->link) {
+        // $kependudukan = Kependudukan::where('user_id', $user->id)->first();
+
+        // dd($user->toArray());
+
+        // dd($kependudukan);
+
+        // $keluarga = Keluarga::where('user_id', $user->id)->first();
+
+        // dd($keluarga);
+
+        // $kepegawaian = Kepegawaian::where('user_id', $user->id)->first();
+
+        // dd($kepegawaian);
+
+        // $alamatdankontak = AlamatdanKontak::where('user_id', $user->id)->first();
+
+        // dd($alamatdankontak);
+
+        // $lainlain = Lainlain::where('user_id', $user->id)->first();
+
+        // dd($lainlain);
+
+        // $pangkatgolongan = pangkat_golongan::where('user_id', $user->id)->latest()->first();
+
+        // dd($pangkatgolongan);
+
+        // $tandaTangan = TandaTangan::where('user_id', $user->id)->first();
+
+        $pegawaiFungsional = PegawaiFungsional::with('unit_kerja_has_jabatan_fungsional.unitkerja')->where('user_id',$user->id)->first();
+        $pegawaiStruktural = PegawaiHasStruktural::with('jabatanStruktural')->where('users_id',$user->id)->first();
+    //    dd($pegawaiStruktural);
+
+        if($tandaTangan->link){
             $qrCodeTandaTangan = base64_encode(
                 QrCode::format('svg')
                     ->size(200)
                     ->errorCorrection('H')
                     ->generate($tandaTangan->link),
             );
-        } else {
+        }else{
             $qrCodeTandaTangan = "";
         }
+        
 
-
-
+        // Ignore Sementara
 
 
         $unitkerjaPegawai = "";
         $jabatanFungsionalPegawai = "";
         $jabatanStrukturalPegawai = "";
-        if ($pegawaiFungsional) {
+        if($pegawaiFungsional){
             $unitkerjaPegawai = $pegawaiFungsional->unit_kerja_has_jabatan_fungsional->unitkerja->name;
             $jabatanFungsionalPegawai = $pegawaiFungsional->unit_kerja_has_jabatan_fungsional->name;
         }
-        if ($pegawaiStruktural) {
-            if ($pegawaiStruktural->jabatanStruktural) {
+        if($pegawaiStruktural){
+            if($pegawaiStruktural->jabatanStruktural){
                 $jabatanStrukturalPegawai = $pegawaiStruktural->jabatanStruktural->name;
+
             }
         }
 
 
         // dd($pegawaiFungsional);
-        //  dd($kepegawaian);
+        // dd($kepegawaian);
+
+        // dd($getUser);
+
         return view('pegawai.profile.index', [
             'user' => $user,
             'kependudukan' => $kependudukan,
             'keluarga' => $keluarga,
             'kepegawaian' => $kepegawaian,
             'alamatdankontak' => $alamatdankontak,
-            'lainlain' => $lainlain,
-            'pangkat' => $pangkatgolongan,
+            'lainlain'=>$lainlain,
+            'pangkat'=>$pangkatgolongan,
             'tandaTangan' => $tandaTangan,
             'unitkerjaPegawai' => $unitkerjaPegawai,
             'jabatanFungsionalPegawai' => $jabatanFungsionalPegawai,
@@ -99,7 +130,7 @@ class ProfileController extends Controller
     public function storeProfile(Request $request)
     {
         // dd($request->file_pendukung);
-
+        // dd($request->all());
         $attrs = $request->validate([
             'name' => 'required',
             'nip' => 'required',
@@ -115,26 +146,27 @@ class ProfileController extends Controller
 
         //!start
         $imageName = '';
-        if ($request->file()) {
-            if ($request->file) {
+        if($request->file()){
+            if($request->file){
 
-
+    
                 $imageName = time() . '.' . $request->file->extension();
                 $request->file->move(public_path('images/photo/'), $imageName);
             }
         }
-        RiwayatProfile::create([
-            'user_id' => Auth::user()->id,
-            'name' => $attrs['name'],
-            'nip' => $attrs['nip'],
-            'email' => $attrs['email'],
-            'jenis_kelamin' => $attrs['jk'],
-            'tempat_lahir' => $attrs['tempat_lahir'],
-            'tanggal_lahir' => $attrs['tanggal_lahir'],
-            'nama_ibu' => $attrs['nama_ibu'],
-            'photo' => $imageName,
-            'status' => $attrs['status']
 
+        // Tugas: Ini nanti diganti ke Update Tabel yang dari user
+        
+        RiwayatProfile::create([
+        'user_id' => Auth::user()->id,
+        'name' => $attrs['name'],
+        'nip' => $attrs['nip'],
+        'email'=> $attrs['email'],
+        'jenis_kelamin' => $attrs['jk'],
+        'tempat_lahir' => $attrs['tempat_lahir'] ,
+        'tanggal_lahir' => $attrs['tanggal_lahir'],
+        'nama_ibu' => $attrs['nama_ibu'] ,
+        'photo' => $imageName ,
         ]);
         //!end
 
@@ -182,19 +214,23 @@ class ProfileController extends Controller
 
     public function updateKedudukan(Request $request)
     {
+        
         $attrs = $request->validate([
             'nik' => 'required',
             'agama' => 'required',
             'kewarganegaraan' => 'required',
             'file' => 'max:2048'
         ]);
+        
+        
         $imageName = '';
-        if ($request->file()) {
+        if($request->file()){
             $imageName = time() . '.' . $request->file->extension();
             $request->file->move(public_path('document/file_pendukung/'), $imageName);
         }
 
         $user = Auth::user();
+        
         RiwayatKependudukan::create([
             'user_id' => $user->id,
             'nik' => $attrs['nik'],
