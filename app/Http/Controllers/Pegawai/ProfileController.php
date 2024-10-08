@@ -67,16 +67,16 @@ class ProfileController extends Controller
         $pegawaiStruktural = PegawaiHasStruktural::with('jabatanStruktural')->where('users_id',$user->id)->first();
     //    dd($pegawaiStruktural);
 
-        if($tandaTangan->link){
-            $qrCodeTandaTangan = base64_encode(
-                QrCode::format('svg')
-                    ->size(200)
-                    ->errorCorrection('H')
-                    ->generate($tandaTangan->link),
-            );
-        }else{
-            $qrCodeTandaTangan = "";
-        }
+        // if($tandaTangan->link){
+        //     $qrCodeTandaTangan = base64_encode(
+        //         QrCode::format('svg')
+        //             ->size(200)
+        //             ->errorCorrection('H')
+        //             ->generate($tandaTangan->link),
+        //     );
+        // }else{
+        //     $qrCodeTandaTangan = "";
+        // }
         
 
         // Ignore Sementara
@@ -102,20 +102,20 @@ class ProfileController extends Controller
 
         // dd($getUser);
 
-        return view('pegawai.profile.index', [
-            'user' => $user,
-            'kependudukan' => $kependudukan,
-            'keluarga' => $keluarga,
-            'kepegawaian' => $kepegawaian,
-            'alamatdankontak' => $alamatdankontak,
-            'lainlain'=>$lainlain,
-            'pangkat'=>$pangkatgolongan,
-            'tandaTangan' => $tandaTangan,
-            'unitkerjaPegawai' => $unitkerjaPegawai,
-            'jabatanFungsionalPegawai' => $jabatanFungsionalPegawai,
-            'jabatanStrukturalPegawai' => $jabatanStrukturalPegawai,
-            'qrCodeTandaTangan' => $qrCodeTandaTangan
-        ]);
+        // return view('pegawai.profile.index', [
+        //     'user' => $user,
+        //     'kependudukan' => $kependudukan,
+        //     'keluarga' => $keluarga,
+        //     'kepegawaian' => $kepegawaian,
+        //     'alamatdankontak' => $alamatdankontak,
+        //     'lainlain'=>$lainlain,
+        //     'pangkat'=>$pangkatgolongan,
+        //     'tandaTangan' => $tandaTangan,
+        //     'unitkerjaPegawai' => $unitkerjaPegawai,
+        //     'jabatanFungsionalPegawai' => $jabatanFungsionalPegawai,
+        //     'jabatanStrukturalPegawai' => $jabatanStrukturalPegawai,
+        //     'qrCodeTandaTangan' => $qrCodeTandaTangan
+        // ]);
     }
 
     public function editProfile(Request $request)
@@ -144,6 +144,12 @@ class ProfileController extends Controller
         ]);
 
 
+        $profile = RiwayatProfile::where('user_id', Auth::user()->id)->first();
+
+        if (!$profile) {
+            return redirect()->back()->with('error', 'Profil tidak ditemukan');
+        }
+
         //!start
         $imageName = '';
         if($request->file()){
@@ -157,49 +163,21 @@ class ProfileController extends Controller
 
         // Tugas: Ini nanti diganti ke Update Tabel yang dari user
         
-        RiwayatProfile::create([
-        'user_id' => Auth::user()->id,
-        'name' => $attrs['name'],
-        'nip' => $attrs['nip'],
-        'email'=> $attrs['email'],
-        'jenis_kelamin' => $attrs['jk'],
-        'tempat_lahir' => $attrs['tempat_lahir'] ,
-        'tanggal_lahir' => $attrs['tanggal_lahir'],
-        'nama_ibu' => $attrs['nama_ibu'] ,
-        'photo' => $imageName ,
+        $profile->update([
+            'name' => $attrs['name'],
+            'nip' => $attrs['nip'],
+            'email' => $attrs['email'],
+            'jenis_kelamin' => $attrs['jk'],
+            'tempat_lahir' => $attrs['tempat_lahir'],
+            'tanggal_lahir' => $attrs['tanggal_lahir'],
+            'nama_ibu' => $attrs['nama_ibu'],
+            'photo' => $imageName,
         ]);
-        //!end
-
-
-        // $userid = Auth::user()->id;
-        // $user = User::find($userid);
-        // $user->nip = $attrs['nip'];
-        // $user->name = $attrs['name'];
-        // $user->email = $attrs['email'];
-        // $user->jenis_kelamin = $attrs['jk'];
-        // $user->tempat_lahir = $attrs['tempat_lahir'];
-        // $user->tanggal_lahir = $attrs['tanggal_lahir'];
-        // $user->nama_ibu = $attrs['nama_ibu'];
-        // if($request->file()){
-        //     if($request->file){
-        //         if ($user->photo) {
-        //             $oldImage = public_path('images/photo/' . $user->photo);
-        //             if (file_exists($oldImage)) {
-        //                 unlink($oldImage);
-        //             }
-        //         }
-
-        //         $imageName = time() . '.' . $request->file->extension();
-        //         $request->file->move(public_path('images/photo/'), $imageName);
-        //         $user->photo = $imageName;
-        //     }
-        // }
-
-        // $user->update();
 
         return redirect()
             ->route('profile.index')
-            ->with('success', 'Profil diperbarui!');
+            ->with('success', 'Profil berhasil diperbarui!');
+        
     }
 
     public function editKedudukan()

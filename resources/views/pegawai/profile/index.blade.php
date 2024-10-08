@@ -29,22 +29,22 @@
                         
                             <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
                                 <p class="max-w-[200px] w-full">Nama</p>
-                                <P>: {{ $users["name"] }}</P>
+                                <P>: {{ $user["name"] }}</P>
                             </div>
                             <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
                                 <p class="max-w-[200px] w-full">NIP</p>
-                                <P>: {{ $users["nip"] }}</P>
+                                <P>: {{ $user["nip"] }}</P>
                             </div>
                             <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
                                 <p class="max-w-[200px] w-full">Email</p>
-                                <P>: {{ $users["email"] }}</P>
+                                <P>: {{ $user["email"] }}</P>
                             </div>
 
                             <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
                                 <p class="max-w-[200px] w-full">Jenis Kelamin</p>
                                 <P>:
 
-                                    @if ($users["jenis_kelamin"] == 'L')
+                                    @if ($user["jenis_kelamin"] == 'L')
                                         Laki-laki
                                     @else
                                         Perempuan
