@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Colors\Profile;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ProfileController extends Controller
@@ -29,64 +30,99 @@ class ProfileController extends Controller
     public function index(Request $request)
     {
         // dd($request->input('tahun'));
+
         $user = Auth::user();
-        $kependudukan = Kependudukan::where('user_id', $user->id)->first();
-        $keluarga = Keluarga::where('user_id', $user->id)->first();
-        $kepegawaian = Kepegawaian::where('user_id', $user->id)->first();
-        $alamatdankontak = AlamatdanKontak::where('user_id', $user->id)->first();
-        $lainlain = Lainlain::where('user_id', $user->id)->first();
-        $pangkatgolongan = pangkat_golongan::where('user_id', $user->id)->latest()->first();
-        $tandaTangan = TandaTangan::where('user_id', $user->id)->first();
 
-        $pegawaiFungsional = PegawaiFungsional::with('unit_kerja_has_jabatan_fungsional.unitkerja')->where('user_id',$user->id)->first();
-        $pegawaiStruktural = PegawaiHasStruktural::with('jabatanStruktural')->where('users_id',$user->id)->first();
-    //    dd($pegawaiStruktural);
+        $getUser = $user->toArray();
 
-        if($tandaTangan->link){
-            $qrCodeTandaTangan = base64_encode(
-                QrCode::format('svg')
-                    ->size(200)
-                    ->errorCorrection('H')
-                    ->generate($tandaTangan->link),
-            );
-        }else{
-            $qrCodeTandaTangan = "";
-        }
+        // $kependudukan = Kependudukan::where('user_id', $user->id)->first();
+
+        // dd($user->toArray());
+
+        // dd($kependudukan);
+
+        // $keluarga = Keluarga::where('user_id', $user->id)->first();
+
+        // dd($keluarga);
+
+        // $kepegawaian = Kepegawaian::where('user_id', $user->id)->first();
+
+        // dd($kepegawaian);
+
+        // $alamatdankontak = AlamatdanKontak::where('user_id', $user->id)->first();
+
+        // dd($alamatdankontak);
+
+        // $lainlain = Lainlain::where('user_id', $user->id)->first();
+
+        // dd($lainlain);
+
+        // $pangkatgolongan = pangkat_golongan::where('user_id', $user->id)->latest()->first();
+
+        // dd($pangkatgolongan);
+
+        // $tandaTangan = TandaTangan::where('user_id', $user->id)->first();
+
+        // dd($tandaTangan);
+
+        // $pegawaiFungsional = PegawaiFungsional::with('unit_kerja_has_jabatan_fungsional.unitkerja')->where('user_id',$user->id)->first();
+
+        // // dd($pegawaiFungsional);
+
+        // $pegawaiStruktural = PegawaiHasStruktural::with('jabatanStruktural')->where('users_id',$user->id)->first();
+
+        // dd($pegawaiStruktural);
+
+        // Ignore Sementara
+
+        // if($tandaTangan->link){
+        //     $qrCodeTandaTangan = base64_encode(
+        //         QrCode::format('svg')
+        //             ->size(200)
+        //             ->errorCorrection('H')
+        //             ->generate($tandaTangan->link),
+        //     );
+        // }else{
+        //     $qrCodeTandaTangan = "";
+        // }
         
 
+        // Ignore Sementara
 
 
+        // $unitkerjaPegawai = "";
+        // $jabatanFungsionalPegawai = "";
+        // $jabatanStrukturalPegawai = "";
+        // if($pegawaiFungsional){
+        //     $unitkerjaPegawai = $pegawaiFungsional->unit_kerja_has_jabatan_fungsional->unitkerja->name;
+        //     $jabatanFungsionalPegawai = $pegawaiFungsional->unit_kerja_has_jabatan_fungsional->name;
+        // }
+        // if($pegawaiStruktural){
+        //     if($pegawaiStruktural->jabatanStruktural){
+        //         $jabatanStrukturalPegawai = $pegawaiStruktural->jabatanStruktural->name;
 
-        $unitkerjaPegawai = "";
-        $jabatanFungsionalPegawai = "";
-        $jabatanStrukturalPegawai = "";
-        if($pegawaiFungsional){
-            $unitkerjaPegawai = $pegawaiFungsional->unit_kerja_has_jabatan_fungsional->unitkerja->name;
-            $jabatanFungsionalPegawai = $pegawaiFungsional->unit_kerja_has_jabatan_fungsional->name;
-        }
-        if($pegawaiStruktural){
-            if($pegawaiStruktural->jabatanStruktural){
-                $jabatanStrukturalPegawai = $pegawaiStruktural->jabatanStruktural->name;
-
-            }
-        }
+        //     }
+        // }
 
         
         // dd($pegawaiFungsional);
-        //  dd($kepegawaian);
+        // dd($kepegawaian);
+
+        // dd($getUser);
+
         return view('pegawai.profile.index', [
-            'user' => $user,
-            'kependudukan' => $kependudukan,
-            'keluarga' => $keluarga,
-            'kepegawaian' => $kepegawaian,
-            'alamatdankontak' => $alamatdankontak,
-            'lainlain'=>$lainlain,
-            'pangkat'=>$pangkatgolongan,
-            'tandaTangan' => $tandaTangan,
-            'unitkerjaPegawai' => $unitkerjaPegawai,
-            'jabatanFungsionalPegawai' => $jabatanFungsionalPegawai,
-            'jabatanStrukturalPegawai' => $jabatanStrukturalPegawai,
-            'qrCodeTandaTangan' => $qrCodeTandaTangan
+            'users' => $getUser,
+            // 'kependudukan' => $kependudukan,
+            // 'keluarga' => $keluarga,
+            // 'kepegawaian' => $kepegawaian,
+            // 'alamatdankontak' => $alamatdankontak,
+            // 'lainlain'=>$lainlain,
+            // 'pangkat'=>$pangkatgolongan,
+            // 'tandaTangan' => $tandaTangan,
+            // 'unitkerjaPegawai' => $unitkerjaPegawai,
+            // 'jabatanFungsionalPegawai' => $jabatanFungsionalPegawai,
+            // 'jabatanStrukturalPegawai' => $jabatanStrukturalPegawai,
+            // 'qrCodeTandaTangan' => $qrCodeTandaTangan
         ]);
     }
 
@@ -124,6 +160,9 @@ class ProfileController extends Controller
                 $request->file->move(public_path('images/photo/'), $imageName);
             }
         }
+
+        // Tugas: Ini nanti diganti ke Update Tabel yang dari user
+        
         RiwayatProfile::create([
         'user_id' => Auth::user()->id,
         'name' => $attrs['name'],
@@ -182,19 +221,24 @@ class ProfileController extends Controller
 
     public function updateKedudukan(Request $request)
     {
+        
         $attrs = $request->validate([
             'nik' => 'required',
             'agama' => 'required',
             'kewarganegaraan' => 'required',
             'file' => 'max:2048'
         ]);
+        
+        
         $imageName = '';
+        
         if($request->file()){
             $imageName = time() . '.' . $request->file->extension();
             $request->file->move(public_path('document/file_pendukung/'), $imageName);
         }
 
         $user = Auth::user();
+        
         RiwayatKependudukan::create([
             'user_id' => $user->id,
             'nik' => $attrs['nik'] , 

@@ -14,15 +14,15 @@
                     </p>
                 </div>
                 @if ($errors->any())
-                <script>
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: '{{ $errors->first() }}',
-                    });
-                </script>
-            @endif
-            
+                    <script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: '{{ $errors->first() }}',
+                        });
+                    </script>
+                @endif
+
 
 
 
@@ -34,7 +34,7 @@
                         class="py-6 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200 dark:border-gray-700">
 
                         <div class="mt-2 space-y-3">
-                            
+
 
                             <div>
                                 <label class="inline-block text-sm font-medium dark:text-white">
@@ -51,7 +51,8 @@
                                 <input name="nip" type="text" value="{{ $user->nip }}"
                                     class="py-2 px-3 pr-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
                                     placeholder="NIP">
-                            </div><div>
+                            </div>
+                            <div>
                                 <label class="inline-block text-sm font-medium dark:text-white">
                                     Email
                                 </label>
@@ -65,12 +66,13 @@
                                 <label class="inline-block text-sm font-medium dark:text-white">
                                     Jenis Kelamin
                                 </label>
-                                <select name="jk"
-                                    value="{{ $user->jenis_kelamin }}"
+                                <select name="jk" value="{{ $user->jenis_kelamin }}"
                                     class="py-2 px-3 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
                                     <option disabled>Jenis Kelamin</option>
-                                    <option {{ $user->jenis_kelamin == 'l' ? 'selected' : '' }}  value="l">Laki-laki</option>
-                                    <option {{ $user->jenis_kelamin == 'p' ? 'selected' : '' }} value="p">Perempuan</option>
+                                    <option {{ $user->jenis_kelamin == 'l' ? 'selected' : '' }} value="l">Laki-laki
+                                    </option>
+                                    <option {{ $user->jenis_kelamin == 'p' ? 'selected' : '' }} value="p">Perempuan
+                                    </option>
                                 </select>
                             </div>
                             <div>
@@ -131,9 +133,9 @@
                     </div>
 
                     <div class="mt-5 flex justify-end gap-x-2">
-                        <button type="button"
+                        <button type="button" onclick="window.history.back()"
                             class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover-bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover-text-white dark:focus:ring-offset-gray-800">
-                            kembali
+                            Kembali
                         </button>
                         <button type="submit"
                             class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
