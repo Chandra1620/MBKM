@@ -18,7 +18,7 @@ use App\Models\RiwayatLainlain;
 use App\Models\RiwayatProfile;
 use App\Models\TandaTangan;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage; 
+use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -77,7 +77,7 @@ class ProfileController extends Controller
         // }else{
         //     $qrCodeTandaTangan = "";
         // }
-        
+
 
         // Ignore Sementara
 
@@ -132,48 +132,61 @@ class ProfileController extends Controller
     {
         // dd($request->file_pendukung);
         // dd($request->all());
+        
         $attrs = $request->validate([
             'name' => 'required',
             'nip' => 'required',
             'email' => 'required',
-            'jk' => 'required',
+            'jenis_kelamin' => 'required',
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
             'nama_ibu' => 'required',
-            'file' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'status' => 'required'
+            'photo' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'role' => 'required'
         ]);
 
 
-        $profile = RiwayatProfile::where('user_id', Auth::user()->id)->first();
-
-        if (!$profile) {
-            return redirect()->back()->with('error', 'Profil tidak ditemukan');
-        }
-
         //!start
         $imageName = '';
-        if($request->file()){
-            if($request->file){
-
-    
+        if ($request->file()) {
+            if ($request->file) {
                 $imageName = time() . '.' . $request->file->extension();
                 $request->file->move(public_path('images/photo/'), $imageName);
             }
         }
 
         // Tugas: Ini nanti diganti ke Update Tabel yang dari user
-        
-        $profile->update([
-            'name' => $attrs['name'],
-            'nip' => $attrs['nip'],
-            'email' => $attrs['email'],
-            'jenis_kelamin' => $attrs['jk'],
-            'tempat_lahir' => $attrs['tempat_lahir'],
-            'tanggal_lahir' => $attrs['tanggal_lahir'],
-            'nama_ibu' => $attrs['nama_ibu'],
-            'photo' => $imageName,
-        ]);
+
+        User::where('id', Auth::user()->id)->update($attrs);
+
+        //!end
+
+
+        // $userid = Auth::user()->id;
+        // $user = User::find($userid);
+        // $user->nip = $attrs['nip'];
+        // $user->name = $attrs['name'];
+        // $user->email = $attrs['email'];
+        // $user->jenis_kelamin = $attrs['jk'];
+        // $user->tempat_lahir = $attrs['tempat_lahir'];
+        // $user->tanggal_lahir = $attrs['tanggal_lahir'];
+        // $user->nama_ibu = $attrs['nama_ibu'];
+        // if($request->file()){
+        //     if($request->file){
+        //         if ($user->photo) {
+        //             $oldImage = public_path('images/photo/' . $user->photo);
+        //             if (file_exists($oldImage)) {
+        //                 unlink($oldImage);
+        //             }
+        //         }
+
+        //         $imageName = time() . '.' . $request->file->extension();
+        //         $request->file->move(public_path('images/photo/'), $imageName);
+        //         $user->photo = $imageName;
+        //     }
+        // }
+
+        // $user->update();
 
         return redirect()
             ->route('profile.index')
@@ -193,23 +206,24 @@ class ProfileController extends Controller
 
     public function updateKedudukan(Request $request)
     {
-        
+
         $attrs = $request->validate([
             'nik' => 'required',
             'agama' => 'required',
             'kewarganegaraan' => 'required',
             'file' => 'max:2048'
         ]);
-        
-        
+
+
         $imageName = '';
-        if($request->file()){
+
+        if ($request->file()) {
             $imageName = time() . '.' . $request->file->extension();
             $request->file->move(public_path('document/file_pendukung/'), $imageName);
         }
 
         $user = Auth::user();
-        
+
         RiwayatKependudukan::create([
             'user_id' => $user->id,
             'nik' => $attrs['nik'],
@@ -268,6 +282,7 @@ class ProfileController extends Controller
         return redirect()
             ->route('profile.index')
             ->with('success', 'Kependudukan diperbarui atau dibuat jika tidak ada sebelumnya!');
+
     }
 
     public function editKeluarga()
@@ -505,5 +520,11 @@ class ProfileController extends Controller
 
 
 
-    public function downloadFilePendukung($name) {}
+    public function downloadFilePendukung($name)
+    {
+
+    }
+
+
+
 }

@@ -66,7 +66,7 @@
                                 <label class="inline-block text-sm font-medium dark:text-white">
                                     Jenis Kelamin
                                 </label>
-                                <select name="jk" value="{{ $user->jenis_kelamin }}"
+                                <select name="jenis_kelamin" value="{{ $user->jenis_kelamin }}"
                                     class="py-2 px-3 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
                                     <option disabled>Jenis Kelamin</option>
                                     <option {{ $user->jenis_kelamin == 'l' ? 'selected' : '' }} value="l">Laki-laki
@@ -105,7 +105,7 @@
                                 <label class="inline-block text-sm font-medium dark:text-white">
                                     Status
                                 </label>
-                                <input name="status" type="text" value="{{ $user->status }}"
+                                <input name="role" type="text" value="{{ $user->status }}"
                                     class="px-3 pr-11 block w-full border-gray-200 shadow-sm 
                                     text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900
                                      dark:border-gray-700 dark:text-gray-400"
@@ -118,7 +118,7 @@
                             <div class=" space-y-3">
                                 <label class="block">
                                     <span class="sr-only">Choose profile photo</span>
-                                    <input name="file" type="file"
+                                    <input name="photo" type="file"
                                         class="block w-full text-sm text-gray-500
                                             file:mr-4 file:py-2 file:px-4
                                             file:rounded-md file:border-0
