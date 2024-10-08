@@ -62,7 +62,7 @@
                             <p class="max-w-[200px] w-full">Nama Ibu Kandung</p>
                             <P>: {{ $user->nama_ibu }}</P>
                         </div>
-                        {{-- <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
+                        <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
                             <p class="max-w-[200px] w-full">File Pendukung</p>
                             @if ($user->file_pendukung)
                                 <a href="{{ url('document/file_pendukung/' . $user->file_pendukung) }}">Lihat
@@ -70,7 +70,8 @@
                             @else
                                 : -
                             @endif
-                        </div> --}}
+                        </div>
+
                     </div>
                 </div>
                 <!-- End Profile -->

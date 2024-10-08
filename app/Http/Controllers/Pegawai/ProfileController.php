@@ -36,21 +36,21 @@ class ProfileController extends Controller
         $pangkatgolongan = pangkat_golongan::where('user_id', $user->id)->latest()->first();
         $tandaTangan = TandaTangan::where('user_id', $user->id)->first();
 
-        $pegawaiFungsional = PegawaiFungsional::with('unit_kerja_has_jabatan_fungsional.unitkerja')->where('user_id',$user->id)->first();
-        $pegawaiStruktural = PegawaiHasStruktural::with('jabatanStruktural')->where('users_id',$user->id)->first();
-    //    dd($pegawaiStruktural);
+        $pegawaiFungsional = PegawaiFungsional::with('unit_kerja_has_jabatan_fungsional.unitkerja')->where('user_id', $user->id)->first();
+        $pegawaiStruktural = PegawaiHasStruktural::with('jabatanStruktural')->where('users_id', $user->id)->first();
+        //    dd($pegawaiStruktural);
 
-        if($tandaTangan->link){
+        if ($tandaTangan->link) {
             $qrCodeTandaTangan = base64_encode(
                 QrCode::format('svg')
                     ->size(200)
                     ->errorCorrection('H')
                     ->generate($tandaTangan->link),
             );
-        }else{
+        } else {
             $qrCodeTandaTangan = "";
         }
-        
+
 
 
 
@@ -58,18 +58,17 @@ class ProfileController extends Controller
         $unitkerjaPegawai = "";
         $jabatanFungsionalPegawai = "";
         $jabatanStrukturalPegawai = "";
-        if($pegawaiFungsional){
+        if ($pegawaiFungsional) {
             $unitkerjaPegawai = $pegawaiFungsional->unit_kerja_has_jabatan_fungsional->unitkerja->name;
             $jabatanFungsionalPegawai = $pegawaiFungsional->unit_kerja_has_jabatan_fungsional->name;
         }
-        if($pegawaiStruktural){
-            if($pegawaiStruktural->jabatanStruktural){
+        if ($pegawaiStruktural) {
+            if ($pegawaiStruktural->jabatanStruktural) {
                 $jabatanStrukturalPegawai = $pegawaiStruktural->jabatanStruktural->name;
-
             }
         }
 
-        
+
         // dd($pegawaiFungsional);
         //  dd($kepegawaian);
         return view('pegawai.profile.index', [
@@ -78,8 +77,8 @@ class ProfileController extends Controller
             'keluarga' => $keluarga,
             'kepegawaian' => $kepegawaian,
             'alamatdankontak' => $alamatdankontak,
-            'lainlain'=>$lainlain,
-            'pangkat'=>$pangkatgolongan,
+            'lainlain' => $lainlain,
+            'pangkat' => $pangkatgolongan,
             'tandaTangan' => $tandaTangan,
             'unitkerjaPegawai' => $unitkerjaPegawai,
             'jabatanFungsionalPegawai' => $jabatanFungsionalPegawai,
@@ -109,30 +108,33 @@ class ProfileController extends Controller
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
             'nama_ibu' => 'required',
-            'file' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+            'file' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'status' => 'required'
         ]);
-        
+
 
         //!start
         $imageName = '';
-        if($request->file()){
-            if($request->file){
+        if ($request->file()) {
+            if ($request->file) {
 
-    
+
                 $imageName = time() . '.' . $request->file->extension();
                 $request->file->move(public_path('images/photo/'), $imageName);
             }
         }
         RiwayatProfile::create([
-        'user_id' => Auth::user()->id,
-        'name' => $attrs['name'],
-        'nip' => $attrs['nip'],
-        'email'=> $attrs['email'],
-        'jenis_kelamin' => $attrs['jk'],
-        'tempat_lahir' => $attrs['tempat_lahir'] ,
-        'tanggal_lahir' => $attrs['tanggal_lahir'],
-        'nama_ibu' => $attrs['nama_ibu'] ,
-        'photo' => $imageName ,
+            'user_id' => Auth::user()->id,
+            'name' => $attrs['name'],
+            'nip' => $attrs['nip'],
+            'email' => $attrs['email'],
+            'jenis_kelamin' => $attrs['jk'],
+            'tempat_lahir' => $attrs['tempat_lahir'],
+            'tanggal_lahir' => $attrs['tanggal_lahir'],
+            'nama_ibu' => $attrs['nama_ibu'],
+            'photo' => $imageName,
+            'status' => $attrs['status']
+
         ]);
         //!end
 
@@ -154,7 +156,7 @@ class ProfileController extends Controller
         //                 unlink($oldImage);
         //             }
         //         }
-    
+
         //         $imageName = time() . '.' . $request->file->extension();
         //         $request->file->move(public_path('images/photo/'), $imageName);
         //         $user->photo = $imageName;
@@ -173,7 +175,7 @@ class ProfileController extends Controller
         $user = Auth::user();
         $kependudukan = Kependudukan::where('user_id', $user->id)->first();
 
-        return view('pegawai.profile.edit_kedudukan',[
+        return view('pegawai.profile.edit_kedudukan', [
             'kependudukan' => $kependudukan
         ]);
     }
@@ -187,7 +189,7 @@ class ProfileController extends Controller
             'file' => 'max:2048'
         ]);
         $imageName = '';
-        if($request->file()){
+        if ($request->file()) {
             $imageName = time() . '.' . $request->file->extension();
             $request->file->move(public_path('document/file_pendukung/'), $imageName);
         }
@@ -195,9 +197,9 @@ class ProfileController extends Controller
         $user = Auth::user();
         RiwayatKependudukan::create([
             'user_id' => $user->id,
-            'nik' => $attrs['nik'] , 
-            'agama' => $attrs['agama']  , 
-            'kewarganegaraan' => $attrs['kewarganegaraan'] ,
+            'nik' => $attrs['nik'],
+            'agama' => $attrs['agama'],
+            'kewarganegaraan' => $attrs['kewarganegaraan'],
             'file_pendukung' => $imageName
         ]);
 
@@ -227,18 +229,18 @@ class ProfileController extends Controller
 
     public function editKepegawaian()
     {
-       
+
         $user = Auth::user();
         $kepegawaian = Kepegawaian::where('user_id', $user->id)->first();
 
-        return view('pegawai.profile.edit_kepegawaian',[
+        return view('pegawai.profile.edit_kepegawaian', [
             'kepegawaian' => $kepegawaian
         ]);
     }
 
     public function updateKepegawaian(Request $request)
     {
-        
+
         $user = Auth::user();
         $kepegawaian = Kepegawaian::where('user_id', $user->id)->first();
         // dd($request->all());
@@ -251,16 +253,15 @@ class ProfileController extends Controller
         return redirect()
             ->route('profile.index')
             ->with('success', 'Kependudukan diperbarui atau dibuat jika tidak ada sebelumnya!');
-            
     }
 
     public function editKeluarga()
     {
-        
+
         $user = Auth::user();
         $keluarga = Keluarga::where('user_id', $user->id)->first();
-       
-        return view('pegawai.profile.edit_keluarga',[
+
+        return view('pegawai.profile.edit_keluarga', [
             'keluarga' => $keluarga
         ]);
     }
@@ -273,15 +274,15 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         $keluarga = new RiwayatKeluarga;
-        if( $attrs['status_perkawinan'] != 'menikah' ){
+        if ($attrs['status_perkawinan'] != 'menikah') {
             $keluarga->nama_pasangan = "";
             $keluarga->pekerjaan_pasangan = "";
-        }else{
+        } else {
             $keluarga->nama_pasangan = $request->input('nama_pasangan');
             $keluarga->pekerjaan_pasangan = $request->input('pekerjaan_pasangan');
         }
         $keluarga->status_perkawinan = $request->input('status_perkawinan');
-        if($request->file()){
+        if ($request->file()) {
             $imageName = time() . '.' . $request->file->extension();
             $request->file->move(public_path('document/file_pendukung/'), $imageName);
             $keluarga->file_pendukung = $imageName;
@@ -316,18 +317,17 @@ class ProfileController extends Controller
             ->route('profile.index')
             ->with('success', 'Kependudukan diperbarui atau dibuat jika tidak ada sebelumnya!');
     }
-    
+
 
     public function editAlamatkontak()
     {
-        
+
         $user = Auth::user();
         $alamatdankontak = AlamatdanKontak::where('user_id', $user->id)->first();
 
-        return view('pegawai.profile.edit_alamatkontak',[
+        return view('pegawai.profile.edit_alamatkontak', [
             'alamatdankontak' => $alamatdankontak
         ]);
-
     }
 
     public function updateAlamatkontak(Request $request)
@@ -338,17 +338,17 @@ class ProfileController extends Controller
         RiwayatAlamatdanKontak::create([
             'user_id' => $user->id,
             'provinsi' => $request->input('nama_provinsi'),
-        'kota' => $request->input('nama_kabupaten'),
-        'kecamatan' => $request->input('nama_kecamatan'),
-        'desa_kelurahan' => $request->input('nama_desa'),
-        'rt' => $request->input('rt'), 
-        'rw' =>$request->input('rw'),
-        'kodepos' => $request->input('kodepos'),
-        'alamat' =>$request->input('alamat'), 
-        'no_telp_rumah' => $request->input('no_telp_rumah') ,
-        'no_hp' => $request->input('no_hp'),
+            'kota' => $request->input('nama_kabupaten'),
+            'kecamatan' => $request->input('nama_kecamatan'),
+            'desa_kelurahan' => $request->input('nama_desa'),
+            'rt' => $request->input('rt'),
+            'rw' => $request->input('rw'),
+            'kodepos' => $request->input('kodepos'),
+            'alamat' => $request->input('alamat'),
+            'no_telp_rumah' => $request->input('no_telp_rumah'),
+            'no_hp' => $request->input('no_hp'),
         ]);
-        
+
         // $alamatdankontak = AlamatdanKontak ::where('user_id', $user->id)->first();
         // $alamatdankontak->provinsi = $request->input('nama_provinsi'); // clear
         // $alamatdankontak->kota = $request->input('nama_kabupaten'); // clear
@@ -371,11 +371,11 @@ class ProfileController extends Controller
 
     public function editLainlain()
     {
-         
+
         $user = Auth::user();
         $lainlain = Lainlain::where('user_id', $user->id)->first();
 
-        return view('pegawai.profile.edit_lainlain',[
+        return view('pegawai.profile.edit_lainlain', [
             'lainlain' => $lainlain
         ]);
     }
@@ -389,14 +389,14 @@ class ProfileController extends Controller
         // dd($request->all());
         // $user = Auth::user();
         $imageName = '';
-        if($request->file()){
-            
+        if ($request->file()) {
+
             $imageName = time() . '.' . $request->file->extension();
             $request->file->move(public_path('document/file_pendukung/'), $imageName);
         }
         RiwayatLainlain::create([
             'user_id' => Auth::user()->id,
-            'npwp' => $attrs['npwp'] , 
+            'npwp' => $attrs['npwp'],
             'nama_wajib_pajak' => $attrs['nama_wajib_pajak'],
             'file_pendukung' => $imageName
         ]);
@@ -424,14 +424,15 @@ class ProfileController extends Controller
 
     public function editTandaTangan()
     {
-         
+
         $user = Auth::user();
         $tandaTangan = TandaTangan::where('user_id', $user->id)->first();
-        return view('pegawai.profile.edit_tandatangan',[
+        return view('pegawai.profile.edit_tandatangan', [
             'tandaTangan' => $tandaTangan
         ]);
     }
-    public function updateTandaTangan(Request $request) {
+    public function updateTandaTangan(Request $request)
+    {
         // dd($request->all());
 
         // Validate the request
@@ -439,13 +440,13 @@ class ProfileController extends Controller
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'link' => 'required'
         ]);
-    
+
         // Get the authenticated user
         $user = Auth::user();
-    
+
         // Find the user's existing tandaTangan or create a new one
         $tandaTangan = TandaTangan::firstOrNew(['user_id' => $user->id]);
-    
+
         // // Check if an old image exists and delete it
         // if ($tandaTangan->image) {
         //     $oldImage = public_path('images/tandatangan/' . $tandaTangan->image);
@@ -453,25 +454,26 @@ class ProfileController extends Controller
         //         unlink($oldImage);
         //     }
         // }
-    
+
         // // Upload and store the new image
         // $imageName = time() . '.' . $request->image->extension();
         // $request->image->move(public_path('images/tandatangan/'), $imageName);
-    
+
         // // Update the tandaTangan model with the new image name
         // $tandaTangan->image = $imageName;
         $tandaTangan->link = $request->link;
         $tandaTangan->save();
-    
+
         return redirect()->route('profile.index')->with('success', 'Profile image updated successfully');
     }
 
-    public function deleteTandaTangan(){
+    public function deleteTandaTangan()
+    {
         $user = Auth::user();
-    
+
         // Find the user's existing tandaTangan or create a new one
         $tandaTangan = TandaTangan::firstOrNew(['user_id' => $user->id]);
-    
+
         // Check if an old image exists and delete it
         if ($tandaTangan->image) {
             $oldImage = public_path('images/tandatangan/' . $tandaTangan->image);
@@ -482,16 +484,11 @@ class ProfileController extends Controller
 
         $tandaTangan->image = null;
         $tandaTangan->save();
-    
+
         return redirect()->route('profile.index')->with('success', 'Profile image updated successfully');
     }
-    
-    
-    
-    public function downloadFilePendukung($name){
-
-    }
 
 
 
+    public function downloadFilePendukung($name) {}
 }
