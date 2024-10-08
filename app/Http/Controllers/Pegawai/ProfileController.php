@@ -103,8 +103,8 @@ class ProfileController extends Controller
         // dd($getUser);
         // Inireturn
 
-        // return view('pegawai.profile.index', [
-        //     'user' => $user,
+        return view('pegawai.profile.index', [
+            'user' => $user,
         //     'kependudukan' => $kependudukan,
         //     'keluarga' => $keluarga,
         //     'kepegawaian' => $kepegawaian,
@@ -116,7 +116,7 @@ class ProfileController extends Controller
         //     'jabatanFungsionalPegawai' => $jabatanFungsionalPegawai,
         //     'jabatanStrukturalPegawai' => $jabatanStrukturalPegawai,
         //     'qrCodeTandaTangan' => $qrCodeTandaTangan
-        // ]);
+        ]);
     }
 
     public function editProfile(Request $request)

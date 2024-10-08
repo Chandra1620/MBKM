@@ -105,12 +105,17 @@
                                 <label class="inline-block text-sm font-medium dark:text-white">
                                     Status
                                 </label>
-                                <input name="role" type="text" value="{{ $user->status }}"
-                                    class="px-3 pr-11 block w-full border-gray-200 shadow-sm 
-                                    text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900
-                                     dark:border-gray-700 dark:text-gray-400"
-                                    placeholder="Status">
+                                <select name="role" value="{{ $user->status }}"
+                                    class="py-2 px-3 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
+                                    <option disabled>Status</option>
+                                    <option {{ $user->role == 'admin' ? 'selected' : 'disabled' }} value="admin">Admin</option>
+                                    <option {{ $user->role == 'admin-pegawai' ? 'selected' : 'disabled' }} value="admin-pegawai">Admin-Pegawai
+                                    </option>
+                                    <option {{ $user->role == 'pegawai' ? 'selected' : 'disabled' }} value="pegawai">Pegawai</option>
+                                    <option {{ $user->role == 'wadir' ? 'selected' : 'disabled' }} value="wadir">Wadir</option>
+                                </select>
                             </div>
+
                             <label class="inline-block text-sm font-medium dark:text-white">
                                 Foto Profil
                             </label>
