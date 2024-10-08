@@ -109,6 +109,7 @@ class ProfileController extends Controller
         // dd($kepegawaian);
 
         // dd($getUser);
+        // Inireturn
 
         return view('pegawai.profile.index', [
             'users' => $getUser,
