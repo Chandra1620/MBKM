@@ -454,7 +454,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
 
         Route::get('/profile/edit-profil', [ProfileController::class, 'editProfile'])->name('edit-profile');
-
         Route::put('/profile/store-profil', [ProfileController::class, 'storeProfile'])->name('store-profile');
 
         Route::get('/profile/edit-kedudukan', [ProfileController::class, 'editKedudukan'])->name('edit-kedudukan');

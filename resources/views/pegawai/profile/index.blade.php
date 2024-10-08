@@ -26,6 +26,7 @@
 
                         </div>
 
+                        {{-- SUDAH BERESSSSS --}}
                         
                             <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
                                 <p class="max-w-[200px] w-full">Nama</p>
