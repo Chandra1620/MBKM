@@ -63,9 +63,9 @@ class ProfileController extends Controller
 
         // $tandaTangan = TandaTangan::where('user_id', $user->id)->first();
 
-        $pegawaiFungsional = PegawaiFungsional::with('unit_kerja_has_jabatan_fungsional.unitkerja')->where('user_id',$user->id)->first();
-        $pegawaiStruktural = PegawaiHasStruktural::with('jabatanStruktural')->where('users_id',$user->id)->first();
-    //    dd($pegawaiStruktural);
+        $pegawaiFungsional = PegawaiFungsional::with('unit_kerja_has_jabatan_fungsional.unitkerja')->where('user_id', $user->id)->first();
+        $pegawaiStruktural = PegawaiHasStruktural::with('jabatanStruktural')->where('users_id', $user->id)->first();
+        //    dd($pegawaiStruktural);
 
         // if($tandaTangan->link){
         //     $qrCodeTandaTangan = base64_encode(
@@ -85,12 +85,12 @@ class ProfileController extends Controller
         $unitkerjaPegawai = "";
         $jabatanFungsionalPegawai = "";
         $jabatanStrukturalPegawai = "";
-        if($pegawaiFungsional){
+        if ($pegawaiFungsional) {
             $unitkerjaPegawai = $pegawaiFungsional->unit_kerja_has_jabatan_fungsional->unitkerja->name;
             $jabatanFungsionalPegawai = $pegawaiFungsional->unit_kerja_has_jabatan_fungsional->name;
         }
-        if($pegawaiStruktural){
-            if($pegawaiStruktural->jabatanStruktural){
+        if ($pegawaiStruktural) {
+            if ($pegawaiStruktural->jabatanStruktural) {
                 $jabatanStrukturalPegawai = $pegawaiStruktural->jabatanStruktural->name;
 
             }
@@ -106,16 +106,16 @@ class ProfileController extends Controller
         return view('pegawai.profile.index', [
             'user' => $user,
             'kependudukan' => $kependudukan,
-        //     'keluarga' => $keluarga,
-        //     'kepegawaian' => $kepegawaian,
-        //     'alamatdankontak' => $alamatdankontak,
-        //     'lainlain'=>$lainlain,
-        //     'pangkat'=>$pangkatgolongan,
-        //     'tandaTangan' => $tandaTangan,
-        //     'unitkerjaPegawai' => $unitkerjaPegawai,
-        //     'jabatanFungsionalPegawai' => $jabatanFungsionalPegawai,
-        //     'jabatanStrukturalPegawai' => $jabatanStrukturalPegawai,
-        //     'qrCodeTandaTangan' => $qrCodeTandaTangan
+            //     'keluarga' => $keluarga,
+            //     'kepegawaian' => $kepegawaian,
+            //     'alamatdankontak' => $alamatdankontak,
+            //     'lainlain'=>$lainlain,
+            //     'pangkat'=>$pangkatgolongan,
+            //     'tandaTangan' => $tandaTangan,
+            //     'unitkerjaPegawai' => $unitkerjaPegawai,
+            //     'jabatanFungsionalPegawai' => $jabatanFungsionalPegawai,
+            //     'jabatanStrukturalPegawai' => $jabatanStrukturalPegawai,
+            //     'qrCodeTandaTangan' => $qrCodeTandaTangan
         ]);
     }
 
@@ -132,7 +132,7 @@ class ProfileController extends Controller
     {
         // dd($request->file_pendukung);
         // dd($request->all());
-        
+
         $attrs = $request->validate([
             'name' => 'required',
             'nip' => 'required',
@@ -189,7 +189,7 @@ class ProfileController extends Controller
         return redirect()
             ->route('profile.index')
             ->with('success', 'Profil berhasil diperbarui!');
-        
+
     }
 
     public function editKedudukan()
@@ -209,15 +209,17 @@ class ProfileController extends Controller
             'nik' => 'required',
             'agama' => 'required',
             'kewarganegaraan' => 'required',
-            'file' => 'max:2048'
+            'file_pendukung' => 'max:2048'
         ]);
 
 
         $imageName = '';
 
-        if ($request->file()) {
-            $imageName = time() . '.' . $request->file->extension();
-            $request->file->move(public_path('document/file_pendukung/'), $imageName);
+        if ($request->hasFile('file_pendukung')) {
+            $imageName = time() . '.' . $request->file('file_pendukung')->getClientOriginalExtension();
+            $request->file('file_pendukung')->move(public_path('document/file_pendukung/'), $imageName);
+
+            $attrs['file_pendukung'] = $imageName;
         }
 
         $user = Auth::user();
