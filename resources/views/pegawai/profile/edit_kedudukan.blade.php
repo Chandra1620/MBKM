@@ -63,7 +63,7 @@
                             <div class=" space-y-3">
                                 <label class="block">
                                     <span class="sr-only">Choose File Pendukung</span>
-                                    <input name="file" type="file"
+                                    <input name="file_pendukung" type="file"
                                         class="block w-full text-sm text-gray-500
                                                 file:mr-4 file:py-2 file:px-4
                                                 file:rounded-md file:border-0

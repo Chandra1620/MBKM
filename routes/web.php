@@ -366,7 +366,7 @@ Route::middleware('auth')->group(function () {
     //? belum ada permission yg bener
 
 
-    Route::middleware(['checkUserRole:atasan-langsung,admin-pegawai,pegawai,wadir,direktur'])->group(function () {
+    Route::middleware(['checkUserRole:atasan-langsung,admin-pegawai,pegawai,wadir,direktur,admin'])->group(function () {
 
 
         Route::get('/pangkat-golongan', [PangkatGolonganController::class, 'index'])->name('pangkat-golongan.index');
