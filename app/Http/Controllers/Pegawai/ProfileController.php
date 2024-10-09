@@ -35,7 +35,7 @@ class ProfileController extends Controller
 
         $getUser = $user->toArray();
 
-        // $kependudukan = Kependudukan::where('user_id', $user->id)->first();
+        $kependudukan = Kependudukan::where('user_id', $user->id)->first();
 
         // dd($user->toArray());
 
@@ -63,17 +63,9 @@ class ProfileController extends Controller
 
         // $tandaTangan = TandaTangan::where('user_id', $user->id)->first();
 
-        // dd($tandaTangan);
-
-        // $pegawaiFungsional = PegawaiFungsional::with('unit_kerja_has_jabatan_fungsional.unitkerja')->where('user_id',$user->id)->first();
-
-        // // dd($pegawaiFungsional);
-
-        // $pegawaiStruktural = PegawaiHasStruktural::with('jabatanStruktural')->where('users_id',$user->id)->first();
-
-        // dd($pegawaiStruktural);
-
-        // Ignore Sementara
+        $pegawaiFungsional = PegawaiFungsional::with('unit_kerja_has_jabatan_fungsional.unitkerja')->where('user_id',$user->id)->first();
+        $pegawaiStruktural = PegawaiHasStruktural::with('jabatanStruktural')->where('users_id',$user->id)->first();
+    //    dd($pegawaiStruktural);
 
         // if($tandaTangan->link){
         //     $qrCodeTandaTangan = base64_encode(
@@ -90,19 +82,19 @@ class ProfileController extends Controller
         // Ignore Sementara
 
 
-        // $unitkerjaPegawai = "";
-        // $jabatanFungsionalPegawai = "";
-        // $jabatanStrukturalPegawai = "";
-        // if($pegawaiFungsional){
-        //     $unitkerjaPegawai = $pegawaiFungsional->unit_kerja_has_jabatan_fungsional->unitkerja->name;
-        //     $jabatanFungsionalPegawai = $pegawaiFungsional->unit_kerja_has_jabatan_fungsional->name;
-        // }
-        // if($pegawaiStruktural){
-        //     if($pegawaiStruktural->jabatanStruktural){
-        //         $jabatanStrukturalPegawai = $pegawaiStruktural->jabatanStruktural->name;
+        $unitkerjaPegawai = "";
+        $jabatanFungsionalPegawai = "";
+        $jabatanStrukturalPegawai = "";
+        if($pegawaiFungsional){
+            $unitkerjaPegawai = $pegawaiFungsional->unit_kerja_has_jabatan_fungsional->unitkerja->name;
+            $jabatanFungsionalPegawai = $pegawaiFungsional->unit_kerja_has_jabatan_fungsional->name;
+        }
+        if($pegawaiStruktural){
+            if($pegawaiStruktural->jabatanStruktural){
+                $jabatanStrukturalPegawai = $pegawaiStruktural->jabatanStruktural->name;
 
-        //     }
-        // }
+            }
+        }
 
 
         // dd($pegawaiFungsional);
@@ -112,18 +104,18 @@ class ProfileController extends Controller
         // Inireturn
 
         return view('pegawai.profile.index', [
-            'users' => $getUser,
-            // 'kependudukan' => $kependudukan,
-            // 'keluarga' => $keluarga,
-            // 'kepegawaian' => $kepegawaian,
-            // 'alamatdankontak' => $alamatdankontak,
-            // 'lainlain'=>$lainlain,
-            // 'pangkat'=>$pangkatgolongan,
-            // 'tandaTangan' => $tandaTangan,
-            // 'unitkerjaPegawai' => $unitkerjaPegawai,
-            // 'jabatanFungsionalPegawai' => $jabatanFungsionalPegawai,
-            // 'jabatanStrukturalPegawai' => $jabatanStrukturalPegawai,
-            // 'qrCodeTandaTangan' => $qrCodeTandaTangan
+            'user' => $user,
+            'kependudukan' => $kependudukan,
+        //     'keluarga' => $keluarga,
+        //     'kepegawaian' => $kepegawaian,
+        //     'alamatdankontak' => $alamatdankontak,
+        //     'lainlain'=>$lainlain,
+        //     'pangkat'=>$pangkatgolongan,
+        //     'tandaTangan' => $tandaTangan,
+        //     'unitkerjaPegawai' => $unitkerjaPegawai,
+        //     'jabatanFungsionalPegawai' => $jabatanFungsionalPegawai,
+        //     'jabatanStrukturalPegawai' => $jabatanStrukturalPegawai,
+        //     'qrCodeTandaTangan' => $qrCodeTandaTangan
         ]);
     }
 
@@ -163,8 +155,6 @@ class ProfileController extends Controller
             }
         }
 
-        // Tugas: Ini nanti diganti ke Update Tabel yang dari user
-
         User::where('id', Auth::user()->id)->update($attrs);
 
         //!end
@@ -198,7 +188,8 @@ class ProfileController extends Controller
 
         return redirect()
             ->route('profile.index')
-            ->with('success', 'Profil diperbarui!');
+            ->with('success', 'Profil berhasil diperbarui!');
+        
     }
 
     public function editKedudukan()
@@ -230,34 +221,8 @@ class ProfileController extends Controller
         }
 
         $user = Auth::user();
+        Kependudukan::where('user_id', Auth::user()->id)->update($attrs);
 
-        RiwayatKependudukan::create([
-            'user_id' => $user->id,
-            'nik' => $attrs['nik'],
-            'agama' => $attrs['agama'],
-            'kewarganegaraan' => $attrs['kewarganegaraan'],
-            'file_pendukung' => $imageName
-        ]);
-
-
-
-
-        // $kedudukan = Kependudukan::where('user_id', $user->id)->first();
-        // $kedudukan->nik = $request->input('nik');
-        // $kedudukan->agama = $request->input('agama');
-        // $kedudukan->kewarganegaraan = $request->input('kewarganegaraan');
-        // if($request->file()){
-        //     if ($kedudukan->file_pendukung) {
-        //         $oldImage = public_path('document/file_pendukung/' . $kedudukan->file_pendukung);
-        //         if (file_exists($oldImage)) {
-        //             unlink($oldImage);
-        //         }
-        //     }
-        //     $imageName = time() . '.' . $request->file->extension();
-        //     $request->file->move(public_path('document/file_pendukung/'), $imageName);
-        //     $kedudukan->file_pendukung = $imageName;
-        // }
-        // $kedudukan->save();
         return redirect()
             ->route('profile.index')
             ->with('success', 'Kependudukan diperbarui atau dibuat jika tidak ada sebelumnya!');
@@ -365,7 +330,6 @@ class ProfileController extends Controller
         return view('pegawai.profile.edit_alamatkontak', [
             'alamatdankontak' => $alamatdankontak
         ]);
-
     }
 
     public function updateAlamatkontak(Request $request)

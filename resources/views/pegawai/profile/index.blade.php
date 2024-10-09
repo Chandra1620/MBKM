@@ -27,50 +27,45 @@
                         </div>
 
                         {{-- SUDAH BERESSSSS --}}
-                        
-                            <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
-                                <p class="max-w-[200px] w-full">Nama</p>
-                                <P>: {{ $users["name"] }}</P>
-                            </div>
-                            <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
-                                <p class="max-w-[200px] w-full">NIP</p>
-                                <P>: {{ $users["nip"] }}</P>
-                            </div>
-                            <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
-                                <p class="max-w-[200px] w-full">Email</p>
-                                <P>: {{ $users["email"] }}</P>
-                            </div>
 
-                            <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
-                                <p class="max-w-[200px] w-full">Jenis Kelamin</p>
-                                <P>:
+                        <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
+                            <p class="max-w-[200px] w-full">Nama</p>
+                            <P>: {{ $user['name'] }}</P>
+                        </div>
+                        <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
+                            <p class="max-w-[200px] w-full">NIP</p>
+                            <P>: {{ $user['nip'] }}</P>
+                        </div>
+                        <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
+                            <p class="max-w-[200px] w-full">Email</p>
+                            <P>: {{ $user['email'] }}</P>
+                        </div>
 
-                                    @if ($users["jenis_kelamin"] == 'L')
-                                        Laki-laki
-                                    @else
-                                        Perempuan
-                                    @endif
+                        <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
+                            <p class="max-w-[200px] w-full">Jenis Kelamin</p>
+                            <P>:
 
-                                </P>
-                            </div>
-                            <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
-                                <p class="max-w-[200px] w-full">Tempat Lahir</p>
-                                <P>: {{ $users["tempat_lahir"] }}</P>
-                            </div>
-                            <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
-                                <p class="max-w-[200px] w-full">Tanggal Lahir</p>
-                                <P>: {{ $users["tanggal_lahir"] }}</P>
-                            </div>
-                            <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
-                                <p class="max-w-[200px] w-full">Nama Ibu Kandung</p>
-                                <P>: {{ $users["nama_ibu"] }}</P>
-                            </div>
-                            <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
-                                <p class="max-w-[200px] w-full">Status Pegawai</p>
-                                <P>: {{ $users["role"] }}</P>
+                                @if ($user['jenis_kelamin'] == 'L')
+                                    Laki-laki
+                                @else
+                                    Perempuan
+                                @endif
 
-                            </div>
-                            {{-- <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
+                            </P>
+                        </div>
+                        <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
+                            <p class="max-w-[200px] w-full">Tempat Lahir</p>
+                            <P>: {{ $user->tempat_lahir }}</P>
+                        </div>
+                        <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
+                            <p class="max-w-[200px] w-full">Tanggal Lahir</p>
+                            <P>: {{ $user->tanggal_lahir }}</P>
+                        </div>
+                        <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
+                            <p class="max-w-[200px] w-full">Nama Ibu Kandung</p>
+                            <P>: {{ $user->nama_ibu }}</P>
+                        </div>
+                        <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
                             <p class="max-w-[200px] w-full">File Pendukung</p>
                             @if ($user->file_pendukung)
                                 <a href="{{ url('document/file_pendukung/' . $user->file_pendukung) }}">Lihat
@@ -78,11 +73,13 @@
                             @else
                                 : -
                             @endif
-                        </div> --}}
+                        </div>
+
                     </div>
                 </div>
                 <!-- End Profile -->
-                {{-- <!-- Start Kependudukan -->
+                
+                <!-- Start Kependudukan -->
                 <div class="max-w-2xl  mx-auto ">
                     <div class="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900 m-2">
                         <div class="flex justify-between mb-2">
@@ -117,7 +114,8 @@
                     </div>
                 </div>
                 <!-- End Kependudukan -->
-                <!-- Start Keluarga -->
+
+                {{-- <!-- Start Keluarga -->
                 <div class="max-w-2xl  mx-auto ">
                     <div class="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900 m-2">
                         <div class="flex justify-between mb-2">
@@ -154,6 +152,8 @@
                 <!-- End Keluarga -->
             </div>
             {{-- end left --}}
+
+
 
             {{-- start right --}}
             {{-- <div class="w-full">
@@ -195,7 +195,7 @@
             </p> --}}
         </div>
     </div>
-    </div> 
+    </div>
 
     <!-- End Lain-lain -->
     <!-- Start Alamat dan Kontak -->
