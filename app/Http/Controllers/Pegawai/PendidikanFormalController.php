@@ -44,6 +44,7 @@ class PendidikanFormalController extends Controller
             'ipk_kelulusan' => 'required',
 
             'jumlah_semester_tempuh' => 'required',
+            'nomor_ijazah' => 'required',
 
             
             'file_pendukung' => 'required',
@@ -59,7 +60,8 @@ class PendidikanFormalController extends Controller
             'nim' => $attrs['nim'],
             'jumlah_sks_kelulusan' => $attrs['jumlah_sks_kelulusan'],
             'ipk_kelulusan' => $attrs['ipk_kelulusan'],
-            // // 'file_pendukung' => $attrs['file_pendukung'],
+            'nomor_ijazah' => $attrs['nomor_ijazah'],
+            'file_pendukung' => $attrs['file_pendukung'],
             // // gaj wajib dibawah
             'gelar_akademik' => $request->gelar_akademik,
             'jumlah_semester_tempuh' => $request->jumlah_semester_tempuh,
