@@ -221,33 +221,8 @@ class ProfileController extends Controller
         }
 
         $user = Auth::user();
+        Kependudukan::where('user_id', Auth::user()->id)->update($attrs);
 
-        Kependudukan::create([
-            'user_id' => $user->id,
-            'nik' => $attrs['nik'],
-            'agama' => $attrs['agama'],
-            'kewarganegaraan' => $attrs['kewarganegaraan'],
-            'file_pendukung' => $imageName
-        ]);
-
-
-        
-        // $kedudukan = Kependudukan::where('user_id', $user->id)->first();
-        // $kedudukan->nik = $request->input('nik');
-        // $kedudukan->agama = $request->input('agama');
-        // $kedudukan->kewarganegaraan = $request->input('kewarganegaraan');
-        // if($request->file()){
-        //     if ($kedudukan->file_pendukung) {
-        //         $oldImage = public_path('document/file_pendukung/' . $kedudukan->file_pendukung);
-        //         if (file_exists($oldImage)) {
-        //             unlink($oldImage);
-        //         }
-        //     }
-        //     $imageName = time() . '.' . $request->file->extension();
-        //     $request->file->move(public_path('document/file_pendukung/'), $imageName);
-        //     $kedudukan->file_pendukung = $imageName;
-        // }
-        // $kedudukan->save();
         return redirect()
             ->route('profile.index')
             ->with('success', 'Kependudukan diperbarui atau dibuat jika tidak ada sebelumnya!');
