@@ -35,7 +35,7 @@ class ProfileController extends Controller
 
         $getUser = $user->toArray();
 
-        // $kependudukan = Kependudukan::where('user_id', $user->id)->first();
+        $kependudukan = Kependudukan::where('user_id', $user->id)->first();
 
         // dd($user->toArray());
 
@@ -105,7 +105,7 @@ class ProfileController extends Controller
 
         return view('pegawai.profile.index', [
             'user' => $user,
-        //     'kependudukan' => $kependudukan,
+            'kependudukan' => $kependudukan,
         //     'keluarga' => $keluarga,
         //     'kepegawaian' => $kepegawaian,
         //     'alamatdankontak' => $alamatdankontak,
@@ -154,8 +154,6 @@ class ProfileController extends Controller
                 $request->file->move(public_path('images/photo/'), $imageName);
             }
         }
-
-        // Tugas: Ini nanti diganti ke Update Tabel yang dari user
 
         User::where('id', Auth::user()->id)->update($attrs);
 
@@ -224,7 +222,7 @@ class ProfileController extends Controller
 
         $user = Auth::user();
 
-        RiwayatKependudukan::create([
+        Kependudukan::create([
             'user_id' => $user->id,
             'nik' => $attrs['nik'],
             'agama' => $attrs['agama'],
@@ -233,8 +231,7 @@ class ProfileController extends Controller
         ]);
 
 
-
-
+        
         // $kedudukan = Kependudukan::where('user_id', $user->id)->first();
         // $kedudukan->nik = $request->input('nik');
         // $kedudukan->agama = $request->input('agama');

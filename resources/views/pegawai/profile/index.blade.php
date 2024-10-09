@@ -27,29 +27,29 @@
                         </div>
 
                         {{-- SUDAH BERESSSSS --}}
-                        
-                            <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
-                                <p class="max-w-[200px] w-full">Nama</p>
-                                <P>: {{ $user["name"] }}</P>
-                            </div>
-                            <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
-                                <p class="max-w-[200px] w-full">NIP</p>
-                                <P>: {{ $user["nip"] }}</P>
-                            </div>
-                            <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
-                                <p class="max-w-[200px] w-full">Email</p>
-                                <P>: {{ $user["email"] }}</P>
-                            </div>
 
-                            <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
-                                <p class="max-w-[200px] w-full">Jenis Kelamin</p>
-                                <P>:
+                        <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
+                            <p class="max-w-[200px] w-full">Nama</p>
+                            <P>: {{ $user['name'] }}</P>
+                        </div>
+                        <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
+                            <p class="max-w-[200px] w-full">NIP</p>
+                            <P>: {{ $user['nip'] }}</P>
+                        </div>
+                        <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
+                            <p class="max-w-[200px] w-full">Email</p>
+                            <P>: {{ $user['email'] }}</P>
+                        </div>
 
-                                    @if ($user["jenis_kelamin"] == 'L')
-                                        Laki-laki
-                                    @else
-                                        Perempuan
-                                    @endif
+                        <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
+                            <p class="max-w-[200px] w-full">Jenis Kelamin</p>
+                            <P>:
+
+                                @if ($user['jenis_kelamin'] == 'L')
+                                    Laki-laki
+                                @else
+                                    Perempuan
+                                @endif
 
                             </P>
                         </div>
@@ -78,7 +78,8 @@
                     </div>
                 </div>
                 <!-- End Profile -->
-                {{-- <!-- Start Kependudukan -->
+                
+                <!-- Start Kependudukan -->
                 <div class="max-w-2xl  mx-auto ">
                     <div class="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900 m-2">
                         <div class="flex justify-between mb-2">
@@ -113,7 +114,8 @@
                     </div>
                 </div>
                 <!-- End Kependudukan -->
-                <!-- Start Keluarga -->
+
+                {{-- <!-- Start Keluarga -->
                 <div class="max-w-2xl  mx-auto ">
                     <div class="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900 m-2">
                         <div class="flex justify-between mb-2">
@@ -150,6 +152,8 @@
                 <!-- End Keluarga -->
             </div>
             {{-- end left --}}
+
+
 
             {{-- start right --}}
             {{-- <div class="w-full">
@@ -191,7 +195,7 @@
             </p> --}}
         </div>
     </div>
-    </div> 
+    </div>
 
     <!-- End Lain-lain -->
     <!-- Start Alamat dan Kontak -->
