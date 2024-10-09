@@ -92,7 +92,6 @@ class ProfileController extends Controller
         if ($pegawaiStruktural) {
             if ($pegawaiStruktural->jabatanStruktural) {
                 $jabatanStrukturalPegawai = $pegawaiStruktural->jabatanStruktural->name;
-
             }
         }
 
@@ -107,15 +106,15 @@ class ProfileController extends Controller
             'user' => $user,
             'kependudukan' => $kependudukan,
             'keluarga' => $keluarga,
-        //     'kepegawaian' => $kepegawaian,
-        //     'alamatdankontak' => $alamatdankontak,
-        //     'lainlain'=>$lainlain,
-        //     'pangkat'=>$pangkatgolongan,
-        //     'tandaTangan' => $tandaTangan,
-        //     'unitkerjaPegawai' => $unitkerjaPegawai,
-        //     'jabatanFungsionalPegawai' => $jabatanFungsionalPegawai,
-        //     'jabatanStrukturalPegawai' => $jabatanStrukturalPegawai,
-        //     'qrCodeTandaTangan' => $qrCodeTandaTangan
+            //     'kepegawaian' => $kepegawaian,
+            //     'alamatdankontak' => $alamatdankontak,
+            //     'lainlain'=>$lainlain,
+            //     'pangkat'=>$pangkatgolongan,
+            //     'tandaTangan' => $tandaTangan,
+            //     'unitkerjaPegawai' => $unitkerjaPegawai,
+            //     'jabatanFungsionalPegawai' => $jabatanFungsionalPegawai,
+            //     'jabatanStrukturalPegawai' => $jabatanStrukturalPegawai,
+            //     'qrCodeTandaTangan' => $qrCodeTandaTangan
         ]);
     }
 
@@ -161,7 +160,6 @@ class ProfileController extends Controller
         return redirect()
             ->route('profile.index')
             ->with('success', 'Profil berhasil diperbarui!');
-
     }
 
     public function editKedudukan()
@@ -228,7 +226,6 @@ class ProfileController extends Controller
         return redirect()
             ->route('profile.index')
             ->with('success', 'Kependudukan diperbarui atau dibuat jika tidak ada sebelumnya!');
-
     }
 
     public function editKeluarga()
@@ -247,51 +244,46 @@ class ProfileController extends Controller
         $attrs = $request->validate([
             'status_perkawinan' => 'required',
         ]);
+
         $user = Auth::user();
 
-        $keluarga = new RiwayatKeluarga;
+        // Cari data keluarga berdasarkan user_id
+        $keluarga = Keluarga::where('user_id', $user->id)->first();
+
+        // Jika data tidak ditemukan, buat entri baru, jika ditemukan, update
+        if (!$keluarga) {
+            $keluarga = new Keluarga;
+            $keluarga->user_id = $user->id;
+        }
+
+        // Jika status perkawinan tidak menikah, kosongkan nama pasangan dan pekerjaannya
         if ($attrs['status_perkawinan'] != 'menikah') {
-            $keluarga->nama_pasangan = "";
-            $keluarga->pekerjaan_pasangan = "";
+            $keluarga->nama_pasangan = null;
+            $keluarga->pekerjaan_pasangan = null;
         } else {
             $keluarga->nama_pasangan = $request->input('nama_pasangan');
             $keluarga->pekerjaan_pasangan = $request->input('pekerjaan_pasangan');
         }
-        $keluarga->status_perkawinan = $request->input('status_perkawinan');
-        if ($request->file()) {
-            $imageName = time() . '.' . $request->file->extension();
-            $request->file->move(public_path('document/file_pendukung/'), $imageName);
-            $keluarga->file_pendukung = $imageName;
+
+        // Update status perkawinan
+        $keluarga->status_perkawinan = $attrs['status_perkawinan'];
+
+        // Jika ada file yang diupload, update file pendukung
+        $imageName = '';
+
+        if ($request->hasFile('file_pendukung')) {
+            $imageName = time() . '.' . $request->file('file_pendukung')->getClientOriginalExtension();
+            $request->file('file_pendukung')->move(public_path('document/file_pendukung/'), $imageName);
+
+            $attrs['file_pendukung'] = $imageName;
         }
-        $keluarga->user_id = $user->id;
+
+        // Simpan perubahan (update atau insert jika entri baru)
         $keluarga->save();
-
-
-        // $keluarga = Keluarga::where('user_id', $user->id)->first();
-        // if( $attrs['status_perkawinan'] != 'menikah' ){
-        //     $keluarga->nama_pasangan = "";
-        //     $keluarga->pekerjaan_pasangan = "";
-        // }else{
-        //     $keluarga->nama_pasangan = $request->input('nama_pasangan');
-        //     $keluarga->pekerjaan_pasangan = $request->input('pekerjaan_pasangan');
-        // }
-        // $keluarga->status_perkawinan = $request->input('status_perkawinan');
-        // if($request->file()){
-        //     if ($keluarga->file_pendukung) {
-        //         $oldImage = public_path('document/file_pendukung/' . $keluarga->file_pendukung);
-        //         if (file_exists($oldImage)) {
-        //             unlink($oldImage);
-        //         }
-        //     }
-        //     $imageName = time() . '.' . $request->file->extension();
-        //     $request->file->move(public_path('document/file_pendukung/'), $imageName);
-        //     $keluarga->file_pendukung = $imageName;
-        // }
-        // $keluarga->update();
 
         return redirect()
             ->route('profile.index')
-            ->with('success', 'Kependudukan diperbarui atau dibuat jika tidak ada sebelumnya!');
+            ->with('success', 'Data keluarga berhasil diperbarui!');
     }
 
 
@@ -466,11 +458,5 @@ class ProfileController extends Controller
 
 
 
-    public function downloadFilePendukung($name)
-    {
-
-    }
-
-
-
+    public function downloadFilePendukung($name) {}
 }
