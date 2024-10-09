@@ -41,7 +41,7 @@ class ProfileController extends Controller
 
         // dd($kependudukan);
 
-        // $keluarga = Keluarga::where('user_id', $user->id)->first();
+        $keluarga = Keluarga::where('user_id', $user->id)->first();
 
         // dd($keluarga);
 
@@ -106,7 +106,7 @@ class ProfileController extends Controller
         return view('pegawai.profile.index', [
             'user' => $user,
             'kependudukan' => $kependudukan,
-        //     'keluarga' => $keluarga,
+            'keluarga' => $keluarga,
         //     'kepegawaian' => $kepegawaian,
         //     'alamatdankontak' => $alamatdankontak,
         //     'lainlain'=>$lainlain,
@@ -157,34 +157,6 @@ class ProfileController extends Controller
 
         User::where('id', Auth::user()->id)->update($attrs);
 
-        //!end
-
-
-        // $userid = Auth::user()->id;
-        // $user = User::find($userid);
-        // $user->nip = $attrs['nip'];
-        // $user->name = $attrs['name'];
-        // $user->email = $attrs['email'];
-        // $user->jenis_kelamin = $attrs['jk'];
-        // $user->tempat_lahir = $attrs['tempat_lahir'];
-        // $user->tanggal_lahir = $attrs['tanggal_lahir'];
-        // $user->nama_ibu = $attrs['nama_ibu'];
-        // if($request->file()){
-        //     if($request->file){
-        //         if ($user->photo) {
-        //             $oldImage = public_path('images/photo/' . $user->photo);
-        //             if (file_exists($oldImage)) {
-        //                 unlink($oldImage);
-        //             }
-        //         }
-
-        //         $imageName = time() . '.' . $request->file->extension();
-        //         $request->file->move(public_path('images/photo/'), $imageName);
-        //         $user->photo = $imageName;
-        //     }
-        // }
-
-        // $user->update();
 
         return redirect()
             ->route('profile.index')

@@ -45,7 +45,7 @@
                             <p class="max-w-[200px] w-full">Jenis Kelamin</p>
                             <P>:
 
-                                @if ($user['jenis_kelamin'] == 'L')
+                                @if ($user['jenis_kelamin'] == 'l')
                                     Laki-laki
                                 @else
                                     Perempuan
@@ -115,7 +115,7 @@
                 </div>
                 <!-- End Kependudukan -->
 
-                {{-- <!-- Start Keluarga -->
+                <!-- Start Keluarga -->
                 <div class="max-w-2xl  mx-auto ">
                     <div class="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900 m-2">
                         <div class="flex justify-between mb-2">
@@ -148,7 +148,7 @@
                             @endif
                         </div>
                     </div>
-                </div> --}}
+                </div>
                 <!-- End Keluarga -->
             </div>
             {{-- end left --}}
