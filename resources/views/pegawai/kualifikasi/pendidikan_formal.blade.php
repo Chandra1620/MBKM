@@ -4,13 +4,13 @@
     <div class="container">
         <div>
             <p class="pb-1 font-bold">Riwayat Pendidikan Formal</p>
-            <div class="text-left">
+            <div class="text-right">
                 <button type="button"
                     class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
                     data-hs-overlay="#hs-modal-signup">
                     Buat
                 </button>
-            </div>
+            </div>            
 
             <div id="hs-modal-signup"
                 class="hs-overlay hidden w-full h-full fixed top-0 left-0 z-[60] overflow-x-hidden overflow-y-auto">
