@@ -146,12 +146,14 @@ class ProfileController extends Controller
 
 
         //!start
+
         $imageName = '';
-        if ($request->file()) {
-            if ($request->file) {
-                $imageName = time() . '.' . $request->file->extension();
-                $request->file->move(public_path('images/photo/'), $imageName);
-            }
+
+        if ($request->file("photo")) {
+            $imageName = time() . '.' . $request->file('photo')->getClientOriginalExtension();
+            $request->file('photo')->move(public_path('images/photo/'), $imageName);
+
+            $attrs['photo'] = $imageName;
         }
 
         User::where('id', Auth::user()->id)->update($attrs);
@@ -458,5 +460,7 @@ class ProfileController extends Controller
 
 
 
-    public function downloadFilePendukung($name) {}
+    public function downloadFilePendukung($name)
+    {
+    }
 }

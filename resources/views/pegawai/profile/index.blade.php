@@ -21,7 +21,7 @@
                         <div
                             class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex justify-center">
                             <div class="w-[100px]">
-                                {{-- <img src="{{ asset('images/photo/' . $user->photo) }}" alt="img"> --}}
+                                <img src="{{ asset('images/photo/' . $user->photo) }}" alt="img">
                             </div>
 
                         </div>
@@ -67,8 +67,8 @@
                         </div>
                         <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
                             <p class="max-w-[200px] w-full">File Pendukung</p>
-                            @if ($user->file_pendukung)
-                                <a href="{{ url('document/file_pendukung/' . $user->file_pendukung) }}">Lihat
+                            @if ($user["photo"])
+                                <a href="{{ url('images/photo/' . $user["photo"]) }}">Lihat
                                     file</a>
                             @else
                                 : -
