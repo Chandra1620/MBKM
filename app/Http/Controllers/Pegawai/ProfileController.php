@@ -243,9 +243,12 @@ class ProfileController extends Controller
 
     public function updateKeluarga(Request $request)
     {
+
         $attrs = $request->validate([
             'status_perkawinan' => 'required',
+            'file' => 'nullable'
         ]);
+
 
         $user = Auth::user();
 
@@ -273,12 +276,14 @@ class ProfileController extends Controller
         // Jika ada file yang diupload, update file pendukung
         $imageName = '';
 
-        if ($request->hasFile('file_pendukung')) {
-            $imageName = time() . '.' . $request->file('file_pendukung')->getClientOriginalExtension();
-            $request->file('file_pendukung')->move(public_path('document/file_pendukung/'), $imageName);
+        if ($request->hasFile('file')) {
+            $imageName = time() . '.' . $request->file('file')->getClientOriginalExtension();
+            $request->file('file')->move(public_path('document/file_pendukung/'), $imageName);
 
-            $attrs['file_pendukung'] = $imageName;
+            $attrs['file'] = $imageName;
         }
+
+        $keluarga->file_pendukung = $attrs["file"];
 
         // Simpan perubahan (update atau insert jika entri baru)
         $keluarga->save();
