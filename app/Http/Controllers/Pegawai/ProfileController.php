@@ -45,11 +45,11 @@ class ProfileController extends Controller
 
         // dd($keluarga);
 
-        // $kepegawaian = Kepegawaian::where('user_id', $user->id)->first();
+        $kepegawaian = Kepegawaian::where('user_id', $user->id)->first();
 
         // dd($kepegawaian);
 
-        // $alamatdankontak = AlamatdanKontak::where('user_id', $user->id)->first();
+        $alamatdankontak = AlamatdanKontak::where('user_id', $user->id)->first();
 
         // dd($alamatdankontak);
 
@@ -57,7 +57,7 @@ class ProfileController extends Controller
 
         // dd($lainlain);
 
-        // $pangkatgolongan = pangkat_golongan::where('user_id', $user->id)->latest()->first();
+        $pangkatgolongan = pangkat_golongan::where('user_id', $user->id)->latest()->first();
 
         // dd($pangkatgolongan);
 
@@ -106,18 +106,20 @@ class ProfileController extends Controller
             'user' => $user,
             'kependudukan' => $kependudukan,
             'keluarga' => $keluarga,
-            //     'kepegawaian' => $kepegawaian,
-            //     'alamatdankontak' => $alamatdankontak,
-            //     'lainlain'=>$lainlain,
-            //     'pangkat'=>$pangkatgolongan,
+            'kepegawaian' => $kepegawaian,
+            'alamatdankontak' => $alamatdankontak,
+            // 'lainlain'=>$lainlain,
+            'pangkat'=>$pangkatgolongan,
             //     'tandaTangan' => $tandaTangan,
-            //     'unitkerjaPegawai' => $unitkerjaPegawai,
-            //     'jabatanFungsionalPegawai' => $jabatanFungsionalPegawai,
-            //     'jabatanStrukturalPegawai' => $jabatanStrukturalPegawai,
+            'unitkerjaPegawai' => $unitkerjaPegawai,
+            'jabatanFungsionalPegawai' => $jabatanFungsionalPegawai,
+            'jabatanStrukturalPegawai' => $jabatanStrukturalPegawai,
             //     'qrCodeTandaTangan' => $qrCodeTandaTangan
         ]);
     }
 
+
+    // PROFILE
     public function editProfile(Request $request)
     {
         $user = Auth::user();
@@ -161,7 +163,10 @@ class ProfileController extends Controller
             ->route('profile.index')
             ->with('success', 'Profil berhasil diperbarui!');
     }
+    // END PROFILE
 
+
+    // KEDUDUKAN
     public function editKedudukan()
     {
         $user = Auth::user();
@@ -199,7 +204,10 @@ class ProfileController extends Controller
             ->route('profile.index')
             ->with('success', 'Kependudukan diperbarui atau dibuat jika tidak ada sebelumnya!');
     }
+    // END KEDUDUKAN
 
+
+    // KEPEGAWAIAN
     public function editKepegawaian()
     {
 
@@ -227,7 +235,10 @@ class ProfileController extends Controller
             ->route('profile.index')
             ->with('success', 'Kependudukan diperbarui atau dibuat jika tidak ada sebelumnya!');
     }
+    // END KEPEGAWAIAN
 
+
+    // KELUARGA
     public function editKeluarga()
     {
 
@@ -285,8 +296,10 @@ class ProfileController extends Controller
             ->route('profile.index')
             ->with('success', 'Data keluarga berhasil diperbarui!');
     }
+    // END KELUARGA
 
 
+    // ALAMAT DAN KONTAK
     public function editAlamatkontak()
     {
 
@@ -335,8 +348,10 @@ class ProfileController extends Controller
             ->route('profile.index')
             ->with('success', 'Kependudukan diperbarui atau dibuat jika tidak ada sebelumnya!');
     }
+    // END ALAMAT KONTAK
 
 
+    // LAIN-LAIN
     public function editLainlain()
     {
 
@@ -389,7 +404,10 @@ class ProfileController extends Controller
             ->route('profile.index')
             ->with('success', 'Kependudukan diperbarui atau dibuat jika tidak ada sebelumnya!');
     }
+    // END LAIN-LAIN
 
+
+    // TTD
     public function editTandaTangan()
     {
 
@@ -455,6 +473,7 @@ class ProfileController extends Controller
 
         return redirect()->route('profile.index')->with('success', 'Profile image updated successfully');
     }
+    // END TTD
 
 
 

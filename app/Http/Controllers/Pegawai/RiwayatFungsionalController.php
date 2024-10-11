@@ -22,7 +22,6 @@ class RiwayatFungsionalController extends Controller
 
     public function create()
     {
-
         $riwayat_fungsional = RiwayatFungsional::all();
         $unitKerja = UnitKerja::with('jabatanfungsional')->get();
 

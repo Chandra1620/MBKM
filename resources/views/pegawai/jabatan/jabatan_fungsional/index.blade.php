@@ -38,24 +38,23 @@
                                     <tr>
 
                                         <th scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Jabatan Fungsional
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Jabatan
+                                            Fungsional
                                         </th>
-
                                         <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Unit Kerja
-                                    </th>
-
-
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Unit
+                                            Kerja
+                                        </th>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nomor SK
-                                        </th> 
-
+                                        </th>
                                         <th scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Terhitung Mulai Tanggal </th>
-
-                                        
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                            Terhitung Mulai Tanggal 
+                                        </th>
                                         <th scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">File</th>
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">File
+                                        </th>
 
                                         <th scope="col"
                                             class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Aksi
@@ -67,75 +66,79 @@
                                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
 
                                     @foreach ($riwayat_fungsional as $fungsional)
-                                    <tr>
+                                        <tr>
+                                            <td
+                                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                                                {{ $fungsional->jabatanfungsional->name }}
+                                            </td>
+                                            <td
+                                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                                                {{ $fungsional->jabatanfungsional->unitkerja->name }}
+                                            </td>
+                                            <td
+                                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                                                {{ $fungsional->nomor_sk }}
+                                            </td>
+                                            <td
+                                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                                                {{ $fungsional->tanggal_mulai }}
+                                            </td>
+                                            <td>
+                                                <div
+                                                    class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
+                                                    @if ($fungsional->dokumen_pendukung)
+                                                        <a
+                                                            href="{{ url('document/riwayat_fungsional/' . $fungsional->dokumen_pendukung) }}">Lihat
+                                                            file</a>
+                                                    @else
+                                                        : -
+                                                    @endif
+                                                </div>
+                                            </td>
 
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                            {{ $fungsional->jabatanfungsional->name}}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                            {{ $fungsional->jabatanfungsional->unitkerja->name}}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                            {{ $fungsional->nomor_sk}}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                            {{ $fungsional->tanggal_mulai}}
-                                        </td>
-                                        <td >
-                                            <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
-                                               
-                                                @if ($fungsional->dokumen_pendukung)
-                                                    <a href="{{ url('document/riwayat_fungsional/' . $fungsional->dokumen_pendukung) }}">Lihat
-                                                        file</a>
-                                                @else
-                                                    : -
-                                                @endif
-                                            </div>
-                                        </td>
-                                    
 
-                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium ">
-                                            <div class="flex justify-end">
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium ">
+                                                <div class="flex justify-end">
 
-                                                {{-- <a href="{{ route('sertifikasi.edit', ['id' => $sertif->id]) }}"> --}}
-                                                {{-- <button type="button"
+                                                    {{-- <a href="{{ route('sertifikasi.edit', ['id' => $sertif->id]) }}"> --}}
+                                                    {{-- <button type="button"
                                                     class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-yellow-200 font-semibold text-yellow-500 hover:text-white hover:bg-yellow-500 hover:border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
                                                     Update
                                                 </button>
                                                 </a> --}}
 
 
-                                                 {{-- <a href="{{ route('jabatan-fungsional.lihatDokumen', ['id' => $fungsional->id]) }}"> 
+                                                    {{-- <a href="{{ route('jabatan-fungsional.lihatDokumen', ['id' => $fungsional->id]) }}"> 
                                                 <button type="button" target="_blank"
                                                     class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-yellow-200 font-semibold text-yellow-500 hover:text-white hover:bg-yellow-500 hover:border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
                                                     Lihat Dokumen
                                                 </button>
                                                 </a> --}}
-                                              
-                                                {{-- <a href="{{ route('jabatan-fungsional.lihatDokumen', ['id' => $fungsional->id]) }}" target="_blank">
+
+                                                    {{-- <a href="{{ route('jabatan-fungsional.lihatDokumen', ['id' => $fungsional->id]) }}" target="_blank">
                                                     <button type="button"
                                                         class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-yellow-200 font-semibold text-yellow-500 hover:text-white hover:bg-yellow-500 hover:border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
                                                         Lihat Dokumen
                                                     </button>
                                                 </a> --}}
-                                                
-
-                                                <form action="{{ route('riwayat-fungsional.delete', ['id' => $fungsional->id]) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit"
-                                                    class="ml-2 py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-red-200 font-semibold text-red-500 hover:text-white hover:bg-red-500 hover:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
-                                                    Hapus
-                                                    </button>
-                                                </form>
-
-                                            </div>
 
 
+                                                    <form
+                                                        action="{{ route('riwayat-fungsional.delete', ['id' => $fungsional->id]) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="ml-2 py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-red-200 font-semibold text-red-500 hover:text-white hover:bg-red-500 hover:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+                                                            Hapus
+                                                        </button>
+                                                    </form>
+                                                </div>
 
-                                        </td>
-                                    </tr>
 
+
+                                            </td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>

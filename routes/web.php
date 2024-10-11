@@ -459,8 +459,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/profile/edit-kedudukan', [ProfileController::class, 'editKedudukan'])->name('edit-kedudukan');
         Route::put('/profile/update-kedudukan', [ProfileController::class, 'updateKedudukan'])->name('update-kedudukan');
 
-        // Route::get('/profile/edit-kepegawaian', [ProfileController::class, 'editKepegawaian'])->name('edit-kepegawaian');
-        // Route::put('/profile/update-kepegawaian', [ProfileController::class, 'updateKepegawaian'])->name('update-kepegawaian');
+        Route::get('/profile/edit-kepegawaian', [ProfileController::class, 'editKepegawaian'])->name('edit-kepegawaian');
+        Route::put('/profile/update-kepegawaian', [ProfileController::class, 'updateKepegawaian'])->name('update-kepegawaian');
 
         Route::get('/profile/edit-keluarga', [ProfileController::class, 'editKeluarga'])->name('edit-keluarga');
         Route::put('/profile/update-keluarga', [ProfileController::class, 'updateKeluarga'])->name('update-keluarga');
