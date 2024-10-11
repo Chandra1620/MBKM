@@ -235,6 +235,8 @@ class ProfileController extends Controller
             ->route('profile.index')
             ->with('success', 'Kependudukan diperbarui atau dibuat jika tidak ada sebelumnya!');
     }
+
+    
     // END KEPEGAWAIAN
 
 
