@@ -164,8 +164,8 @@
                             <h1 class="text-xl md:text-3xl font-bold text-gray-800 dark:text-gray-200">
                                 Kepegawaian
                             </h1>
-                            {{-- <a href="{{ route('edit-kepegawaian') }}"> --}}
-                            <a href="{{ route('riwayat-fungsional.create') }}">
+                            <a href="{{ route('edit-kepegawaian') }}">
+                            {{-- <a href="{{ route('riwayat-fungsional.create') }}"> --}}
                                 <img src="{{ asset('assets/icon/update.png') }}" alt="icon" width="30">
                             </a>
                         </div>

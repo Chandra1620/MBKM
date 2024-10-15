@@ -34,5 +34,4 @@ class PerizinanCuti extends Model
     public function perizinanCutiHasPegawaiStruktural(){
         // return $this->belongsTo(JenisCuti::class,'user_id');
     }
-    
 }

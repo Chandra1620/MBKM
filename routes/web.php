@@ -1,4 +1,4 @@
- <?php
+<?php
 
 use App\Http\Controllers\Admin\MengelolaRolePermissionController;
 use App\Http\Controllers\AdminKepegawaian\AdminPangkatGolonganController;
@@ -200,6 +200,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['permission:mangelola-validasi-perizinan'])->group(function () {
         Route::get('/management-perizinan', [ManagementPerizinanAdminController::class, 'index'])->name('management-perizinan.index');
         Route::post('/management-perizinan/{id}/verifikasi', [ManagementPerizinanAdminController::class, 'verifikasi'])->name('management-perizinan.verifikasi');
+        Route::delete('/management-perizinan/{id}/denied', [ManagementPerizinanAdminController::class, 'ditolak'])->name('management-perizinan.ditolak');
     });
 
     Route::middleware(['checkUserRole:admin-pegawai'])->group(function () {
