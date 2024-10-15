@@ -26,7 +26,6 @@
                         </label>
 
                         <div class="mt-2 space-y-3">
-                           
                             <input name="jabatan_fungsional" type="text"
                             value="{{ $kepegawaian->jabatan_fungsional }}"
                             class="py-2 px-3 pr-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
@@ -39,7 +38,6 @@
                             value="{{ $kepegawaian->jabatan_struktural }}"
                                 class="py-2 px-3 pr-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
                                 placeholder="Jabatan Struktural">
-                          
                         </div>
                     </div>
 
@@ -55,7 +53,6 @@
                     </div>
 
                 </form>
-
 
             </div>
             <!-- End Card -->

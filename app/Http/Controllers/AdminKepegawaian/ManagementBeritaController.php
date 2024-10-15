@@ -55,7 +55,7 @@ class ManagementBeritaController extends Controller
             dd('Gagal Menemukan Berita');
         }
 
-            return view ('admin.kepegawaian.berita.edit', compact('berita'));
+            return view('admin.kepegawaian.berita.edit', compact('berita'));
     }
 
     public function update(Request $request,$id){
@@ -66,10 +66,12 @@ class ManagementBeritaController extends Controller
         }
         $attrs = $request->validate([
             'judul' => 'required',
-            'isi' => 'required'
+            'isi' => 'required',
+            'file' => 'required',
         ]);
+
         $fileDocumentName = $berita->gambar; // Inisialisasi nama file gambar dari data yang ada
-    
+
         if ($request->hasFile('file')) {
             // Jika ada gambar baru yang diupload, simpan gambar baru
             $fileDocumentName = time() . '.' . $request->file('file')->extension();
@@ -80,6 +82,7 @@ class ManagementBeritaController extends Controller
                 unlink(public_path('berita/' . $berita->gambar));
             }
         }
+
         $berita->update([
             'judul' => $attrs['judul'],
             'isi' => $attrs['isi'],

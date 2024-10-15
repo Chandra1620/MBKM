@@ -122,6 +122,7 @@ class PerizinanController extends Controller
             'jenis_cuti' => 'required|exists:jenis_cutis,id', // Pastikan jenis_cuti adalah ID yang valid
             'tgl_mulai' => 'required',
             'tgl_selesai' => 'required',
+            'no_telp_bisa_dihubungi' => 'required'
         ]);
         $year = now()->year; // Mengambil tahun saat ini
         $totalRiwayatCuti = PerizinanCuti::where('user_id', $user->id)
@@ -142,6 +143,7 @@ class PerizinanController extends Controller
         $perizinanCuti->jenis_cuti_id = $attrs['jenis_cuti'];
         $perizinanCuti->tgl_mulai = $attrs['tgl_mulai'];
         $perizinanCuti->tgl_selesai = $attrs['tgl_selesai'];
+        $perizinanCuti->no_telp_bisa_dihubungi = $attrs['no_telp_bisa_dihubungi'];
 
         $perizinanCuti->save();
 

@@ -1,4 +1,4 @@
- <?php
+<?php
 
 use App\Http\Controllers\Admin\MengelolaRolePermissionController;
 use App\Http\Controllers\AdminKepegawaian\AdminPangkatGolonganController;
@@ -200,6 +200,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['permission:mangelola-validasi-perizinan'])->group(function () {
         Route::get('/management-perizinan', [ManagementPerizinanAdminController::class, 'index'])->name('management-perizinan.index');
         Route::post('/management-perizinan/{id}/verifikasi', [ManagementPerizinanAdminController::class, 'verifikasi'])->name('management-perizinan.verifikasi');
+        Route::delete('/management-perizinan/{id}/denied', [ManagementPerizinanAdminController::class, 'ditolak'])->name('management-perizinan.ditolak');
     });
 
     Route::middleware(['checkUserRole:admin-pegawai'])->group(function () {
@@ -366,7 +367,7 @@ Route::middleware('auth')->group(function () {
     //? belum ada permission yg bener
 
 
-    Route::middleware(['checkUserRole:atasan-langsung,admin-pegawai,pegawai,wadir,direktur'])->group(function () {
+    Route::middleware(['checkUserRole:atasan-langsung,admin-pegawai,pegawai,wadir,direktur,admin'])->group(function () {
 
 
         Route::get('/pangkat-golongan', [PangkatGolonganController::class, 'index'])->name('pangkat-golongan.index');
@@ -461,8 +462,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/profile/edit-kedudukan', [ProfileController::class, 'editKedudukan'])->name('edit-kedudukan');
         Route::put('/profile/update-kedudukan', [ProfileController::class, 'updateKedudukan'])->name('update-kedudukan');
 
-        // Route::get('/profile/edit-kepegawaian', [ProfileController::class, 'editKepegawaian'])->name('edit-kepegawaian');
-        // Route::put('/profile/update-kepegawaian', [ProfileController::class, 'updateKepegawaian'])->name('update-kepegawaian');
+        Route::get('/profile/edit-kepegawaian', [ProfileController::class, 'editKepegawaian'])->name('edit-kepegawaian');
+        Route::put('/profile/update-kepegawaian', [ProfileController::class, 'updateKepegawaian'])->name('update-kepegawaian');
 
         Route::get('/profile/edit-keluarga', [ProfileController::class, 'editKeluarga'])->name('edit-keluarga');
         Route::put('/profile/update-keluarga', [ProfileController::class, 'updateKeluarga'])->name('update-keluarga');

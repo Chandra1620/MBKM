@@ -41,15 +41,15 @@ class ProfileController extends Controller
 
         // dd($kependudukan);
 
-        // $keluarga = Keluarga::where('user_id', $user->id)->first();
+        $keluarga = Keluarga::where('user_id', $user->id)->first();
 
         // dd($keluarga);
 
-        // $kepegawaian = Kepegawaian::where('user_id', $user->id)->first();
+        $kepegawaian = Kepegawaian::where('user_id', $user->id)->first();
 
         // dd($kepegawaian);
 
-        // $alamatdankontak = AlamatdanKontak::where('user_id', $user->id)->first();
+        $alamatdankontak = AlamatdanKontak::where('user_id', $user->id)->first();
 
         // dd($alamatdankontak);
 
@@ -57,15 +57,15 @@ class ProfileController extends Controller
 
         // dd($lainlain);
 
-        // $pangkatgolongan = pangkat_golongan::where('user_id', $user->id)->latest()->first();
+        $pangkatgolongan = pangkat_golongan::where('user_id', $user->id)->latest()->first();
 
         // dd($pangkatgolongan);
 
         // $tandaTangan = TandaTangan::where('user_id', $user->id)->first();
 
-        $pegawaiFungsional = PegawaiFungsional::with('unit_kerja_has_jabatan_fungsional.unitkerja')->where('user_id',$user->id)->first();
-        $pegawaiStruktural = PegawaiHasStruktural::with('jabatanStruktural')->where('users_id',$user->id)->first();
-    //    dd($pegawaiStruktural);
+        $pegawaiFungsional = PegawaiFungsional::with('unit_kerja_has_jabatan_fungsional.unitkerja')->where('user_id', $user->id)->first();
+        $pegawaiStruktural = PegawaiHasStruktural::with('jabatanStruktural')->where('users_id', $user->id)->first();
+        //    dd($pegawaiStruktural);
 
         // if($tandaTangan->link){
         //     $qrCodeTandaTangan = base64_encode(
@@ -85,14 +85,13 @@ class ProfileController extends Controller
         $unitkerjaPegawai = "";
         $jabatanFungsionalPegawai = "";
         $jabatanStrukturalPegawai = "";
-        if($pegawaiFungsional){
+        if ($pegawaiFungsional) {
             $unitkerjaPegawai = $pegawaiFungsional->unit_kerja_has_jabatan_fungsional->unitkerja->name;
             $jabatanFungsionalPegawai = $pegawaiFungsional->unit_kerja_has_jabatan_fungsional->name;
         }
-        if($pegawaiStruktural){
-            if($pegawaiStruktural->jabatanStruktural){
+        if ($pegawaiStruktural) {
+            if ($pegawaiStruktural->jabatanStruktural) {
                 $jabatanStrukturalPegawai = $pegawaiStruktural->jabatanStruktural->name;
-
             }
         }
 
@@ -106,19 +105,21 @@ class ProfileController extends Controller
         return view('pegawai.profile.index', [
             'user' => $user,
             'kependudukan' => $kependudukan,
-        //     'keluarga' => $keluarga,
-        //     'kepegawaian' => $kepegawaian,
-        //     'alamatdankontak' => $alamatdankontak,
-        //     'lainlain'=>$lainlain,
-        //     'pangkat'=>$pangkatgolongan,
-        //     'tandaTangan' => $tandaTangan,
-        //     'unitkerjaPegawai' => $unitkerjaPegawai,
-        //     'jabatanFungsionalPegawai' => $jabatanFungsionalPegawai,
-        //     'jabatanStrukturalPegawai' => $jabatanStrukturalPegawai,
-        //     'qrCodeTandaTangan' => $qrCodeTandaTangan
+            'keluarga' => $keluarga,
+            'kepegawaian' => $kepegawaian,
+            'alamatdankontak' => $alamatdankontak,
+            // 'lainlain'=>$lainlain,
+            'pangkat'=>$pangkatgolongan,
+            //     'tandaTangan' => $tandaTangan,
+            'unitkerjaPegawai' => $unitkerjaPegawai,
+            'jabatanFungsionalPegawai' => $jabatanFungsionalPegawai,
+            'jabatanStrukturalPegawai' => $jabatanStrukturalPegawai,
+            //     'qrCodeTandaTangan' => $qrCodeTandaTangan
         ]);
     }
 
+
+    // PROFILE
     public function editProfile(Request $request)
     {
         $user = Auth::user();
@@ -132,7 +133,7 @@ class ProfileController extends Controller
     {
         // dd($request->file_pendukung);
         // dd($request->all());
-        
+
         $attrs = $request->validate([
             'name' => 'required',
             'nip' => 'required',
@@ -147,51 +148,27 @@ class ProfileController extends Controller
 
 
         //!start
+
         $imageName = '';
-        if ($request->file()) {
-            if ($request->file) {
-                $imageName = time() . '.' . $request->file->extension();
-                $request->file->move(public_path('images/photo/'), $imageName);
-            }
+
+        if ($request->file("photo")) {
+            $imageName = time() . '.' . $request->file('photo')->getClientOriginalExtension();
+            $request->file('photo')->move(public_path('images/photo/'), $imageName);
+
+            $attrs['photo'] = $imageName;
         }
 
         User::where('id', Auth::user()->id)->update($attrs);
 
-        //!end
-
-
-        // $userid = Auth::user()->id;
-        // $user = User::find($userid);
-        // $user->nip = $attrs['nip'];
-        // $user->name = $attrs['name'];
-        // $user->email = $attrs['email'];
-        // $user->jenis_kelamin = $attrs['jk'];
-        // $user->tempat_lahir = $attrs['tempat_lahir'];
-        // $user->tanggal_lahir = $attrs['tanggal_lahir'];
-        // $user->nama_ibu = $attrs['nama_ibu'];
-        // if($request->file()){
-        //     if($request->file){
-        //         if ($user->photo) {
-        //             $oldImage = public_path('images/photo/' . $user->photo);
-        //             if (file_exists($oldImage)) {
-        //                 unlink($oldImage);
-        //             }
-        //         }
-
-        //         $imageName = time() . '.' . $request->file->extension();
-        //         $request->file->move(public_path('images/photo/'), $imageName);
-        //         $user->photo = $imageName;
-        //     }
-        // }
-
-        // $user->update();
 
         return redirect()
             ->route('profile.index')
             ->with('success', 'Profil berhasil diperbarui!');
-        
     }
+    // END PROFILE
 
+
+    // KEDUDUKAN
     public function editKedudukan()
     {
         $user = Auth::user();
@@ -209,15 +186,17 @@ class ProfileController extends Controller
             'nik' => 'required',
             'agama' => 'required',
             'kewarganegaraan' => 'required',
-            'file' => 'max:2048'
+            'file_pendukung' => 'max:2048'
         ]);
 
 
         $imageName = '';
 
-        if ($request->file()) {
-            $imageName = time() . '.' . $request->file->extension();
-            $request->file->move(public_path('document/file_pendukung/'), $imageName);
+        if ($request->hasFile('file_pendukung')) {
+            $imageName = time() . '.' . $request->file('file_pendukung')->getClientOriginalExtension();
+            $request->file('file_pendukung')->move(public_path('document/file_pendukung/'), $imageName);
+
+            $attrs['file_pendukung'] = $imageName;
         }
 
         $user = Auth::user();
@@ -227,7 +206,10 @@ class ProfileController extends Controller
             ->route('profile.index')
             ->with('success', 'Kependudukan diperbarui atau dibuat jika tidak ada sebelumnya!');
     }
+    // END KEDUDUKAN
 
+
+    // KEPEGAWAIAN
     public function editKepegawaian()
     {
 
@@ -254,9 +236,13 @@ class ProfileController extends Controller
         return redirect()
             ->route('profile.index')
             ->with('success', 'Kependudukan diperbarui atau dibuat jika tidak ada sebelumnya!');
-
     }
 
+    
+    // END KEPEGAWAIAN
+
+
+    // KELUARGA
     public function editKeluarga()
     {
 
@@ -270,57 +256,59 @@ class ProfileController extends Controller
 
     public function updateKeluarga(Request $request)
     {
+
         $attrs = $request->validate([
             'status_perkawinan' => 'required',
+            'file' => 'nullable'
         ]);
+
+
         $user = Auth::user();
 
-        $keluarga = new RiwayatKeluarga;
+        // Cari data keluarga berdasarkan user_id
+        $keluarga = Keluarga::where('user_id', $user->id)->first();
+
+        // Jika data tidak ditemukan, buat entri baru, jika ditemukan, update
+        if (!$keluarga) {
+            $keluarga = new Keluarga;
+            $keluarga->user_id = $user->id;
+        }
+
+        // Jika status perkawinan tidak menikah, kosongkan nama pasangan dan pekerjaannya
         if ($attrs['status_perkawinan'] != 'menikah') {
-            $keluarga->nama_pasangan = "";
-            $keluarga->pekerjaan_pasangan = "";
+            $keluarga->nama_pasangan = null;
+            $keluarga->pekerjaan_pasangan = null;
         } else {
             $keluarga->nama_pasangan = $request->input('nama_pasangan');
             $keluarga->pekerjaan_pasangan = $request->input('pekerjaan_pasangan');
         }
-        $keluarga->status_perkawinan = $request->input('status_perkawinan');
-        if ($request->file()) {
-            $imageName = time() . '.' . $request->file->extension();
-            $request->file->move(public_path('document/file_pendukung/'), $imageName);
-            $keluarga->file_pendukung = $imageName;
+
+        // Update status perkawinan
+        $keluarga->status_perkawinan = $attrs['status_perkawinan'];
+
+        // Jika ada file yang diupload, update file pendukung
+        $imageName = '';
+
+        if ($request->hasFile('file')) {
+            $imageName = time() . '.' . $request->file('file')->getClientOriginalExtension();
+            $request->file('file')->move(public_path('document/file_pendukung/'), $imageName);
+
+            $attrs['file'] = $imageName;
         }
-        $keluarga->user_id = $user->id;
+
+        $keluarga->file_pendukung = $attrs["file"];
+
+        // Simpan perubahan (update atau insert jika entri baru)
         $keluarga->save();
-
-
-        // $keluarga = Keluarga::where('user_id', $user->id)->first();
-        // if( $attrs['status_perkawinan'] != 'menikah' ){
-        //     $keluarga->nama_pasangan = "";
-        //     $keluarga->pekerjaan_pasangan = "";
-        // }else{
-        //     $keluarga->nama_pasangan = $request->input('nama_pasangan');
-        //     $keluarga->pekerjaan_pasangan = $request->input('pekerjaan_pasangan');
-        // }
-        // $keluarga->status_perkawinan = $request->input('status_perkawinan');
-        // if($request->file()){
-        //     if ($keluarga->file_pendukung) {
-        //         $oldImage = public_path('document/file_pendukung/' . $keluarga->file_pendukung);
-        //         if (file_exists($oldImage)) {
-        //             unlink($oldImage);
-        //         }
-        //     }
-        //     $imageName = time() . '.' . $request->file->extension();
-        //     $request->file->move(public_path('document/file_pendukung/'), $imageName);
-        //     $keluarga->file_pendukung = $imageName;
-        // }
-        // $keluarga->update();
 
         return redirect()
             ->route('profile.index')
-            ->with('success', 'Kependudukan diperbarui atau dibuat jika tidak ada sebelumnya!');
+            ->with('success', 'Data keluarga berhasil diperbarui!');
     }
+    // END KELUARGA
 
 
+    // ALAMAT DAN KONTAK
     public function editAlamatkontak()
     {
 
@@ -369,8 +357,10 @@ class ProfileController extends Controller
             ->route('profile.index')
             ->with('success', 'Kependudukan diperbarui atau dibuat jika tidak ada sebelumnya!');
     }
+    // END ALAMAT KONTAK
 
 
+    // LAIN-LAIN
     public function editLainlain()
     {
 
@@ -423,7 +413,10 @@ class ProfileController extends Controller
             ->route('profile.index')
             ->with('success', 'Kependudukan diperbarui atau dibuat jika tidak ada sebelumnya!');
     }
+    // END LAIN-LAIN
 
+
+    // TTD
     public function editTandaTangan()
     {
 
@@ -489,14 +482,11 @@ class ProfileController extends Controller
 
         return redirect()->route('profile.index')->with('success', 'Profile image updated successfully');
     }
+    // END TTD
 
 
 
     public function downloadFilePendukung($name)
     {
-
     }
-
-
-
 }

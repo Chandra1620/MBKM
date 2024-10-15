@@ -14,7 +14,7 @@
                     </p>
                 </div>
 
-                <form method="POST" action="{{ route('news.update', ['id' => $berita->id     ]) }}">
+                <form method="POST" action="{{ route('news.update', ['id' => $berita->id]) }}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
