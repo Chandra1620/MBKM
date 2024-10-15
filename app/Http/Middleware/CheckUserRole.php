@@ -18,10 +18,10 @@ class CheckUserRole
     {
         $user = Auth::user();
 
-        if($user && in_array($user->role, $roles)){
+        if ($user && in_array($user->role, $roles)) {
             return $next($request);
         }
+
         abort(403, 'Akses Dilarang');
-        // return $next($request);
     }
 }

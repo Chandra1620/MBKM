@@ -404,14 +404,16 @@ Route::middleware('auth')->group(function () {
 
 
         Route::get('/pendidikan-formal', [PendidikanFormalController::class, 'index'])->name('pendidikanformal.index');
+        Route::post('/pendidikan-formal', [PendidikanFormalController::class, 'store'])->name('pendidikanformal.store');
         Route::get('/pendidikan-formal/{id}/edit', [PendidikanFormalController::class, 'edit'])->name('pendidikanformal.edit');
         Route::put('/pendidikan-formal/{id}/update', [PendidikanFormalController::class, 'update'])->name('pendidikanformal.update');
-        Route::post('/pendidikan-formal', [PendidikanFormalController::class, 'store'])->name('pendidikanformal.store');
+        Route::get('/pendidikanformal/info/{id}', [PendidikanFormalController::class, 'info'])->name('pendidikanformal.info');
         Route::delete('/pendidikan-formal/{id}/delete', [PendidikanFormalController::class, 'delete'])->name('pendidikanformal.delete');
 
         Route::get('/diklat', [DiklatController::class, 'index'])->name('diklat.index');
         Route::post('/diklat', [DiklatController::class, 'store'])->name('diklat.store');
-        Route::get('/diklat/create', [DiklatController::class, 'create'])->name('diklat.create');
+        Route::get('/diklat/{id}/edit', [DiklatController::class, 'edit'])->name('diklat.edit');
+        Route::put('/diklat/{id}/update', [DiklatController::class, 'update'])->name('diklat.update');
         Route::delete('/diklat/{id}/delete', [DiklatController::class, 'delete'])->name('diklat.delete');
 
 
