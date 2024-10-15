@@ -415,6 +415,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/diklat', [DiklatController::class, 'store'])->name('diklat.store');
         Route::get('/diklat/{id}/edit', [DiklatController::class, 'edit'])->name('diklat.edit');
         Route::put('/diklat/{id}/update', [DiklatController::class, 'update'])->name('diklat.update');
+        Route::get('/diklat/{id}/info', [DiklatController::class, 'info'])->name('diklat.info');
         Route::delete('/diklat/{id}/delete', [DiklatController::class, 'delete'])->name('diklat.delete');
 
 

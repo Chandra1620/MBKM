@@ -1,0 +1,771 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 10 Okt 2024 pada 05.20
+-- Versi server: 10.4.32-MariaDB
+-- Versi PHP: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `pembayaran_spp8`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `banks`
+--
+
+CREATE TABLE `banks` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `sandi_bank` varchar(20) NOT NULL,
+  `nama_bank` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `banks`
+--
+
+INSERT INTO `banks` (`id`, `sandi_bank`, `nama_bank`) VALUES
+(1, '014', 'BANK BCA (BANK CENTRAL ASIA)'),
+(2, '008', 'BANK MANDIRI'),
+(3, '009', 'BANK BNI (BANK NEGARA INDONESIA)'),
+(4, '427', 'BANK SYARIAH INDONESIA (Eks BNI SYARIAH)'),
+(5, '002', 'BANK BRI (BANK RAKYAT INDONESIA)'),
+(6, '451', 'BANK SYARIAH INDONESIA (Eks BSM)'),
+(7, '022', 'BANK CIMB NIAGA'),
+(8, '022', 'BANK CIMB NIAGA SYARIAH'),
+(9, '147', 'BANK MUAMALAT'),
+(10, '213', 'BANK BTPN (BANK TABUNGAN PENSIUNAN NASIONAL)'),
+(11, '547', 'BANK BTPN SYARIAH'),
+(12, '213', 'JENIUS'),
+(13, '422', 'BANK SYARIAH INDONESIA (Eks BRI SYARIAH)'),
+(14, '200', 'BANK TABUNGAN NEGARA (BANK BTN)'),
+(15, '013', 'PERMATA BANK'),
+(16, '011', 'BANK DANAMON'),
+(17, '016', 'BANK BII MAYBANK'),
+(18, '426', 'BANK MEGA'),
+(19, '153', 'BANK SINARMAS'),
+(20, '950', 'BANK COMMONWEALTH'),
+(21, '028', 'BANK OCBC NISP'),
+(22, '441', 'BANK BUKOPIN'),
+(23, '521', 'BANK BUKOPIN SYARIAH'),
+(24, '536', 'BANK BCA SYARIAH'),
+(25, '026', 'BANK LIPPO'),
+(26, '031', 'CITIBANK'),
+(27, '789', 'INDOSAT DOMPETKU'),
+(28, '911', 'TELKOMSEL TCASH'),
+(29, '911', 'LINKAJA'),
+(30, '046', 'BANK DBS INDONESIA'),
+(31, '046', 'DIGIBANK'),
+(32, '535', 'SEABANK (Eks BANK KESEJAHTERAAN EKONOMI)'),
+(33, '542', 'BANK JAGO (Eks BANK ARTOS INDONESIA)'),
+(34, '023', 'BANK UOB INDONESIA'),
+(35, '023', 'TMRW by UOB INDONESIA'),
+(36, '490', 'BANK NEO COMMERCE (Akulaku)'),
+(37, '567', 'ALLO BANK (Eks BANK HARDA)'),
+(38, '947', 'BANK ALADIN (Eks BANK MAYBANK INDOCORP)'),
+(39, '110', 'BANK JABAR dan BANTEN (BJB)'),
+(40, '111', 'BANK DKI JAKARTA'),
+(41, '112', 'BPD DIY (YOGYAKARTA)'),
+(42, '113', 'BANK JATENG (JAWA TENGAH)'),
+(43, '114', 'BANK JATIM (JAWA BARAT)'),
+(44, '115', 'BPD JAMBI'),
+(45, '116', 'BPD ACEH'),
+(46, '116', 'BPD ACEH SYARIAH'),
+(47, '117', 'BANK SUMUT'),
+(48, '118', 'BANK NAGARI (BANK SUMBAR)'),
+(49, '119', 'BANK RIAU KEPRI'),
+(50, '120', 'BANK SUMSEL BABEL'),
+(51, '121', 'BANK LAMPUNG'),
+(52, '122', 'BANK KALSEL (BANK KALIMANTAN SELATAN)'),
+(53, '123', 'BANK KALBAR (BANK KALIMANTAN BARAT)'),
+(54, '124', 'BANK KALTIMTARA (BANK KALIMANTAN TIMUR DAN UTARA)'),
+(55, '125', 'BANK KALTENG (BANK KALIMANTAN TENGAH)'),
+(56, '126', 'BANK SULSELBAR (BANK SULAWESI SELATAN DAN BARAT)'),
+(57, '127', 'BANK SULUTGO (BANK SULAWESI UTARA DAN GORONTALO)'),
+(58, '128', 'BANK NTB'),
+(59, '128', 'BANK NTB SYARIAH'),
+(60, '129', 'BANK BPD BALI'),
+(61, '130', 'BANK NTT'),
+(62, '131', 'BANK MALUKU MALUT'),
+(63, '132', 'BANK PAPUA'),
+(64, '133', 'BANK BENGKULU'),
+(65, '134', 'BANK SULTENG (BANK SULAWESI TENGAH)'),
+(66, '135', 'BANK SULTRA'),
+(67, '137', 'BANK BPD BANTEN'),
+(68, '003', 'BANK EKSPOR INDONESIA'),
+(69, '019', 'BANK PANIN'),
+(70, '517', 'BANK PANIN DUBAI SYARIAH'),
+(71, '020', 'BANK ARTA NIAGA KENCANA'),
+(72, '023', 'BANK UOB INDONESIA (BANK BUANA INDONESIA)'),
+(73, '030', 'AMERICAN EXPRESS BANK LTD'),
+(74, '031', 'CITIBANK N.A.'),
+(75, '032', 'JP. MORGAN CHASE BANK, N.A.'),
+(76, '033', 'BANK OF AMERICA, N.A'),
+(77, '034', 'ING INDONESIA BANK'),
+(78, '036', 'BANK MULTICOR'),
+(79, '037', 'BANK ARTHA GRAHA INTERNASIONAL'),
+(80, '039', 'BANK CREDIT AGRICOLE INDOSUEZ'),
+(81, '040', 'THE BANGKOK BANK COMP. LTD'),
+(82, '041', 'THE HONGKONG & SHANGHAI B.C. (BANK HSBC)'),
+(83, '042', 'THE BANK OF TOKYO MITSUBISHI UFJ LTD'),
+(84, '045', 'BANK SUMITOMO MITSUI INDONESIA'),
+(85, '047', 'BANK RESONA PERDANIA'),
+(86, '048', 'BANK MIZUHO INDONESIA'),
+(87, '050', 'STANDARD CHARTERED BANK'),
+(88, '052', 'BANK ABN AMRO'),
+(89, '053', 'BANK KEPPEL TATLEE BUANA'),
+(90, '054', 'BANK CAPITAL INDONESIA'),
+(91, '057', 'BANK BNP PARIBAS INDONESIA'),
+(92, '023', 'BANK UOB INDONESIA'),
+(93, '059', 'KOREA EXCHANGE BANK DANAMON'),
+(94, '060', 'RABOBANK INTERNASIONAL INDONESIA'),
+(95, '061', 'BANK ANZ INDONESIA'),
+(96, '068', 'BANK WOORI SAUDARA'),
+(97, '069', 'BANK OF CHINA'),
+(98, '076', 'BANK BUMI ARTA'),
+(99, '087', 'BANK EKONOMI'),
+(100, '088', 'BANK ANTARDAERAH'),
+(101, '089', 'BANK HAGA'),
+(102, '093', 'BANK IFI'),
+(103, '095', 'BANK CENTURY'),
+(104, '097', 'BANK MAYAPADA'),
+(105, '145', 'BANK NUSANTARA PARAHYANGAN'),
+(106, '146', 'BANK SWADESI (BANK OF INDIA INDONESIA)'),
+(107, '151', 'BANK MESTIKA DHARMA'),
+(108, '152', 'BANK SHINHAN INDONESIA (BANK METRO EXPRESS)'),
+(109, '157', 'BANK MASPION INDONESIA'),
+(110, '159', 'BANK HAGAKITA'),
+(111, '161', 'BANK GANESHA'),
+(112, '162', 'BANK WINDU KENTJANA'),
+(113, '164', 'BANK ICBC INDONESIA (HALIM INDONESIA BANK)'),
+(114, '166', 'BANK HARMONI INTERNATIONAL'),
+(115, '167', 'BANK QNB KESAWAN (BANK QNB INDONESIA)'),
+(116, '212', 'BANK HIMPUNAN SAUDARA 1906'),
+(117, '405', 'BANK SWAGUNA'),
+(118, '459', 'BANK BISNIS INTERNASIONAL'),
+(119, '466', 'BANK SRI PARTHA'),
+(120, '472', 'BANK JASA JAKARTA'),
+(121, '484', 'BANK BINTANG MANUNGGAL'),
+(122, '485', 'BANK MNC INTERNASIONAL (BANK BUMIPUTERA)'),
+(123, '490', 'BANK YUDHA BHAKTI'),
+(124, '491', 'BANK MITRANIAGA'),
+(125, '494', 'BANK BRI AGRO NIAGA'),
+(126, '498', 'BANK SBI INDONESIA (BANK INDOMONEX)'),
+(127, '501', 'BANK ROYAL INDONESIA'),
+(128, '503', 'BANK NATIONAL NOBU (BANK ALFINDO)'),
+(129, '506', 'BANK MEGA SYARIAH'),
+(130, '513', 'BANK INA PERDANA'),
+(131, '517', 'BANK HARFA'),
+(132, '520', 'PRIMA MASTER BANK'),
+(133, '521', 'BANK PERSYARIKATAN INDONESIA'),
+(134, '525', 'BANK AKITA'),
+(135, '526', 'LIMAN INTERNATIONAL BANK'),
+(136, '531', 'ANGLOMAS INTERNASIONAL BANK'),
+(137, '523', 'BANK SAHABAT SAMPEORNA (BANK DIPO INTERNATIONAL)'),
+(138, '547', 'BANK PURBA DANARTA'),
+(139, '548', 'BANK MULTI ARTA SENTOSA'),
+(140, '553', 'BANK MAYORA INDONESIA'),
+(141, '555', 'BANK INDEX SELINDO'),
+(142, '566', 'BANK VICTORIA INTERNATIONAL'),
+(143, '558', 'BANK EKSEKUTIF'),
+(144, '559', 'CENTRATAMA NASIONAL BANK'),
+(145, '562', 'BANK FAMA INTERNASIONAL'),
+(146, '564', 'BANK MANDIRI TASPEN POS (BANK SINAR HARAPAN BALI)'),
+(147, '945', 'BANK AGRIS (BANK FINCONESIA)'),
+(148, '946', 'BANK MERINCORP'),
+(149, '948', 'BANK OCBC – INDONESIA'),
+(150, '949', 'BANK CTBC (CHINA TRUST) INDONESIA'),
+(151, '425', 'BANK BJB SYARIAH'),
+(152, '688', 'BPR KS (KARYAJATNIKA SEDAYA)');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `bank_sekolahs`
+--
+
+CREATE TABLE `bank_sekolahs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `kode` varchar(255) NOT NULL,
+  `nama_bank` varchar(255) NOT NULL,
+  `nama_rekening` varchar(255) NOT NULL,
+  `nomor_rekening` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `bank_sekolahs`
+--
+
+INSERT INTO `bank_sekolahs` (`id`, `kode`, `nama_bank`, `nama_rekening`, `nomor_rekening`, `created_at`, `updated_at`) VALUES
+(1, '014', 'BANK BCA (BANK CENTRAL ASIA)', 'Chandra', '123123', '2024-06-17 10:20:16', '2024-06-17 10:28:09'),
+(3, '009', 'BANK BNI (BANK NEGARA INDONESIA)', 'sekolah', '123123', '2024-06-18 05:00:52', '2024-06-18 05:00:52'),
+(4, '008', 'BANK MANDIRI', 'janpiter', '037733', '2024-06-30 20:33:59', '2024-06-30 20:33:59'),
+(5, '008', 'BANK MANDIRI', 'akmal', '888', '2024-09-10 19:39:26', '2024-09-10 19:39:26');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `biayas`
+--
+
+CREATE TABLE `biayas` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `biayas`
+--
+
+INSERT INTO `biayas` (`id`, `nama`, `jumlah`, `user_id`, `created_at`, `updated_at`) VALUES
+(1, 'SPP 2022', 300000, 2, '2024-05-29 12:16:57', '2024-05-29 12:21:53'),
+(3, 'pramuka', 100000, 2, '2024-05-29 12:59:18', '2024-05-29 12:59:18'),
+(4, 'paskibra', 150000, 2, '2024-05-29 18:35:55', '2024-05-29 18:35:55'),
+(9, 'Kemah', 200000, 2, '2024-06-11 08:46:00', '2024-06-11 08:46:00'),
+(10, 'Peralatan', 200000, 2, '2024-09-10 19:44:48', '2024-09-10 19:44:48');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `failed_jobs`
+--
+
+CREATE TABLE `failed_jobs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(255) NOT NULL,
+  `connection` text NOT NULL,
+  `queue` text NOT NULL,
+  `payload` longtext NOT NULL,
+  `exception` longtext NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(255) NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '2014_10_12_000000_create_users_table', 1),
+(2, '2014_10_12_100000_create_password_reset_tokens_table', 1),
+(3, '2014_10_12_100000_create_password_resets_table', 1),
+(4, '2019_08_19_000000_create_failed_jobs_table', 1),
+(5, '2019_12_14_000001_create_personal_access_tokens_table', 1),
+(6, '2024_05_25_193527_create_siswas_table', 2),
+(8, '2024_05_26_043723_add_foto_to_siswas_table', 3),
+(9, '2024_05_29_182605_create_biayas_table', 4),
+(13, '2024_05_29_204339_create_tagihans_table', 5),
+(14, '2024_06_10_151521_create_tagihan_details_table', 6),
+(16, '2024_06_11_032840_create_pembayarans_table', 7),
+(17, '2021_08_08_100000_create_banks_tables', 8),
+(18, '2024_06_17_154326_create_bank_sekolahs_table', 9),
+(19, '2024_06_27_063840_create_wali_banks_table', 10),
+(21, '2024_07_05_200201_add_wali_bank_id_and_sekolah_bank_id_to_pembayarans_table', 11),
+(22, '2024_07_06_080852_create_notifications_table', 12),
+(24, '2024_07_07_224452_add_tanggal_konfirmasi_to_pembayaran_table', 13),
+(25, '2024_07_07_234538_drop_status_konfirmasi_to_pembayaran_table', 14);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `id` char(36) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `notifiable_type` varchar(255) NOT NULL,
+  `notifiable_id` bigint(20) UNSIGNED NOT NULL,
+  `data` text NOT NULL,
+  `read_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `notifications`
+--
+
+INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `data`, `read_at`, `created_at`, `updated_at`) VALUES
+('5caf3be3-2de0-432c-a9ae-f004628969d3', 'App\\Notifications\\PembayaranNotification', 'App\\Models\\User', 2, '{\"tagihan_id\":\"19\",\"wali_id\":4,\"pembayaran_id\":35,\"title\":\"Pembayaran Tagihan\",\"messages\":\"joko wali Melakukan Pembayaran Tagihan.\",\"url\":\"http:\\/\\/127.0.0.1:8000\\/operator\\/pembayaran\\/35\"}', NULL, '2024-07-19 10:08:08', '2024-07-19 10:08:08'),
+('872c66df-d5fd-4162-8180-b0b110c7dee4', 'App\\Notifications\\PembayaranNotification', 'App\\Models\\User', 2, '{\"tagihan_id\":\"18\",\"wali_id\":4,\"pembayaran_id\":34,\"title\":\"Pembayaran Tagihan\",\"messages\":\"joko wali Melakukan Pembayaran Tagihan.\",\"url\":\"http:\\/\\/127.0.0.1:8000\\/operator\\/pembayaran\\/34\"}', '2024-07-07 21:01:58', '2024-07-07 21:01:46', '2024-07-07 21:01:58');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `password_reset_tokens`
+--
+
+CREATE TABLE `password_reset_tokens` (
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `pembayarans`
+--
+
+CREATE TABLE `pembayarans` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `bank_sekolah_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `wali_bank_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `tagihan_id` bigint(20) UNSIGNED NOT NULL,
+  `wali_id` bigint(20) UNSIGNED NOT NULL,
+  `tanggal_bayar` datetime NOT NULL,
+  `tanggal_konfirmasi` datetime DEFAULT NULL,
+  `jumlah_dibayar` double NOT NULL,
+  `bukti_bayar` varchar(255) DEFAULT NULL,
+  `metode_pembayaran` varchar(255) NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `pembayarans`
+--
+
+INSERT INTO `pembayarans` (`id`, `bank_sekolah_id`, `wali_bank_id`, `tagihan_id`, `wali_id`, `tanggal_bayar`, `tanggal_konfirmasi`, `jumlah_dibayar`, `bukti_bayar`, `metode_pembayaran`, `user_id`, `created_at`, `updated_at`) VALUES
+(13, NULL, NULL, 9, 0, '2024-06-12 00:00:00', NULL, 450000, NULL, 'manual', 2, '2024-06-12 07:29:04', '2024-06-12 07:29:04'),
+(14, NULL, NULL, 10, 0, '2024-06-17 00:00:00', NULL, 30000, NULL, 'manual', 2, '2024-06-17 07:56:05', '2024-06-17 07:56:05'),
+(15, NULL, NULL, 10, 0, '2024-06-17 00:00:00', NULL, 270000, NULL, 'manual', 2, '2024-06-17 07:56:44', '2024-06-17 07:56:44'),
+(16, NULL, NULL, 10, 0, '2024-06-17 00:00:00', NULL, 300000, NULL, 'manual', 2, '2024-06-17 07:56:58', '2024-06-17 07:56:58'),
+(17, NULL, NULL, 12, 0, '2024-06-27 00:00:00', NULL, 750000, NULL, 'manual', 2, '2024-06-26 23:32:39', '2024-06-26 23:32:39'),
+(18, NULL, NULL, 11, 0, '2024-07-01 00:00:00', NULL, 300000, NULL, 'manual', 2, '2024-06-30 20:35:04', '2024-06-30 20:35:04'),
+(31, NULL, NULL, 15, 0, '2024-07-07 00:00:00', '2024-07-07 23:04:42', 750000, NULL, 'manual', 2, '2024-07-07 16:04:42', '2024-07-07 16:04:42'),
+(32, NULL, NULL, 16, 0, '2024-07-07 00:00:00', '2024-07-07 23:13:34', 750000, NULL, 'manual', 2, '2024-07-07 16:13:34', '2024-07-07 16:13:34'),
+(34, 1, 3, 18, 4, '2024-07-08 00:00:00', '2024-07-08 04:02:16', 750000, 'public/mncRJ9KsXBsKiU7z5bU2BqrKErQPzZ3aEuoPK49i.jpg', 'transfer', 2, '2024-07-07 21:01:46', '2024-07-07 21:02:16'),
+(35, 1, 3, 19, 4, '2024-07-19 00:00:00', NULL, 750000, 'public/3Pxg4F3mOz52vBDRh6rCetXpUc3KvjHhTBmbpMgz.png', 'transfer', 4, '2024-07-19 10:08:07', '2024-07-19 10:08:07');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `personal_access_tokens`
+--
+
+CREATE TABLE `personal_access_tokens` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `tokenable_type` varchar(255) NOT NULL,
+  `tokenable_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `abilities` text DEFAULT NULL,
+  `last_used_at` timestamp NULL DEFAULT NULL,
+  `expires_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `siswas`
+--
+
+CREATE TABLE `siswas` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `wali_id` int(11) DEFAULT NULL,
+  `wali_status` varchar(255) DEFAULT NULL,
+  `nama` varchar(255) NOT NULL,
+  `nisn` varchar(20) NOT NULL,
+  `foto` varchar(255) DEFAULT NULL,
+  `tingkatan` varchar(20) NOT NULL,
+  `kelas` varchar(3) NOT NULL,
+  `angkatan` int(11) NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `siswas`
+--
+
+INSERT INTO `siswas` (`id`, `wali_id`, `wali_status`, `nama`, `nisn`, `foto`, `tingkatan`, `kelas`, `angkatan`, `user_id`, `created_at`, `updated_at`) VALUES
+(5, 16, 'ok', 'Dimas', '10003', 'public/3k6Z0QgeOLGYHXonqR93cF4gAjkGz5ky6CRX4RUN.jpg', 'RA', '1', 2015, 2, '2024-05-28 20:10:50', '2024-07-06 13:44:52'),
+(7, NULL, NULL, 'Aprila Aditia', '10024', NULL, 'MTs', '3', 2021, 2, '2024-06-10 09:01:21', '2024-06-14 11:17:12');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tagihans`
+--
+
+CREATE TABLE `tagihans` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `siswa_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `angkatan` int(11) DEFAULT NULL,
+  `kelas` int(11) DEFAULT NULL,
+  `tanggal_tagihan` date NOT NULL,
+  `tanggal_jatuh_tempo` date NOT NULL,
+  `keterangan` varchar(255) DEFAULT NULL,
+  `status` enum('baru','angsur','lunas') NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `tagihans`
+--
+
+INSERT INTO `tagihans` (`id`, `siswa_id`, `user_id`, `angkatan`, `kelas`, `tanggal_tagihan`, `tanggal_jatuh_tempo`, `keterangan`, `status`, `created_at`, `updated_at`) VALUES
+(14, 5, 2, 2015, 1, '2024-07-06', '2024-07-06', NULL, 'baru', '2024-07-06 13:46:17', '2024-07-06 13:46:17'),
+(16, 8, 2, 2015, 1, '2024-07-07', '2024-07-07', NULL, 'lunas', '2024-07-07 16:13:19', '2024-07-07 16:13:34'),
+(19, 3, 2, 2024, 1, '2024-07-19', '2024-07-19', NULL, 'baru', '2024-07-19 10:07:13', '2024-07-19 10:07:13');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tagihan_details`
+--
+
+CREATE TABLE `tagihan_details` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `tagihan_id` bigint(20) UNSIGNED NOT NULL,
+  `nama_biaya` varchar(255) NOT NULL,
+  `jumlah_biaya` bigint(20) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `tagihan_details`
+--
+
+INSERT INTO `tagihan_details` (`id`, `tagihan_id`, `nama_biaya`, `jumlah_biaya`, `created_at`, `updated_at`) VALUES
+(5, 5, 'SPP 2022', 300000, '2024-06-10 18:12:31', '2024-06-10 18:12:31'),
+(6, 5, 'Paduan Suara', 200000, '2024-06-10 18:12:31', '2024-06-10 18:12:31'),
+(7, 6, 'SPP 2022', 300000, '2024-06-10 18:16:43', '2024-06-10 18:16:43'),
+(8, 6, 'pramuka', 100000, '2024-06-10 18:16:43', '2024-06-10 18:16:43'),
+(9, 6, 'Paduan Suara', 200000, '2024-06-10 18:16:43', '2024-06-10 18:16:43'),
+(10, 7, 'SPP 2022', 300000, '2024-06-11 08:34:19', '2024-06-11 08:34:19'),
+(11, 7, 'paskibra', 150000, '2024-06-11 08:34:19', '2024-06-11 08:34:19'),
+(12, 8, 'SPP 2022', 300000, '2024-06-12 06:45:46', '2024-06-12 06:45:46'),
+(13, 8, 'Paduan Suara', 200000, '2024-06-12 06:45:46', '2024-06-12 06:45:46'),
+(14, 9, 'SPP 2022', 300000, '2024-06-12 06:57:03', '2024-06-12 06:57:03'),
+(15, 9, 'paskibra', 150000, '2024-06-12 06:57:03', '2024-06-12 06:57:03'),
+(16, 10, 'SPP 2022', 300000, '2024-06-17 07:39:08', '2024-06-17 07:39:08'),
+(17, 11, 'SPP 2022', 300000, '2024-06-18 03:03:33', '2024-06-18 03:03:33'),
+(18, 12, 'SPP 2022', 300000, '2024-06-18 21:46:11', '2024-06-18 21:46:11'),
+(19, 12, 'pramuka', 100000, '2024-06-18 21:46:11', '2024-06-18 21:46:11'),
+(20, 12, 'paskibra', 150000, '2024-06-18 21:46:11', '2024-06-18 21:46:11'),
+(21, 12, 'Kemah', 200000, '2024-06-18 21:46:11', '2024-06-18 21:46:11'),
+(22, 13, 'SPP 2022', 300000, '2024-07-01 06:24:43', '2024-07-01 06:24:43'),
+(23, 13, 'pramuka', 100000, '2024-07-01 06:24:43', '2024-07-01 06:24:43'),
+(24, 14, 'SPP 2022', 300000, '2024-07-06 13:46:17', '2024-07-06 13:46:17'),
+(25, 14, 'pramuka', 100000, '2024-07-06 13:46:17', '2024-07-06 13:46:17'),
+(26, 14, 'paskibra', 150000, '2024-07-06 13:46:17', '2024-07-06 13:46:17'),
+(27, 14, 'Kemah', 200000, '2024-07-06 13:46:17', '2024-07-06 13:46:17'),
+(28, 15, 'SPP 2022', 300000, '2024-07-06 13:46:17', '2024-07-06 13:46:17'),
+(29, 15, 'pramuka', 100000, '2024-07-06 13:46:17', '2024-07-06 13:46:17'),
+(30, 15, 'paskibra', 150000, '2024-07-06 13:46:17', '2024-07-06 13:46:17'),
+(31, 15, 'Kemah', 200000, '2024-07-06 13:46:17', '2024-07-06 13:46:17'),
+(32, 16, 'SPP 2022', 300000, '2024-07-07 16:13:19', '2024-07-07 16:13:19'),
+(33, 16, 'pramuka', 100000, '2024-07-07 16:13:19', '2024-07-07 16:13:19'),
+(34, 16, 'paskibra', 150000, '2024-07-07 16:13:19', '2024-07-07 16:13:19'),
+(35, 16, 'Kemah', 200000, '2024-07-07 16:13:19', '2024-07-07 16:13:19'),
+(36, 17, 'SPP 2022', 300000, '2024-07-07 18:01:07', '2024-07-07 18:01:07'),
+(37, 17, 'pramuka', 100000, '2024-07-07 18:01:07', '2024-07-07 18:01:07'),
+(38, 17, 'paskibra', 150000, '2024-07-07 18:01:07', '2024-07-07 18:01:07'),
+(39, 17, 'Kemah', 200000, '2024-07-07 18:01:07', '2024-07-07 18:01:07'),
+(40, 18, 'SPP 2022', 300000, '2024-07-07 21:00:59', '2024-07-07 21:00:59'),
+(41, 18, 'pramuka', 100000, '2024-07-07 21:00:59', '2024-07-07 21:00:59'),
+(42, 18, 'paskibra', 150000, '2024-07-07 21:00:59', '2024-07-07 21:00:59'),
+(43, 18, 'Kemah', 200000, '2024-07-07 21:00:59', '2024-07-07 21:00:59'),
+(44, 19, 'SPP 2022', 300000, '2024-07-19 10:07:13', '2024-07-19 10:07:13'),
+(45, 19, 'pramuka', 100000, '2024-07-19 10:07:13', '2024-07-19 10:07:13'),
+(46, 19, 'paskibra', 150000, '2024-07-19 10:07:13', '2024-07-19 10:07:13'),
+(47, 19, 'Kemah', 200000, '2024-07-19 10:07:13', '2024-07-19 10:07:13');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `users`
+--
+
+CREATE TABLE `users` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `akses` enum('operator','admin','wali') NOT NULL,
+  `nohp` varchar(255) NOT NULL,
+  `nohp_verified_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `akses`, `nohp`, `nohp_verified_at`) VALUES
+(1, 'admin', 'admin@gmail.com', NULL, '$2y$10$GnH/YX4YrW6ZBr67uxwYC.TNesWz/rL7OuuYrv5a23isGesYpoBxK', NULL, '2024-05-20 11:26:41', '2024-06-18 19:51:40', 'admin', '089786578676', NULL),
+(2, 'operator', 'operator@gmail.com', NULL, '$2y$10$KrARKX0wwBaSVevHh2nrgecp4YYdAQXxTS0dIeKSK4anI0E82nKFW', 'rNVQtkWns5VXE4y2StjAVNXykvTOgXP7CDmxhXJvZilP95RddofQP4hMgGZC', '2024-05-21 02:39:45', '2024-06-17 10:37:09', 'operator', '089767656579', '2024-05-21 09:39:45'),
+(4, 'joko wali', 'joko@gmail.com', NULL, '$2y$10$SjD4EuDRrDEm9R1qvcoZ7udDKh.FTJZ11WRpRLUBFF8uggRjwOH3e', NULL, '2024-05-21 02:53:43', '2024-05-21 02:53:43', 'wali', '089767567678', '2024-05-21 09:53:43'),
+(16, 'roni', 'Roni@gmail.com', NULL, '$2y$10$dTgteA6eVSOJame.jOZZmuBZe5y3L3TxoRoEVOS.FZbudG397x/Xq', NULL, '2024-07-06 13:44:41', '2024-07-06 13:44:41', 'wali', '089736736', NULL),
+(17, 'Ochir', 'Ochir@gmail.com', NULL, '$2y$10$dLiuyNaBNq9B5sqnumIh9uWgXvXqIBgQlczwSFMQGpvumIUY5kF3i', NULL, '2024-07-07 00:04:21', '2024-07-07 00:04:21', 'wali', '08867678767', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `wali_banks`
+--
+
+CREATE TABLE `wali_banks` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `wali_id` bigint(20) UNSIGNED NOT NULL COMMENT 'wali id adalah primary key di user id',
+  `kode` varchar(255) NOT NULL,
+  `nama_bank` varchar(255) NOT NULL,
+  `nama_rekening` varchar(255) NOT NULL,
+  `nomor_rekening` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `wali_banks`
+--
+
+INSERT INTO `wali_banks` (`id`, `wali_id`, `kode`, `nama_bank`, `nama_rekening`, `nomor_rekening`, `created_at`, `updated_at`) VALUES
+(3, 4, '500', 'bri', 'joko', '22055655', '2024-07-05 18:36:28', '2024-07-05 18:36:28'),
+(6, 4, '014', 'BANK BCA (BANK CENTRAL ASIA)', 'yuyu', '1545124', '2024-07-05 12:34:06', '2024-07-05 12:34:06'),
+(7, 4, '014', 'BANK BCA (BANK CENTRAL ASIA)', 'yyy', '555245655', '2024-07-05 12:54:28', '2024-07-05 12:54:28'),
+(8, 16, '008', 'BANK MANDIRI', 'Roni', '8787968786', '2024-07-06 13:55:22', '2024-07-06 13:55:22'),
+(9, 17, '008', 'BANK MANDIRI', 'Ochir', '098790989', '2024-07-07 00:05:40', '2024-07-07 00:05:40'),
+(10, 17, '014', 'BANK BCA (BANK CENTRAL ASIA)', 'yyyy', '0989787', '2024-07-07 02:36:22', '2024-07-07 02:36:22');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indeks untuk tabel `banks`
+--
+ALTER TABLE `banks`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `bank_sekolahs`
+--
+ALTER TABLE `bank_sekolahs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `biayas`
+--
+ALTER TABLE `biayas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `failed_jobs`
+--
+ALTER TABLE `failed_jobs`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Indeks untuk tabel `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`);
+
+--
+-- Indeks untuk tabel `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD KEY `password_resets_email_index` (`email`);
+
+--
+-- Indeks untuk tabel `password_reset_tokens`
+--
+ALTER TABLE `password_reset_tokens`
+  ADD PRIMARY KEY (`email`);
+
+--
+-- Indeks untuk tabel `pembayarans`
+--
+ALTER TABLE `pembayarans`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `pembayarans_tagihan_id_index` (`tagihan_id`),
+  ADD KEY `pembayarans_wali_id_index` (`wali_id`),
+  ADD KEY `pembayarans_user_id_index` (`user_id`);
+
+--
+-- Indeks untuk tabel `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+  ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
+
+--
+-- Indeks untuk tabel `siswas`
+--
+ALTER TABLE `siswas`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `siswas_nisn_unique` (`nisn`),
+  ADD KEY `siswas_wali_id_index` (`wali_id`);
+
+--
+-- Indeks untuk tabel `tagihans`
+--
+ALTER TABLE `tagihans`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `tagihans_siswa_id_index` (`siswa_id`),
+  ADD KEY `tagihans_user_id_index` (`user_id`);
+
+--
+-- Indeks untuk tabel `tagihan_details`
+--
+ALTER TABLE `tagihan_details`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`);
+
+--
+-- Indeks untuk tabel `wali_banks`
+--
+ALTER TABLE `wali_banks`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT untuk tabel yang dibuang
+--
+
+--
+-- AUTO_INCREMENT untuk tabel `banks`
+--
+ALTER TABLE `banks`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=153;
+
+--
+-- AUTO_INCREMENT untuk tabel `bank_sekolahs`
+--
+ALTER TABLE `bank_sekolahs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT untuk tabel `biayas`
+--
+ALTER TABLE `biayas`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT untuk tabel `failed_jobs`
+--
+ALTER TABLE `failed_jobs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT untuk tabel `pembayarans`
+--
+ALTER TABLE `pembayarans`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
+--
+-- AUTO_INCREMENT untuk tabel `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `siswas`
+--
+ALTER TABLE `siswas`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT untuk tabel `tagihans`
+--
+ALTER TABLE `tagihans`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT untuk tabel `tagihan_details`
+--
+ALTER TABLE `tagihan_details`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+
+--
+-- AUTO_INCREMENT untuk tabel `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT untuk tabel `wali_banks`
+--
+ALTER TABLE `wali_banks`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

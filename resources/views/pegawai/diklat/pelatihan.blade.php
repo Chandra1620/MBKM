@@ -434,6 +434,9 @@
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium ">
                                                 <div class="flex justify-end">
                                                     {{-- {{ dd($pelatihan->status) }} --}}
+                                                    <a href="{{ route('diklat.info', $pelatihan->id) }}"
+                                                        class="ml-2 py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-yellow-200 font-semibold text-yellow-500 hover:text-white hover:bg-yellow-500 hover:border-yelow-500 focus:outline-none focus:ring-2 focus:ring-yellow-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+                                                        Info</a>
                                                     @if ($pelatihan->status == 'pengajuan')
                                                         <a href="{{ route('diklat.edit', ['id' => $pelatihan->id]) }}">
                                                             <button type="button"

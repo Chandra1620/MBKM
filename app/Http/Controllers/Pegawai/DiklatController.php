@@ -111,6 +111,17 @@ class DiklatController extends Controller
         return redirect()->route('diklat.index')->with('success', 'Berhasil mengubah data pelatihan');
     }
 
+    public function info($id)
+    {
+        $diklat = Diklat::find($id);
+
+        if (!$diklat) {
+            return redirect()->route('diklat')->with('error', 'Data tidak ditemukan');
+        }
+
+        return view('pegawai.diklat.info', compact('diklat'));
+    }
+
     public function delete($id)
     {
         $diklat = Diklat::find($id);
