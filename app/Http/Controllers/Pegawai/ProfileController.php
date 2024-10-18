@@ -287,16 +287,13 @@ class ProfileController extends Controller
         $keluarga->status_perkawinan = $attrs['status_perkawinan'];
 
         // Jika ada file yang diupload, update file pendukung
-        $imageName = '';
+        if ($request->hasFile('file_pendukung')) {
+            $imageName = time() . '.' . $request->file('file_pendukung')->getClientOriginalExtension();
+            $request->file('file_pendukung')->move(public_path('document/file_pendukung/'), $imageName);
 
-        if ($request->hasFile('file')) {
-            $imageName = time() . '.' . $request->file('file')->getClientOriginalExtension();
-            $request->file('file')->move(public_path('document/file_pendukung/'), $imageName);
-
-            $attrs['file'] = $imageName;
+            $attrs['file_pendukung'] = $imageName;
         }
-
-        $keluarga->file_pendukung = $attrs["file"];
+        
 
         // Simpan perubahan (update atau insert jika entri baru)
         $keluarga->save();
@@ -325,8 +322,7 @@ class ProfileController extends Controller
         $user = Auth::user();
         // dd($request->all());
 
-        RiwayatAlamatdanKontak::create([
-            'user_id' => $user->id,
+        AlamatdanKontak::create([
             'provinsi' => $request->input('nama_provinsi'),
             'kota' => $request->input('nama_kabupaten'),
             'kecamatan' => $request->input('nama_kecamatan'),
@@ -338,20 +334,6 @@ class ProfileController extends Controller
             'no_telp_rumah' => $request->input('no_telp_rumah'),
             'no_hp' => $request->input('no_hp'),
         ]);
-
-        // $alamatdankontak = AlamatdanKontak ::where('user_id', $user->id)->first();
-        // $alamatdankontak->provinsi = $request->input('nama_provinsi'); // clear
-        // $alamatdankontak->kota = $request->input('nama_kabupaten'); // clear
-        // $alamatdankontak->kecamatan = $request->input('nama_kecamatan');
-        // $alamatdankontak->desa_kelurahan = $request->input('nama_desa');
-        // $alamatdankontak->rt = $request->input('rt');
-        // $alamatdankontak->rw = $request->input('rw');
-        // $alamatdankontak->alamat = $request->input('alamat');
-        // $alamatdankontak->kodepos = $request->input('kodepos');
-        // $alamatdankontak->no_telp_rumah = $request->input('no_telp_rumah');
-        // $alamatdankontak->no_hp = $request->input('no_hp');
-
-        // $alamatdankontak->update();
 
         return redirect()
             ->route('profile.index')
@@ -392,22 +374,6 @@ class ProfileController extends Controller
             'nama_wajib_pajak' => $attrs['nama_wajib_pajak'],
             'file_pendukung' => $imageName
         ]);
-        // $lainlain = Lainlain ::where('user_id', $user->id)->first();
-
-        // $lainlain->npwp = $request->input('npwp');
-        // $lainlain->nama_wajib_pajak = $request->input('nama_wajib_pajak');
-        // if($request->file()){
-        //     if ($lainlain->file_pendukung) {
-        //         $oldImage = public_path('document/file_pendukung/' . $lainlain->file_pendukung);
-        //         if (file_exists($oldImage)) {
-        //             unlink($oldImage);
-        //         }
-        //     }
-        //     $imageName = time() . '.' . $request->file->extension();
-        //     $request->file->move(public_path('document/file_pendukung/'), $imageName);
-        //     $lainlain->file_pendukung = $imageName;
-        // }
-        // $lainlain->update();
 
         return redirect()
             ->route('profile.index')
