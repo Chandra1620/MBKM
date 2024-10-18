@@ -1,4 +1,4 @@
- <?php
+<?php
 
 use App\Http\Controllers\Admin\MengelolaRolePermissionController;
 use App\Http\Controllers\AdminKepegawaian\AdminPangkatGolonganController;
@@ -48,6 +48,7 @@ use App\Http\Controllers\Pegawai\SuratMeyuratController;
 use App\Http\Controllers\Pegawai\TesController;
 use App\Http\Controllers\Wadir\RequestPerizinanWadirController;
 use App\Models\RiwayatFungsional;
+use App\Models\RiwayatPekerjaan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -200,6 +201,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['permission:mangelola-validasi-perizinan'])->group(function () {
         Route::get('/management-perizinan', [ManagementPerizinanAdminController::class, 'index'])->name('management-perizinan.index');
         Route::post('/management-perizinan/{id}/verifikasi', [ManagementPerizinanAdminController::class, 'verifikasi'])->name('management-perizinan.verifikasi');
+        Route::delete('/management-perizinan/{id}/denied', [ManagementPerizinanAdminController::class, 'ditolak'])->name('management-perizinan.ditolak');
     });
 
     Route::middleware(['checkUserRole:admin-pegawai'])->group(function () {
@@ -404,14 +406,17 @@ Route::middleware('auth')->group(function () {
 
 
         Route::get('/pendidikan-formal', [PendidikanFormalController::class, 'index'])->name('pendidikanformal.index');
+        Route::post('/pendidikan-formal', [PendidikanFormalController::class, 'store'])->name('pendidikanformal.store');
         Route::get('/pendidikan-formal/{id}/edit', [PendidikanFormalController::class, 'edit'])->name('pendidikanformal.edit');
         Route::put('/pendidikan-formal/{id}/update', [PendidikanFormalController::class, 'update'])->name('pendidikanformal.update');
-        Route::post('/pendidikan-formal', [PendidikanFormalController::class, 'store'])->name('pendidikanformal.store');
+        Route::get('/pendidikanformal/info/{id}', [PendidikanFormalController::class, 'info'])->name('pendidikanformal.info');
         Route::delete('/pendidikan-formal/{id}/delete', [PendidikanFormalController::class, 'delete'])->name('pendidikanformal.delete');
 
         Route::get('/diklat', [DiklatController::class, 'index'])->name('diklat.index');
         Route::post('/diklat', [DiklatController::class, 'store'])->name('diklat.store');
-        Route::get('/diklat/create', [DiklatController::class, 'create'])->name('diklat.create');
+        Route::get('/diklat/{id}/edit', [DiklatController::class, 'edit'])->name('diklat.edit');
+        Route::put('/diklat/{id}/update', [DiklatController::class, 'update'])->name('diklat.update');
+        Route::get('/diklat/{id}/info', [DiklatController::class, 'info'])->name('diklat.info');
         Route::delete('/diklat/{id}/delete', [DiklatController::class, 'delete'])->name('diklat.delete');
 
 
@@ -419,8 +424,10 @@ Route::middleware('auth')->group(function () {
 
         //! RIWAYAT PEKERJAAN
         Route::get('/riwayat-pekerjaan', [RiwayatPekerjaanController::class, 'index'])->name('riwayat-pekerjaan.index');
-        Route::get('/riwayat-pekerjaan/create', [RiwayatPekerjaanController::class, 'create'])->name('riwayat-pekerjaan.create');
-        Route::post('/riwayat-pekerjaan/store', [RiwayatPekerjaanController::class, 'store'])->name('riwayat-pekerjaan.store');
+        Route::post('/riwayat-pekerjaan', [RiwayatPekerjaanController::class, 'store'])->name('riwayat-pekerjaan.store');
+        Route::get('/riwayat-pekerjaan/{id}/edit', [RiwayatPekerjaan::class, 'edit'])->name('riwayat-pekerjaan.edit');
+        Route::put('/riwayat-pekerjaan/{id}/update', [RiwayatPekerjaanController::class, 'update'])->name('riwayat-pekerjaan.update');
+        Route::get('/riwayat-pekerjaan/{id}/info', [RiwayatPekerjaan::class, 'info'])->name('riwayat-pekerjaan.info');
         Route::delete('/riwayat-pekerjaan/{id}/delete', [RiwayatPekerjaanController::class, 'delete'])->name('riwayat-pekerjaan.delete');
 
         //! RIWAYAT PEKERJAAN

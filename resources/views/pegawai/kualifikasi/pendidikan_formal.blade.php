@@ -8,9 +8,9 @@
                 <button type="button"
                     class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
                     data-hs-overlay="#hs-modal-signup">
-                    Buat
+                    Tambah
                 </button>
-            </div>            
+            </div>
 
             <div id="hs-modal-signup"
                 class="hs-overlay hidden w-full h-full fixed top-0 left-0 z-[60] overflow-x-hidden overflow-y-auto">
@@ -343,7 +343,9 @@
 
 
                                         <button type="submit"
-                                            class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">Riwayat</button>
+                                            class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+                                            Tambah
+                                        </button>
                                     </div>
                                 </form>
                                 <!-- End Form -->
@@ -377,7 +379,7 @@
                             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                                 <thead class="bg-gray-50 dark:bg-gray-700">
                                     <tr>
-                                    
+
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                                             Gelar
@@ -408,7 +410,7 @@
 
                                     @foreach ($pendidikan as $user)
                                         <tr>
-                                            
+
 
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
@@ -429,31 +431,33 @@
                                             </td>
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                              {{ $user->tahun_lulus }}
+                                                {{ $user->tahun_lulus }}
 
                                             </td>
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                              {{ $user->status }}
+                                                {{ $user->status }}
 
                                             </td>
                                             {{-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">New York No. 1 Lake Park</td> --}}
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium ">
                                                 <div class="flex justify-end">
 
+                                                    <a href="{{ route('pendidikanformal.info', $user->id) }}"
+                                                        class="ml-2 py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-yellow-200 font-semibold text-yellow-500 hover:text-white hover:bg-yellow-500 hover:border-yelow-500 focus:outline-none focus:ring-2 focus:ring-yellow-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+                                                        Info</a>
+
                                                     @if ($user->status == 'pengajuan')
-                                                    <a 
-                                                    href="{{ route('pendidikanformal.edit',['id' => $user->id ]) }}"
-                                                    >
-                                                    <button type="submit"
-                                                        class="py-3 px-4 iupdatenline-flex justify-center items-center gap-2 rounded-md border-2 border-blue-200 font-semibold text-blue-500 hover:text-white hover:bg-blue-500 hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
-                                                        update
-                                                    </button>
-                                                </a>
+                                                        <a
+                                                            href="{{ route('pendidikanformal.edit', ['id' => $user->id]) }}">
+                                                            <button type="submit"
+                                                                class="ml-2 py-3 px-4 iupdatenline-flex justify-center items-center gap-2 rounded-md border-2 border-blue-200 font-semibold text-blue-500 hover:text-white hover:bg-blue-500 hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+                                                                Edit
+                                                            </button>
+                                                        </a>
                                                     @endif
-                                                    
-                                                    <form 
-                                                        action="{{ route('pendidikanformal.delete',['id' => $user->id ]) }}"
+                                                    <form
+                                                        action="{{ route('pendidikanformal.delete', ['id' => $user->id]) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('delete')

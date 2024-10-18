@@ -1,3 +1,4 @@
+{{-- @dd($perizinan) --}}
 @extends('layouts.theme')
 
 @section('content')
@@ -76,18 +77,18 @@
                                             class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                                            {{ $item->user->name }}</td><td
                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                           {{ $item->jenis_cuti }}</td><td
+                                           {{ $item->jeniscuti->name }}</td><td
                                           class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                                           {{ $item->alasan }}</td><td
                                          class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                        berhasil</td>
+                                        {{ $item->pertimbangan_atasan_langsung }}</td>
                                         <td
                                          class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                        berhasil</td><td
+                                        {{ $item->tgl_mulai }}</td><td
                                         class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                       berhasil</td>
+                                       {{ $item->tgl_selesai }}</td>
 
-                                       
+                                    
                                        <td
                                         class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                                         {{ $item->verifikasi_admin }}
@@ -116,7 +117,7 @@
 
 
                                                 <form
-                                                    action=""
+                                                    action="{{ route('management-perizinan.ditolak',['id' => $item->id ])}}"
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
