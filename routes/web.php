@@ -48,6 +48,7 @@ use App\Http\Controllers\Pegawai\SuratMeyuratController;
 use App\Http\Controllers\Pegawai\TesController;
 use App\Http\Controllers\Wadir\RequestPerizinanWadirController;
 use App\Models\RiwayatFungsional;
+use App\Models\RiwayatPekerjaan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -423,8 +424,10 @@ Route::middleware('auth')->group(function () {
 
         //! RIWAYAT PEKERJAAN
         Route::get('/riwayat-pekerjaan', [RiwayatPekerjaanController::class, 'index'])->name('riwayat-pekerjaan.index');
-        Route::get('/riwayat-pekerjaan/create', [RiwayatPekerjaanController::class, 'create'])->name('riwayat-pekerjaan.create');
-        Route::post('/riwayat-pekerjaan/store', [RiwayatPekerjaanController::class, 'store'])->name('riwayat-pekerjaan.store');
+        Route::post('/riwayat-pekerjaan', [RiwayatPekerjaanController::class, 'store'])->name('riwayat-pekerjaan.store');
+        Route::get('/riwayat-pekerjaan/{id}/edit', [RiwayatPekerjaan::class, 'edit'])->name('riwayat-pekerjaan.edit');
+        Route::put('/riwayat-pekerjaan/{id}/update', [RiwayatPekerjaanController::class, 'update'])->name('riwayat-pekerjaan.update');
+        Route::get('/riwayat-pekerjaan/{id}/info', [RiwayatPekerjaan::class, 'info'])->name('riwayat-pekerjaan.info');
         Route::delete('/riwayat-pekerjaan/{id}/delete', [RiwayatPekerjaanController::class, 'delete'])->name('riwayat-pekerjaan.delete');
 
         //! RIWAYAT PEKERJAAN
