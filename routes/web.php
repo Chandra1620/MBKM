@@ -507,6 +507,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/riwayat-kehadiran', [RiwayatKehadiranController::class, 'index'])->name('riwayatkehadiran.index');
         Route::get('/riwayat-absensi', [RiwayatKehadiranController::class, 'absence'])->name('riwayatkehadiran.absensi');
     });
+
+    Route::prefix('pegawai')->group(function() {
+        Route::get('riwayat-pekerjaan', [App\Http\Controllers\Pegawai\RiwayatPekerjaanController::class, 'index'])->name('riwayat-pekerjaan.index');
+        Route::post('riwayat-pekerjaan/store', [App\Http\Controllers\Pegawai\RiwayatPekerjaanController::class, 'store'])->name('riwayat-pekerjaan.store');
+        Route::get('riwayat-pekerjaan/edit/{id}', [App\Http\Controllers\Pegawai\RiwayatPekerjaanController::class, 'edit'])->name('riwayat-pekerjaan.edit');
+        Route::put('riwayat-pekerjaan/update/{id}', [App\Http\Controllers\Pegawai\RiwayatPekerjaanController::class, 'update'])->name('riwayat-pekerjaan.update');
+        Route::delete('riwayat-pekerjaan/delete/{id}', [App\Http\Controllers\Pegawai\RiwayatPekerjaanController::class, 'delete'])->name('riwayat-pekerjaan.delete');
+        Route::get('riwayat-pekerjaan/{id}/info', [App\Http\Controllers\Pegawai\RiwayatPekerjaanController::class, 'info'])->name('riwayat-pekerjaan.info');
+    });
+    
 });
 
 require __DIR__ . '/auth.php';

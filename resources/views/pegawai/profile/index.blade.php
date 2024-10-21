@@ -3,8 +3,8 @@
 @section('content')
     {{-- <p class="bg-red-200">hello</p> --}}
     <div class="container">
-
         <div class="flex w-full flex-col xl:flex-row">
+            {{-- SUDAH BERESSSSS --}}
             {{-- start left --}}
             <div class="w-full">
                 <!-- Start Profile -->
@@ -25,9 +25,6 @@
                             </div>
 
                         </div>
-
-                        {{-- SUDAH BERESSSSS --}}
-
                         <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
                             <p class="max-w-[200px] w-full">Nama</p>
                             <P>: {{ $user['name'] }}</P>
@@ -40,7 +37,6 @@
                             <p class="max-w-[200px] w-full">Email</p>
                             <P>: {{ $user['email'] }}</P>
                         </div>
-
                         <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
                             <p class="max-w-[200px] w-full">Jenis Kelamin</p>
                             <P>:
@@ -50,7 +46,6 @@
                                 @else
                                     Perempuan
                                 @endif
-
                             </P>
                         </div>
                         <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
@@ -67,8 +62,8 @@
                         </div>
                         <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
                             <p class="max-w-[200px] w-full">File Pendukung</p>
-                            @if ($user["photo"])
-                                <a href="{{ url('images/photo/' . $user["photo"]) }}">Lihat
+                            @if ($user['photo'])
+                                <a href="{{ url('images/photo/' . $user['photo']) }}">Lihat
                                     file</a>
                             @else
                                 : -
@@ -78,6 +73,7 @@
                     </div>
                 </div>
                 <!-- End Profile -->
+
 
                 <!-- Start Kependudukan -->
                 <div class="max-w-2xl  mx-auto ">
@@ -165,7 +161,7 @@
                                 Kepegawaian
                             </h1>
                             <a href="{{ route('edit-kepegawaian') }}">
-                            {{-- <a href="{{ route('riwayat-fungsional.create') }}"> --}}
+                                {{-- <a href="{{ route('riwayat-fungsional.create') }}"> --}}
                                 <img src="{{ asset('assets/icon/update.png') }}" alt="icon" width="30">
                             </a>
                         </div>
@@ -184,9 +180,10 @@
                         </div>
                         <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
                             <p class="max-w-[200px] w-full">Pangkat Golongan</p>
-                            <p> @if ($pangkat && $pangkat->status == 'diverifikasi')
+                            <p>
+                                @if ($pangkat && $pangkat->status == 'diverifikasi')
                                     {{ $pangkat->pangkat_golongan }}
-                                    @else
+                                @else
                                     : -
                                 @endif
                             </p>
@@ -223,7 +220,6 @@
                             <p class="max-w-[200px] w-full">Desa/Kelurahan</p>
                             <P>: {{ $alamatdankontak->desa_kelurahan }}</P>
                         </div>
-
                         <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex">
                             <p class="max-w-[200px] w-full">Alamat</p>
                             <P>: {{ $alamatdankontak->alamat }}</P>
@@ -252,8 +248,9 @@
                 </div>
                 <!-- End Alamat dan Kontak -->
 
+
                 <!-- Start Lain-lain -->
-                {{-- <div class="max-w-2xl  mx-auto ">
+                <div class="max-w-2xl  mx-auto ">
                     <div class="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900 m-2">
                         <div class="flex justify-between mb-2">
                             <h1 class="text-xl md:text-3xl font-bold text-gray-800 dark:text-gray-200">
@@ -281,26 +278,26 @@
                             @endif
                         </div>
                     </div>
-                </div> --}}
-
+                </div>
                 <!-- End Lain-lain -->
-                <!-- Start Lain-lain -->
-                {{-- <div class="max-w-2xl  mx-auto ">
+
+
+                <!-- Start TTD -->
+                <div class="max-w-2xl  mx-auto ">
                     <div class="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900 m-2">
                         <div class="flex justify-between mb-2">
                             <h1 class="text-xl md:text-3xl font-bold text-gray-800 dark:text-gray-200">
                                 Tanda Tangan
                             </h1>
                             <div class="flex">
-
                                 <a href="{{ route('edit-tandatangan') }}">
                                     <img src="{{ asset('assets/icon/update.png') }}" alt="icon" width="30">
                                 </a>
                             </div>
-
                         </div>
-                        <div class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex justify-center">
-                            {{-- @if ($tandaTangan->image)
+                        <div
+                            class="py-2 border-t first:border-transparent border-gray-200 dark:border-gray-700 flex justify-center">
+                            @if ($tandaTangan->image)
                                 <div class="w-[100px] h-[100px] bg-red-400">
                                     <img src="{{ asset('images/tandatangan/' . $tandaTangan->image) }}"
                                         alt="Tanda Tangan" />
@@ -309,7 +306,7 @@
                                 <div class="flex justify-center  w-full my-8">
                                     <p>--- Tidak ada tanda tangan ---</p>
                                 </div>
-                            @endif --}
+                            @endif
                             @if ($tandaTangan->link)
                                 <div class="w-[100px] h-[100px] ">
                                     <img width="70px" src="data:image/svg+xml;base64,{{ $qrCodeTandaTangan }}"
@@ -320,18 +317,12 @@
                                     <p>--- Tidak ada tanda tangan ---</p>
                                 </div>
                             @endif
-
-
                         </div>
-
                     </div>
-                </div> --}}
-                <!-- End Lain-lain -->
-
+                </div>
+                <!-- End TTD -->
             </div>
             {{-- end right --}}
-
-
         </div>
 
 

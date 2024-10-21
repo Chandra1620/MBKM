@@ -53,6 +53,8 @@
                                             {{-- <p class="hidden text-xs text-red-600 mt-2" id="email-error">Please include a valid email address so we can get back to you</p> --}}
                                         </div>
                                         <!-- End Form Group -->
+
+
                                         <!-- Form Group -->
                                         <div>
                                             <label class="inline-block text-sm font-medium dark:text-white">
@@ -74,6 +76,8 @@
                                             {{-- <p class="hidden text-xs text-red-600 mt-2" id="email-error">Please include a valid email address so we can get back to you</p> --}}
                                         </div>
                                         <!-- End Form Group -->
+
+
                                         <!-- Form Group -->
                                         <div>
                                             <label class="inline-block text-sm font-medium dark:text-white">
@@ -94,8 +98,8 @@
                                             </div>
                                             {{-- <p class="hidden text-xs text-red-600 mt-2" id="email-error">Please include a valid email address so we can get back to you</p> --}}
                                         </div>
-
                                         <!-- End Form Group -->
+                                        
                                         <div>
                                             <label class="inline-block text-sm font-medium dark:text-white">
                                                 Instansi
@@ -268,11 +272,9 @@
                             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                                 <thead class="bg-gray-50 dark:bg-gray-700">
                                     <tr>
-
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Bidang
                                             Usaha </th>
-
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Jenis
                                             Pekerjaan</th>
@@ -283,12 +285,9 @@
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                                             Instansi
                                         </th>
-
-
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Divisi
                                         </th>
-
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Mulai
                                             Bekerja </th>
@@ -298,15 +297,6 @@
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status
                                         </th>
-                                        {{-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tahun  </th>
-
-                                            <th scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tanggal Tes </th> --}}
-                                        {{-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Address</th> --}}
-
-
-                                        {{-- <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Skor Tes </th> --}}
                                         <th scope="col"
                                             class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Aksi
                                         </th>
@@ -349,21 +339,8 @@
                                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                                                 {{ $riwayat->status }}
                                             </td>
-
-
-
-
-                                            {{-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">New York No. 1 Lake Park</td> --}}
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium ">
                                                 <div class="flex justify-end">
-
-                                                    {{-- <a href="{{ route('riwayatikasi.edit', ['id' => $riwayat->id]) }}">
-                                                    <button type="button"
-                                                        class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-yellow-200 font-semibold text-yellow-500 hover:text-white hover:bg-yellow-500 hover:border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
-                                                        Update
-                                                    </button>
-                                                    </a> --}}
-
                                                     <a href="{{ route('riwayat-pekerjaan.info', $riwayat->id) }}"
                                                         class="ml-2 py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-yellow-200 font-semibold text-yellow-500 hover:text-white hover:bg-yellow-500 hover:border-yelow-500 focus:outline-none focus:ring-2 focus:ring-yellow-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
                                                         Info</a>
@@ -386,17 +363,11 @@
                                                         </button>
                                                     </form>
                                                 </div>
-
-
-
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
-                        </div>
-                        <div class="py-1 px-4">
-                            {{-- {{ $riwayatikasi->links() }} --}}
                         </div>
                     </div>
                 </div>
