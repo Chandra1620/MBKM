@@ -147,7 +147,7 @@ class RiwayatPekerjaanController extends Controller
     public function info($id)
     {
         // Ambil data riwayat pekerjaan berdasarkan user_id yang sedang login
-        $riwayatPekerjaan = RiwayatPekerjaan::where('user_id', Auth::user()->id)->get();
+        $riwayatPekerjaan = RiwayatPekerjaan::find($id);
 
         // Kirim data ke view
         return view('pegawai.riwayat_pekerjaan.info', compact('riwayatPekerjaan'));
