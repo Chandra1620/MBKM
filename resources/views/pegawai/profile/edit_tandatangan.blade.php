@@ -57,11 +57,9 @@
                                 class="py-2 px-3 pr-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
                                 placeholder="Link Tanda Tangan ">
                         </div>
-                        
-                        {{-- <label class="inline-block text-sm font-medium dark:text-white">
+                        <label class="inline-block text-sm font-medium dark:text-white">
                             Tanda Tangan
                         </label>
-
                         <div class="mt-2 space-y-3">
                             <label class="block">
                                 <span class="sr-only">Choose profile photo</span>
@@ -74,7 +72,7 @@
                                     hover:file:bg-blue-600"
                                     accept="image/*" />
                             </label>
-                        </div> --}}
+                        </div>
                     </div>
 
                     <div class="mt-5 flex justify-end gap-x-2">

@@ -21,13 +21,7 @@
                     <!-- Section -->
                     <div
                         class="py-6 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200 dark:border-gray-700">
-                        {{-- <label class="inline-block text-sm font-medium dark:text-white">
-                            Alamat dan Kontak 
-                        </label> --}}
-
                         <div class="mt-2 space-y-3">
-
-
                             <div>
                                 <label class="inline-block text-sm font-medium dark:text-white">
                                     Provinsi
@@ -57,9 +51,6 @@
                                 <select id="kecamatanSelect" class="js-example-basic-single" style="width: 100%;">
                                     <option value="">Pilih Kecamatan</option>
                                 </select>
-
-
-
                             </div>
                             <div>
                                 <label class="inline-block text-sm font-medium dark:text-white">
