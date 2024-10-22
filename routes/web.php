@@ -497,7 +497,6 @@ Route::middleware('auth')->group(function () {
 
         //!: FITURE PRESENSI
         Route::get('/log-harian', [LogHarianController::class, 'index'])->name('logharian.index');
-
         Route::get('/log-harian/create', [LogHarianController::class, 'create'])->name('logharian.create');
         Route::post('/log-harian', [LogHarianController::class, 'store'])->name('logharian.store');
         Route::get('/log-harian/{id}/edit', [LogHarianController::class, 'edit'])->name('logharian.edit');
