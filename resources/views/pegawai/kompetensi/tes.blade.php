@@ -5,10 +5,10 @@
         <div class="flex justify-between">
             <p class="pb-2 font-bold">Tes</p>
             <a href="{{ route('tes.create') }}">
-            <button type="button"
-                class="py-2 px-3 mb-2 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
-                Tambah
-            </button>
+                <button type="button"
+                    class="py-2 px-3 mb-2 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+                    Tambah
+                </button>
             </a>
 
         </div>
@@ -65,63 +65,70 @@
                                         <th scope="col"
                                             class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Aksi
                                         </th>
-                                        
+
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
 
                                     @foreach ($tes as $test)
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                            {{ $test->nama_tes}}
-                                        </td>
+                                        <tr>
+                                            <td
+                                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                                                {{ $test->nama_tes }}
+                                            </td>
 
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                            {{ $test->skor}}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                            {{ $test->jenis_tes}}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                            {{ $test->penyelenggara}}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                            {{ $test->tahun}}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                            {{ $test->status}}
-                                        </td>
+                                            <td
+                                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                                                {{ $test->skor }}
+                                            </td>
+                                            <td
+                                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                                                {{ $test->jenis_tes }}
+                                            </td>
+                                            <td
+                                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                                                {{ $test->penyelenggara }}
+                                            </td>
+                                            <td
+                                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                                                {{ $test->tahun }}
+                                            </td>
+                                            <td
+                                                class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                                                {{ $test->status }}
+                                            </td>
 
-                                        {{-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">New York No. 1 Lake Park</td> --}}
-                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium ">
-                                            <div class="flex justify-end">
+                                            {{-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">New York No. 1 Lake Park</td> --}}
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium ">
+                                                <div class="flex justify-end">
 
-                                                @if ($test->status == 'pengajuan')
-                                                <a href="{{ route('tes.edit', ['id' => $test->id]) }}">
-                                                    <button type="button"
-                                                        class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-yellow-200 font-semibold text-yellow-500 hover:text-white hover:bg-yellow-500 hover:border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
-                                                        Update
-                                                    </button>
-                                                    </a>
-                                                @endif
-                                                
-
-
-                                                <form action="{{ route('tes.delete', ['id' => $test->id]) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit"
-                                                        class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-red-200 font-semibold text-red-500 hover:text-white hover:bg-red-500 hover:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
-                                                        Hapus
-                                                    </button>
-                                                </form>
-                                            </div>
+                                                    @if ($test->status == 'pengajuan')
+                                                        <a href="{{ route('tes.edit', ['id' => $test->id]) }}">
+                                                            <button type="button"
+                                                                class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-yellow-200 font-semibold text-yellow-500 hover:text-white hover:bg-yellow-500 hover:border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800 mt-4 mb-4 ml-4 mr-4">
+                                                                Update
+                                                            </button>
+                                                        </a>
+                                                    @endif
 
 
 
-                                        </td>
-                                    </tr>
+                                                    <form action="{{ route('tes.delete', ['id' => $test->id]) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-red-200 font-semibold text-red-500 hover:text-white hover:bg-red-500 hover:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800 mt-4">
+                                                            Hapus
+                                                        </button>
 
+                                                    </form>
+                                                </div>
+
+
+
+                                            </td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>
