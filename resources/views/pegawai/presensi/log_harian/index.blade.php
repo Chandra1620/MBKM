@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <div >
+        <div>
             <p class="pb-1 font-bold">Log Harian</p>
             <a href="{{ route('logharian.create') }}">
                 <button type="button"
@@ -60,23 +60,19 @@
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tgl
                                             Selesai
                                         </th> --}}
-
-
-                                        {{-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Address</th> --}}
                                         <th scope="col"
                                             class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Action
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-
                                     @foreach ($log_harian as $log)
                                         <tr>
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                                                 {{ $log->created_at->format('d M Y') }}
                                             </td>
-            
+
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                                                 {{ $log->waktu_mulai }}
@@ -91,21 +87,15 @@
                                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                                                 {{ $log->name }}
                                             </td>
-
-                                            
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium ">
                                                 <div class="flex justify-end">
-
-                                                    <a 
-                                                        href="{{ route('logharian.edit',['id' => $log->id ]) }}"
-                                                        >
+                                                    <a href="{{ route('logharian.edit', ['id' => $log->id]) }}">
                                                         <button type="submit"
                                                             class="py-3 px-4 iupdatenline-flex justify-center items-center gap-2 rounded-md border-2 border-blue-200 font-semibold text-blue-500 hover:text-white hover:bg-blue-500 hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
                                                             update
                                                         </button>
                                                     </a>
-                                                    <form 
-                                                        action="{{ route('logharian.destroy',['id' => $log->id ]) }}"
+                                                    <form action="{{ route('logharian.destroy', ['id' => $log->id]) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('delete')
@@ -115,13 +105,9 @@
                                                         </button>
                                                     </form>
                                                 </div>
-
-
-
                                             </td>
                                         </tr>
                                     @endforeach
-
                                 </tbody>
                             </table>
                         </div>

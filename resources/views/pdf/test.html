@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        html, body {
+            margin: 10px;
+            padding: 0;
+        }
+        .content {
+            width: 100%;
+            border: 1px solid black;
+            display: table;
+            justify-content: center;
+            align-items: center;
+        }
+        .footer {
+            margin-top: auto;
+        }
+        .border {
+            border: 1px solid black;
+        }
+        .table {
+            width: 100%;
+        }
+    </style>
+    <title>Invoice</title>
+</head>
+<body>
+    <table class="table" style="border-collapse: collapse; margin-bottom: 20px;">
+        <tr>
+            <td class="border" colspan="3">test</td>
+        </tr>
+        <tr class="border">
+            <td class="border">Test</td>
+            <td class="border">test</td>
+            <td class="border" rowspan="2">test</td>
+        </tr>
+        <tr class="border">
+            <td class="border">Test</td>
+            <td class="border">test</td>
+
+        </tr>
+    </table>
+    <!-- <div class="content"> -->
+        <!-- <h1 style="border: 1px solid black; text-align: end;">Hi</h1> -->
+        <!-- <h1>Invoice #{{ $invoice_number }}</h1>
+        <p>Date: {{ $date }}</p>
+
+        <h2>Customer Details</h2>
+        <p>Name: {{ $customer['name'] }}</p>
+        <p>Address: {{ $customer['address'] }}</p>
+        <p>Phone: {{ $customer['phone'] }}</p>
+
+        <h2>Items</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        <td>{{ $item['description'] }}</td>
+                        <td>{{ $item['quantity'] }}</td>
+                        <td>${{ $item['price'] }}</td>
+                    </tr>
+            </tbody>
+        </table>
+
+        <div class="footer">
+            <p>Subtotal: ${{ $subtotal }}</p>
+            <p>Tax: ${{ $tax }}</p>
+            <p>Total: ${{ $total }}</p>
+        </div> -->
+    <!-- </div> -->
+</body>
+</html>

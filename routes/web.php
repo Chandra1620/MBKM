@@ -29,6 +29,7 @@ use App\Http\Controllers\AdminSystem\AdminPegawaiController;
 use App\Http\Controllers\AdminSystem\PegawaiController;
 use App\Http\Controllers\AtasanLangsung\RequestPerizinanAtasanLangsungController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\Pegawai\DiklatController;
 use App\Http\Controllers\Pegawai\KegiatanController;
 use App\Http\Controllers\Pegawai\LogHarianController;
@@ -220,9 +221,6 @@ Route::middleware('auth')->group(function () {
         Route::delete('/jabatan-fungsional/{id}/delete', [JabatanFungsionalController::class, 'destroy'])->name('jabatan-fungsional.delete');
 
         // end will deleted
-
-
-
         Route::get('/pegawai-struktural', [PegawaiStrukturalController::class, 'index'])->name('pegawai-struktural.index');
 
         Route::get('/pegawai-struktural/create', [PegawaiStrukturalController::class, 'create'])->name('pegawai-struktural.create');
@@ -281,8 +279,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/overview/{id}', [PerizinanController::class, 'overview'])->name('perizinan-cuti.overview');
 
     Route::get('/perizinan-cuti', [PerizinanController::class, 'index'])->name('perizinan-cuti.index');
-
-
 
     Route::get('/perizinan-cuti/create', [PerizinanController::class, 'create'])->name('perizinan-cuti.create');
     Route::post('/perizinan-cuti/store', [PerizinanController::class, 'store'])->name('perizinan-cuti.store');
@@ -497,7 +493,6 @@ Route::middleware('auth')->group(function () {
 
         //!: FITURE PRESENSI
         Route::get('/log-harian', [LogHarianController::class, 'index'])->name('logharian.index');
-
         Route::get('/log-harian/create', [LogHarianController::class, 'create'])->name('logharian.create');
         Route::post('/log-harian', [LogHarianController::class, 'store'])->name('logharian.store');
         Route::get('/log-harian/{id}/edit', [LogHarianController::class, 'edit'])->name('logharian.edit');
@@ -517,6 +512,9 @@ Route::middleware('auth')->group(function () {
         Route::get('riwayat-pekerjaan/{id}/info', [App\Http\Controllers\Pegawai\RiwayatPekerjaanController::class, 'info'])->name('riwayat-pekerjaan.info');
     });
     
+
 });
+
+Route::get("/pdf", [DocumentController::class, "create"]);
 
 require __DIR__ . '/auth.php';
