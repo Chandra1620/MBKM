@@ -448,7 +448,8 @@
                                                                 y2="17" />
                                                             <line x1="14" y1="11" x2="14"
                                                                 y2="17" />
-                                                        </svg></button>
+                                                        </svg>
+                                                    </button>
                                                 </form>
                                                 <a href="{{ route('management-surat-tugas.detail', ['id' => $log->id]) }}"
                                                     class="py-1 px-2 flex justify-center items-center h-[2.2rem] w-[2.2rem] text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
