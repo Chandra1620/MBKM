@@ -32,17 +32,22 @@ class ManagementSuratTugasController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $pengirimId = Auth::user()->id;
+
         $attrs = $request->validate([
+            "jenis_surat" => "required",
             'judul' => 'required',
             'deskripsi' => 'required',
             'nomor_surat' => 'required',
             'leadersSelected' => 'required',
-            'membersSelected' => 'array',
-            'tgl_berangkat' => 'required',
-            'tgl_kembali' => 'required',
+            'membersSelected' => 'nullable',
+            'tgl_berangkat' => 'nullable',
+            'tgl_kembali' => 'nullable',
             'file_pendukung' => 'nullable|file|mimes:doc,docx,pdf|max:10240',
         ]);
+
+        // dd($attrs);
 
             $surat = new SuratTugas([
                 'jenis_surat' => 'ST',
