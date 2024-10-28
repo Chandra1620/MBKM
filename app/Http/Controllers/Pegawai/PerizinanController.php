@@ -1,16 +1,17 @@
 <?php
+
 namespace App\Http\Controllers\Pegawai;
+
 use App\Http\Controllers\Controller;
 use App\Models\JabatanFungsional;
 use App\Models\JenisCuti;
 use App\Models\PegawaiFungsional;
 use App\Models\PerizinanCuti;
-use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
-use Carbon\Carbon;
-use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+use Illuminate\Support\Carbon;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class PerizinanController extends Controller
@@ -598,4 +599,5 @@ class PerizinanController extends Controller
 
         return view('pegawai.perizinan.scan', compact('perizinanCuti', 'sisaCutiTahunIni', 'sisaCutiTahunN1', 'sisaCutiTahunN2'));
     }
+
 }
