@@ -97,40 +97,40 @@
                                     Keluar</th>
                                     <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Jam
-                                    Tanggal</th>
+                                    Tanggal</th> --}}
 
                                 {{-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Address</th> --}}
                             
-                            {{--</tr>
+                            {{-- </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
 
-                            @foreach ($berita as $news)
+                            @foreach ($kehadiran as $kehadiran)
                                 <tr>
                                     <td
                                         class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                        {{ $news->user->nip }}</td>
+                                        {{ $kehadiran->user->nip }}</td>
                                     <td
                                         class="px-6 font-bold py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                        {{ $news->user->name }}</td>
+                                        {{ $kehadiran->user->name }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"
                                         style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                        {{ $news->jam_masuk }}
+                                        {{ $kehadiran->jam_masuk }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"
                                         style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                        {{ $news->jam_keluar }}
+                                        {{ $kehadiran->jam_keluar }}
 
                                     </td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"
                                     style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                    {{ $news->jam_keluar }}
+                                    {{ $kehadiran->jam_keluar }}
 
                                 </td>
 
                                     <td
                                         class="px-6 py-4 whitespace-nowrap max-w-xs text-sm text-gray-800 dark:text-gray-200">
                                         <div class="w-[50px] h-50px">
-                                    {{ $news->tanggal_kehadiran }}
+                                    {{ $kehadiran->tanggal_kehadiran }}
 
                                         </div>
                                     </td>
@@ -142,7 +142,7 @@
                     </table>
                 </div>
                 <div class="py-1 px-4">
-                    {{ $berita->links() }}
+                    {{ $kehadiran->links() }}
                 </div>
             </div>
         </div>

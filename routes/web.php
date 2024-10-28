@@ -170,7 +170,6 @@ Route::middleware('auth')->group(function () {
         Route::put('/admin-pangkat-golongan/update/{id}', [AdminPangkatGolonganController::class, 'update'])->name('admin-pangkat-golongan.update');
         Route::delete('/admin-pangkat-golongan/{id}/delete', [AdminPangkatGolonganController::class, 'destroy'])->name('admin-pangkat-golongan.delete');
         Route::get('/admin-pangkat-golongan/downloadFile/{id}', [AdminPangkatGolonganController::class, 'downloadFile'])->name('admin-pangkat-golongan.download');
-
     });
     Route::middleware(['permission:mengelola-unit-kerja'])->group(function () {
         Route::get('/unit-kerja', [UnitKerjaController::class, 'index'])->name('unit-kerja.index');
@@ -271,7 +270,6 @@ Route::middleware('auth')->group(function () {
         Route::delete('/management-surat-keputusan/{id}', [ManagementSuratKeputusanController::class, 'destroy'])->name('management-surat-keputusan.destroy');
 
         Route::get('/admin-pangkat-golongan', [AdminPangkatGolonganController::class, 'index'])->name('admin-pangkat-golongan.index');
-
     });
 
     //todo
@@ -503,7 +501,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/riwayat-absensi', [RiwayatKehadiranController::class, 'absence'])->name('riwayatkehadiran.absensi');
     });
 
-    Route::prefix('pegawai')->group(function() {
+    // Route::get('/riwayat-kehadiran', [RiwayatKehadiranController::class, 'index'])->name('riwayatkehadiran.index');
+    // Route::post('/riwayat-absensi', [RiwayatKehadiranController::class, 'absence'])->name('riwayatkehadiran.absensi');
+    // // Route::post('/riwayat-kehadiran/absen', [RiwayatKehadiranController::class, 'absen'])->name('riwayatkehadiran.absen');
+
+    // Route::get('/riwayat-kehadiran', [RiwayatKehadiranController::class, 'index'])->name('riwayatkehadiran.index');
+    // Route::post('/riwayat-absen', [RiwayatKehadiranController::class, 'absence'])->name('riwayatkehadiran.absence');
+
+
+    Route::prefix('pegawai')->group(function () {
         Route::get('riwayat-pekerjaan', [App\Http\Controllers\Pegawai\RiwayatPekerjaanController::class, 'index'])->name('riwayat-pekerjaan.index');
         Route::post('riwayat-pekerjaan/store', [App\Http\Controllers\Pegawai\RiwayatPekerjaanController::class, 'store'])->name('riwayat-pekerjaan.store');
         Route::get('riwayat-pekerjaan/edit/{id}', [App\Http\Controllers\Pegawai\RiwayatPekerjaanController::class, 'edit'])->name('riwayat-pekerjaan.edit');
@@ -511,8 +517,6 @@ Route::middleware('auth')->group(function () {
         Route::delete('riwayat-pekerjaan/delete/{id}', [App\Http\Controllers\Pegawai\RiwayatPekerjaanController::class, 'delete'])->name('riwayat-pekerjaan.delete');
         Route::get('riwayat-pekerjaan/{id}/info', [App\Http\Controllers\Pegawai\RiwayatPekerjaanController::class, 'info'])->name('riwayat-pekerjaan.info');
     });
-    
-
 });
 
 Route::get("/pdf", [DocumentController::class, "create"]);

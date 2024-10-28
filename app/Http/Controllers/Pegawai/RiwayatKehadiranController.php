@@ -11,8 +11,8 @@ class RiwayatKehadiranController extends Controller
 {
     public function index()
     {
-        $berita = PegawaiHasAbsensi::with('user')->where('user_id',Auth::user()->id)->paginate(8);
-        return view('pegawai.presensi.riwayat_kehadiran.index', compact('berita'));
+        $kehadiran = PegawaiHasAbsensi::with('user')->where('user_id',Auth::user()->id)->paginate(8);
+        return view('pegawai.presensi.riwayat_kehadiran.index', compact('kehadiran'));
     }
 
     function absence(){
@@ -21,3 +21,4 @@ class RiwayatKehadiranController extends Controller
         ]);
     }
 }
+
