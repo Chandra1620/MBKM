@@ -5,11 +5,12 @@ use App\Models\JabatanFungsional;
 use App\Models\JenisCuti;
 use App\Models\PegawaiFungsional;
 use App\Models\PerizinanCuti;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Carbon\Carbon;
 use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\DB;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class PerizinanController extends Controller
@@ -116,6 +117,7 @@ class PerizinanController extends Controller
                 ->route('perizinan-cuti.index')
                 ->with('error', 'Anda Harus Memiliki Jabatan Fungsional dulu');
         }
+        
         $attrs = $request->validate([
             'alasan' => 'required',
             'alamat_selama_cuti' => 'required',
@@ -124,6 +126,7 @@ class PerizinanController extends Controller
             'tgl_selesai' => 'required',
             'no_telp_bisa_dihubungi' => 'required'
         ]);
+
         $year = now()->year; // Mengambil tahun saat ini
         $totalRiwayatCuti = PerizinanCuti::where('user_id', $user->id)
             ->whereYear('tgl_mulai', $year)
@@ -135,6 +138,7 @@ class PerizinanController extends Controller
         }
 
         $perizinanCuti = new PerizinanCuti();
+
         $perizinanCuti->user_id = $user->id;
         $perizinanCuti->unit_kerja_id = $pegawaiFungsional->unit_kerja_has_jabatan_fungsional->unitkerja->id;
 
@@ -146,8 +150,32 @@ class PerizinanController extends Controller
         $perizinanCuti->no_telp_bisa_dihubungi = $attrs['no_telp_bisa_dihubungi'];
 
         $perizinanCuti->save();
+            
+        $results = DB::table('riwayat_fungsionals')
+        ->join('unit_kerja_has_jabatan_fungsionals', 'riwayat_fungsionals.unit_kerja_has_jabatan_fungsional_id', '=', 'unit_kerja_has_jabatan_fungsionals.id')
+        ->select('riwayat_fungsionals.*', 'unit_kerja_has_jabatan_fungsionals.*')
+        ->where("riwayat_fungsionals.user_id", "=", "$user->id")
+        ->get()
+        ->first();
 
-        return redirect()->route('perizinan-cuti.index');
+        $data = [
+            'name' => $user->name,
+            'unit_kerja' => $pegawaiFungsional->unit_kerja_has_jabatan_fungsional->unitkerja->name,
+            'jabatan_fungsional' => $results->name,
+            'nip' => $user->nip,
+            'jenis_cuti' => $attrs["jenis_cuti"],
+            'tax' => 20,
+            'total' => 220,
+            'images' => public_path('assets/test/pngwing.com.png'),
+            'icon' => public_path('assets/icon/check.svg')
+        ];
+        
+        // dd($data);
+
+        $pdf = FacadePdf::loadView('pdf.test', data: $data);
+        return $pdf->stream('Form Cuti.pdf');
+
+        // return redirect()->route('perizinan-cuti.index');
     }
 
     public function edit($id)
