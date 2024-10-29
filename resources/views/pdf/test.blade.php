@@ -136,7 +136,7 @@
             </tr>
             <tr>
                 <td class="border padding-table-x" style="width: 20%;">Unit Kerja</td>
-                <td class="border padding-table-x" colspan="3">{{ $unit_kerja }}</td>
+                <td class="border padding-table-x" colspan="3"></td>
             </tr>
         </table>
         <table class="tabel margin-table-x-y">
@@ -193,7 +193,7 @@
                         CUTI</strong></td>
             </tr>
             <tr>
-                <td class="border padding-table-x" style="width: 100%; height: 40px;"></td>
+                <td class="border padding-table-x" style="width: 100%; height: 40px;">{{ $alasan }}</td>
             </tr>
         </table>
         <table class="tabel margin-table-x-y">
@@ -268,7 +268,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="border padding-table-x"></td>
+                <td class="border padding-table-x">{{ $alamat_cuti }}</td>
                 <td class="border padding-table-x"></td>
             </tr>
         </table>

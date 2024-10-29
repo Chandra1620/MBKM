@@ -275,13 +275,16 @@ Route::middleware('auth')->group(function () {
     });
 
     //todo
-    Route::get('/export-pdf/{id}', [PerizinanController::class, 'exportPdf'])->name('perizinan-cuti.exportPdf');
-    Route::get('/overview/{id}', [PerizinanController::class, 'overview'])->name('perizinan-cuti.overview');
+    // Route::get('/export-pdf/{id}', [PerizinanController::class, 'exportPdf'])->name('perizinan-cuti.exportPdf');
+    // Route::get('/overview/{id}', [PerizinanController::class, 'overview'])->name('perizinan-cuti.overview');
 
     Route::get('/perizinan-cuti', [PerizinanController::class, 'index'])->name('perizinan-cuti.index');
 
     Route::get('/perizinan-cuti/create', [PerizinanController::class, 'create'])->name('perizinan-cuti.create');
     Route::post('/perizinan-cuti/store', [PerizinanController::class, 'store'])->name('perizinan-cuti.store');
+    
+    Route::get("/perizinan-cuti-overview", [PerizinanController::class, 'overview'])->name('perizinan-cuti.overview');
+    Route::get("/perizinan-cuti/{id}/download", [PerizinanController::class, 'pdfExporting'])->name('perizinan-cuti.pdfExporting');
 
     Route::get('/perizinan-cuti/{id}/edit', [PerizinanController::class, 'edit'])->name('perizinan-cuti.edit');
     Route::put('/perizinan-cuti/{id}/update', [PerizinanController::class, 'update'])->name('perizinan-cuti.update');

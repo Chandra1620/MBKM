@@ -173,10 +173,10 @@ class PerizinanController extends Controller
         
         // dd($data);
 
-        $pdf = FacadePdf::loadView('pdf.test', data: $data);
-        return $pdf->stream('Form Cuti.pdf');
+        // $pdf = FacadePdf::loadView('pdf.test', data: $data);
+        // return $pdf->stream('Form Cuti.pdf');
 
-        // return redirect()->route('perizinan-cuti.index');
+        return redirect()->route('perizinan-cuti.index');
     }
 
     public function edit($id)
@@ -213,6 +213,42 @@ class PerizinanController extends Controller
         }
         $perizinan->delete();
         return redirect()->route('perizinan-cuti.index');
+    }
+    public function pdfExporting($id)
+    {
+        $user = Auth::user();
+
+        $results = DB::table('riwayat_fungsionals')
+            ->join('unit_kerja_has_jabatan_fungsionals', 'riwayat_fungsionals.unit_kerja_has_jabatan_fungsional_id', '=', 'unit_kerja_has_jabatan_fungsionals.id')
+            ->select('riwayat_fungsionals.*', 'unit_kerja_has_jabatan_fungsionals.*')
+            ->where("riwayat_fungsionals.user_id", "=", "$user->id")
+            ->get()
+            ->first();
+
+        $results2 = DB::table('perizinan_cutis')
+            ->join('jenis_cutis', 'jenis_cutis.id', '=', 'perizinan_cutis.jenis_cuti_id')
+            ->where('perizinan_cutis.id', '=', $id)
+            ->get()
+            ->first();
+
+        $data = [
+            "name" => $user->name,
+            'nip' => $user->nip,
+            // "unit-kerja" =>
+            'jabatan_fungsional' => $results->name,
+            'jenis_cuti' => $results2->jenis_cuti_id,
+            'alasan' => $results2->alasan,
+            'alamat_cuti' => $results2->alamat_selama_cuti,
+            'tgl_mulai' => $results2->tgl_mulai,
+            'tgl_selesai' => $results2->tgl_selesai,
+            'images' => public_path('assets/test/pngwing.com.png'),
+            'icon' => public_path('assets/icon/check.svg')
+        ];
+
+        // dd($results2);
+
+        $pdf = FacadePdf::loadView('pdf.test', data: $data);
+        return $pdf->stream('Form Cuti.pdf');
     }
     public function exportPdf($id)
     {
