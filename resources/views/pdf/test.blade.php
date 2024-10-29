@@ -87,6 +87,7 @@
             transform: translate(-50%, -50%);
         }
     </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <title>Invoice</title>
 </head>
 
@@ -123,18 +124,19 @@
             </tr>
             <tr>
                 <td class="border padding-table-x" style="width: 20%;">Nama</td>
-                <td class="border padding-table-x" style="width: 30%;">{{ $customer['name'] }}</td>
+                <td class="border padding-table-x" style="width: 30%;">{{ $name }}</td>
                 <td class="border padding-table-x" style="width: 20%;">NIP</td>
-                <td class="border padding-table-x" style="width: 30%">123</td>
+                <td class="border padding-table-x" style="width: 30%">{{ $nip }}</td>
             </tr>
             <tr>
                 <td class="border padding-table-x" style="width: 20%;">Jabatan</td>
-                <td class="border padding-table-x" style="width: 30%;"></td>
+                <td class="border padding-table-x" style="width: 30%;">{{ $jabatan_fungsional }}</td>
                 <td class="border padding-table-x" style="width: 20%;">Masa Kerja</td>
                 <td class="border padding-table-x" style="width: 30%"></td>
             </tr>
             <tr>
-                <td class="border padding-table-x" style="width: 20%;" colspan="4">Unit Kerja</td>
+                <td class="border padding-table-x" style="width: 20%;">Unit Kerja</td>
+                <td class="border padding-table-x" colspan="3"></td>
             </tr>
         </table>
         <table class="tabel margin-table-x-y">
@@ -144,21 +146,45 @@
             </tr>
             <tr>
                 <td class="border padding-table-x" style="width: 40%;">1. Cuti Tahunan</td>
-                <td class="border padding-table-x" style="width: 10%;"></td>
+                <td class="border padding-table-x" style="width: 10%; text-align:center;">
+                    @if ($jenis_cuti == 1)
+                        <img src={{ $icon }} alt="tanda tangan">
+                    @endif
+                </td>
                 <td class="border padding-table-x" style="width: 40%;">2. Cuti Besar</td>
-                <td class="border padding-table-x" style="width: 10%">123</td>
+                <td class="border padding-table-x" style="width: 10% text-align:center;">
+                    @if ($jenis_cuti == 2)
+                        <img src={{ $icon }} alt="tanda tangan">
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td class="border padding-table-x" style="width: 40%;">3. Cuti Sakit</td>
-                <td class="border padding-table-x" style="width: 10%;"></td>
+                <td class="border padding-table-x" style="width: 10%; text-align:center;">
+                    @if ($jenis_cuti == 3)
+                        <img src={{ $icon }} alt="tanda tangan">
+                    @endif
+                </td>
                 <td class="border padding-table-x" style="width: 40%;">4. Cuti Melahirkan</td>
-                <td class="border padding-table-x" style="width: 10%"></td>
+                <td class="border padding-table-x" style="width: 10%; text-align:center;">
+                    @if ($jenis_cuti == 4)
+                        <img src={{ $icon }} alt="tanda tangan">
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td class="border padding-table-x" style="width: 40%;">5. Cuti Karena Alasan Penting</td>
-                <td class="border padding-table-x" style="width: 10%;"></td>
+                <td class="border padding-table-x" style="width: 10%; text-align:center;">
+                    @if ($jenis_cuti == 5)
+                        <img src={{ $icon }} alt="tanda tangan">
+                    @endif
+                </td>
                 <td class="border padding-table-x" style="width: 40%;">6. Cuti di Luar Tanggungan Negara</td>
-                <td class="border padding-table-x" style="width: 10%"></td>
+                <td class="border padding-table-x" style="width: 10%; text-align:center;">
+                    @if ($jenis_cuti == 6)
+                        <img src={{ $icon }} alt="tanda tangan">
+                    @endif
+                </td>
             </tr>
         </table>
         <table class="tabel margin-table-x-y">
@@ -167,7 +193,7 @@
                         CUTI</strong></td>
             </tr>
             <tr>
-                <td class="border padding-table-x" style="width: 100%; height: 40px;"></td>
+                <td class="border padding-table-x" style="width: 100%; height: 40px;">{{ $alasan }}</td>
             </tr>
         </table>
         <table class="tabel margin-table-x-y">
@@ -242,7 +268,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="border padding-table-x"></td>
+                <td class="border padding-table-x">{{ $alamat_cuti }}</td>
                 <td class="border padding-table-x"></td>
             </tr>
         </table>

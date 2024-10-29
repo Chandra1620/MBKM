@@ -181,11 +181,33 @@
                                                                 <path stroke-linecap="round" stroke-linejoin="round"
                                                                     d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                                                             </svg>
-
                                                             Tracer
                                                         </button>
                                                     </div>
-
+                                                    <a
+                                                        class="flex justify-center items-center gap-3 px-3 me-2 rounded-md border-2 border-orange-200 font-semibold text-orange-500 hover:text-white hover:bg-orange-500 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                            height="16" fill="currentColor" class="bi bi-eye"
+                                                            viewBox="0 0 16 16">
+                                                            <path
+                                                                d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z" />
+                                                            <path
+                                                                d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
+                                                        </svg>
+                                                        Overview
+                                                    </a>
+                                                    <a href="{{ route('perizinan-cuti.pdfExporting', ['id' => $izin->id]) }}"
+                                                        class="flex justify-center items-center gap-3 px-3 me-2 rounded-md border-2 border-green-200 font-semibold text-green-500 hover:text-white hover:bg-green-500 hover:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                            height="16" fill="currentColor" class="bi bi-download"
+                                                            viewBox="0 0 16 16">
+                                                            <path
+                                                                d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
+                                                            <path
+                                                                d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z" />
+                                                        </svg>
+                                                        Download
+                                                    </a>
                                                     <div id="hs-cookies"
                                                         class="hs-overlay hidden w-full h-full fixed top-0 start-0 z-[60] overflow-x-hidden overflow-y-auto">
                                                         <div
@@ -223,7 +245,9 @@
                                                                             </div>
                                                                         </div>
                                                                         {{-- TODO start garus --}}
-                                                                        <div class="w-[50px] h-[5px] {{ $izin->verifikasi_admin == null ? 'bg-blue-100' : 'bg-blue-700' }}"></div>
+                                                                        <div
+                                                                            class="w-[50px] h-[5px] {{ $izin->verifikasi_admin == null ? 'bg-blue-100' : 'bg-blue-700' }}">
+                                                                        </div>
                                                                         {{-- TODO end garis --}}
                                                                         <div
                                                                             class="w-[80px] h-[80px] rounded-full flex justify-center items-center {{ $izin->pertimbangan_atasan_langsung == 'proses' ? 'bg-blue-100' : 'bg-blue-700' }} ">
@@ -234,7 +258,9 @@
                                                                             </div>
                                                                         </div>
                                                                         {{-- TODO start garus --}}
-                                                                        <div class="w-[50px] h-[5px] {{ $izin->pertimbangan_atasan_langsung == 'proses' ? 'bg-blue-100' : 'bg-blue-700' }}"></div>
+                                                                        <div
+                                                                            class="w-[50px] h-[5px] {{ $izin->pertimbangan_atasan_langsung == 'proses' ? 'bg-blue-100' : 'bg-blue-700' }}">
+                                                                        </div>
                                                                         {{-- TODO end garis --}}
                                                                         <div
                                                                             class="w-[80px] h-[80px] rounded-full {{ $izin->keputusan_pejabat_berwenang == 'proses' ? 'bg-blue-100' : 'bg-blue-700' }} flex justify-center items-center ">
@@ -278,30 +304,38 @@
 
 
 
-                                                    @if ($izin->keputusan_pejabat_berwenang == 'diizinkan')
-                                                    <a
-                                                        href="{{ route('perizinan-cuti.exportPdf', ['id' => $izin->id]) }}">
-                                                        <button type="button"
-                                                            class="py-3 mr-2 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-yellow-200 font-semibold text-yellow-500 hover:text-white hover:bg-yellow-500 hover:border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
-                                                            Export PDF
-                                                        </button>
-                                                    </a>
-                                                    @endif
-                                                    
+                                                    {{-- @if ($izin->keputusan_pejabat_berwenang == 'diizinkan')
+                                                        <a
+                                                            href="{{ route('perizinan-cuti.exportPdf', ['id' => $izin->id]) }}">
+                                                            <button type="button"
+                                                                class="py-3 mr-2 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-yellow-200 font-semibold text-yellow-500 hover:text-white hover:bg-yellow-500 hover:border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+                                                                Export PDF
+                                                            </button>
+                                                        </a>
+                                                    @endif --}}
+
 
                                                     @if ($izin->keputusan_pejabat_berwenang == 'proses')
-                                                    <form
-                                                    action="{{ route('perizinan-cuti.delete', ['id' => $izin->id]) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit"
-                                                        class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-red-200 font-semibold text-red-500 hover:text-white hover:bg-red-500 hover:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
-                                                        Delete
-                                                    </button>
-                                                </form>
+                                                        <form
+                                                            action="{{ route('perizinan-cuti.delete', ['id' => $izin->id]) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-red-200 font-semibold text-red-500 hover:text-white hover:bg-red-500 hover:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800 h-full">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                    height="16" fill="currentColor"
+                                                                    class="bi bi-trash" viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                                                    <path
+                                                                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                                                </svg>
+                                                                Delete
+                                                            </button>
+                                                        </form>
                                                     @endif
-                                                    
+
                                                 </div>
 
 

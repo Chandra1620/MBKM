@@ -23,18 +23,20 @@
                         <label class="inline-block text-sm font-medium dark:text-white">
                             Unit Kerja
                         </label>
-                        <select id="unitKerja"
+                        <select id="unitKerja" name="unitKerja"
                             class="py-3 px-4 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 sm:p-4">
-                            <option disabled selected>Unit Kerja</option>
+                            <option disabled {{ old('unitKerja') ? '' : 'selected' }}>Unit Kerja</option>
                             @foreach ($unitKerja as $unit)
-                                <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                                <option value="{{ $unit->id }}" {{ old('unitKerja') == $unit->id ? 'selected' : '' }}>
+                                    {{ $unit->name }}
+                                </option>
                             @endforeach
                         </select>
                         <label class="inline-block text-sm font-medium dark:text-white">
                             Jabatan Fungsional
                         </label>
                         <input type="hidden" id="jabatan_fungsional_id" name="jabatan_fungsional">
-                        <select name="jabatan_id" id="jabatanFungsional" 
+                        <select name="jabatan_id" id="jabatanFungsional"
                             class="py-3 px-4 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 sm:p-4">
                             <option disabled selected>Jabatan Fungsional</option>
                         </select>
@@ -72,8 +74,8 @@
                             jabatanFungsionalDropdown.addEventListener('change', function(event) {
                                 // Mendapatkan nilai dari opsi yang dipilih
                                 var selectedOption = event.target.value;
-                                    var jabatan_fungsional_id = document.getElementById('jabatan_fungsional_id')
-                                    jabatan_fungsional_id.value = selectedOption;
+                                var jabatan_fungsional_id = document.getElementById('jabatan_fungsional_id')
+                                jabatan_fungsional_id.value = selectedOption;
                                 // Lakukan sesuatu dengan nilai opsi yang dipilih
                                 console.log('Opsi yang dipilih:', selectedOption);
 
@@ -123,7 +125,7 @@
                         <div class="mt-2 space-y-3">
                             <input name="nomor_sk" type="text"
                                 class="py-2 px-3 pr-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
-                                placeholder="Nomor SK">
+                                placeholder="Nomor SK" value="{{ old('nomor_sk') }}">
                         </div>
 
 
@@ -133,17 +135,17 @@
                         <div class="mt-2 space-y-3">
                             <input name="tanggal_mulai" type="date" id="tanggalMulai"
                                 class="py-2 px-3 pr-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
-                                placeholder="Terhitung Mulai Tanggal">
+                                placeholder="Terhitung Mulai Tanggal" value="{{ old('tanggal_mulai') }}">
                         </div>
 
 
                         <script>
                             // Ambil elemen input tanggal
                             var inputTanggalMulai = document.getElementById("tanggalMulai");
-                        
+
                             // Dapatkan tanggal hari ini dalam format YYYY-MM-DD
                             var today = new Date().toISOString().split('T')[0];
-                        
+
                             // Set atribut min dengan nilai hari ini
                             inputTanggalMulai.setAttribute("min", today);
                         </script>
@@ -189,4 +191,40 @@
             <!-- End Card -->
         </div>
     </div>
+    @if ($errors->has('jabatan_fungsional'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '{{ $errors->first('jabatan_fungsional') }}',
+            });
+        </script>
+    @endif
+    @if ($errors->has('dokumen_pendukung'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '{{ $errors->first('dokumen_pendukung') }}',
+            });
+        </script>
+    @endif
+    @if ($errors->has('tanggal_mulai'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '{{ $errors->first('tanggal_mulai') }}',
+            });
+        </script>
+    @endif
+    @if ($errors->has('nomor_sk'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '{{ $errors->first('nomor_sk') }}',
+            });
+        </script>
+    @endif
 @endsection
