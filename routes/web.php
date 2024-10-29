@@ -497,17 +497,13 @@ Route::middleware('auth')->group(function () {
         Route::put('/log-harian/{id}/update', [LogHarianController::class, 'update'])->name('logharian.update');
         Route::delete('/log-harian/{id}/delete', [LogHarianController::class, 'destroy'])->name('logharian.destroy');
 
+        // Route::get('/riwayat-kehadiran', [RiwayatKehadiranController::class, 'index'])->name('riwayatkehadiran.index');
+        // Route::get('/riwayat-absensi', [RiwayatKehadiranController::class, 'absence'])->name('riwayatkehadiran.absensi');
+
         Route::get('/riwayat-kehadiran', [RiwayatKehadiranController::class, 'index'])->name('riwayatkehadiran.index');
         Route::get('/riwayat-absensi', [RiwayatKehadiranController::class, 'absence'])->name('riwayatkehadiran.absensi');
+        Route::post('/submit-attendance', [RiwayatKehadiranController::class, 'storeAttendance'])->name('riwayatkehadiran.store');
     });
-
-    // Route::get('/riwayat-kehadiran', [RiwayatKehadiranController::class, 'index'])->name('riwayatkehadiran.index');
-    // Route::post('/riwayat-absensi', [RiwayatKehadiranController::class, 'absence'])->name('riwayatkehadiran.absensi');
-    // // Route::post('/riwayat-kehadiran/absen', [RiwayatKehadiranController::class, 'absen'])->name('riwayatkehadiran.absen');
-
-    // Route::get('/riwayat-kehadiran', [RiwayatKehadiranController::class, 'index'])->name('riwayatkehadiran.index');
-    // Route::post('/riwayat-absen', [RiwayatKehadiranController::class, 'absence'])->name('riwayatkehadiran.absence');
-
 
     Route::prefix('pegawai')->group(function () {
         Route::get('riwayat-pekerjaan', [App\Http\Controllers\Pegawai\RiwayatPekerjaanController::class, 'index'])->name('riwayat-pekerjaan.index');
