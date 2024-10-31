@@ -39,9 +39,9 @@
                                             </label>
                                             <select name="jenis_surat" id="kategori"
                                                 class="py-2 px-3 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
-                                                <option value="SK">Surat Keputusan (SK)</option>
+                                                {{-- <option value="SK">Surat Keputusan (SK)</option> --}}
                                                 <option value="ST">Surat Tugas (ST)</option>
-                                                <option value="STPD">Surat Tugas Perjalanan Dinas (STPD)</option>
+                                                {{-- <option value="STPD">Surat Tugas Perjalanan Dinas (STPD)</option> --}}
                                             </select>
                                         </div>
 
@@ -390,47 +390,57 @@
                                         {{-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">New York No. 1 Lake Park</td> --}}
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium ">
                                             <div class="flex justify-end">
+                                                <div class="flex space-x-2">
+                                                    <form
+                                                        action="{{ route('management-surat-tugas.edit', ['id' => $log->id]) }}">
+                                                        <button type="submit"
+                                                            class="py-1 px-2 flex justify-center items-center space-x-2 text-sm font-semibold rounded-lg border border-transparent bg-green-600 text-white hover:bg-green-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                                                            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24"
+                                                                fill="none" stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round">
+                                                                <path d="M12 20h9" />
+                                                                <path
+                                                                    d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                                                            </svg>
+                                                        </button>
+                                                    </form>
+                                                    <form
+                                                        action="{{ route('management-surat-tugas.destroy', ['id' => $log->id]) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="submit"
+                                                            class="py-1 px-2 flex justify-center items-center space-x-2 h-[2.2rem] text-sm font-semibold rounded-lg border border-transparent bg-red-600 text-white hover:bg-red-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                                                            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24"
+                                                                fill="none" stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round">
+                                                                <polyline points="3 6 5 6 21 6" />
+                                                                <path
+                                                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                                                                <line x1="10" y1="11" x2="10"
+                                                                    y2="17" />
+                                                                <line x1="14" y1="11" x2="14"
+                                                                    y2="17" />
+                                                            </svg>
+                                                        </button>
+                                                    </form>
 
-                                                {{-- <a href="{{ route('logharian.edit', ['id' => $log->id]) }}">
-                                                            <button type="submit"
-                                                                class="py-3 px-4 iupdatenline-flex justify-center items-center gap-2 rounded-md border-2 border-blue-200 font-semibold text-blue-500 hover:text-white hover:bg-blue-500 hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
-                                                                update
-                                                            </button> --}}
-                                                </a>
-                                                <form
-                                                    action="{{ route('management-surat-tugas.destroy', ['id' => $log->id]) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button type="submit"
-                                                        class="py-1 px-2 flex justify-center items-center h-[2.2rem] w-[2.2rem] text-sm font-semibold rounded-lg border border-transparent bg-red-600 text-white hover:bg-reed-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-                                                        <svg class="h-10 w-10 text-white" viewBox="0 0 24 24"
-                                                            fill="none" stroke="currentColor" stroke-width="2"
-                                                            stroke-linecap="round" stroke-linejoin="round">
-                                                            <polyline points="3 6 5 6 21 6" />
-                                                            <path
-                                                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                                                            <line x1="10" y1="11" x2="10"
-                                                                y2="17" />
-                                                            <line x1="14" y1="11" x2="14"
-                                                                y2="17" />
-                                                        </svg>
-                                                    </button>
-                                                </form>
-                                                <a href="{{ route('management-surat-tugas.detail', ['id' => $log->id]) }}"
-                                                    class="py-1 px-2 flex justify-center items-center h-[2.2rem] w-[2.2rem] text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-                                                    <svg class="h-10 w-10 text-white" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round">
-                                                        <circle cx="12" cy="12" r="10" />
-                                                        <line x1="12" y1="8" x2="12"
-                                                            y2="12" />
-                                                        <line x1="12" y1="16" x2="12.01"
-                                                            y2="16" />
-                                                    </svg>
-                                                </a>
-
-
+                                                    <form
+                                                        action="{{ route('management-surat-tugas.detail', ['id' => $log->id]) }}">
+                                                        <button type="submit"
+                                                            class="py-1 px-2 flex justify-center items-center space-x-2 h-[2.2rem] text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                                                            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24"
+                                                                fill="none" stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round">
+                                                                <circle cx="12" cy="12" r="10" />
+                                                                <line x1="12" y1="8" x2="12"
+                                                                    y2="12" />
+                                                                <line x1="12" y1="16" x2="12.01"
+                                                                    y2="16" />
+                                                            </svg>
+                                                        </button>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>

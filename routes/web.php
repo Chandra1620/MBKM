@@ -189,6 +189,8 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['permission:mengelola-surat-tugas-penelitian'])->group(function () {
         Route::get('/management-surat-tugas', [ManagementSuratTugasController::class, 'index'])->name('management-surat-tugas.index');
         Route::post('/management-surat-tugas', [ManagementSuratTugasController::class, 'store'])->name('management-surat-tugas.store');
+        Route::get('/management-surat-tugas/{id}/edit', [ManagementSuratTugasController::class, 'edit'])->name('management-surat-tugas.edit');
+        Route::put('/management-surat-tugas/{id}/update', [ManagementSuratTugasController::class, 'update'])->name('management-surat-tugas.update');
     });
     Route::middleware(['permission:mengelola-surat-tugas-dinas'])->group(function () {
         Route::get('/management-surat-tugas-dinas', [ManagementSuratTugasDinasController::class, 'index'])->name('management-surat-tugas-dinas.index');
