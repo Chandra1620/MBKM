@@ -11,13 +11,39 @@ class RiwayatKehadiranController extends Controller
 {
     public function index()
     {
-        $berita = PegawaiHasAbsensi::with('user')->where('user_id',Auth::user()->id)->paginate(8);
-        return view('pegawai.presensi.riwayat_kehadiran.index', compact('berita'));
+        $kehadiran = PegawaiHasAbsensi::with('user')->where('user_id', Auth::user()->id)->paginate(8);
+        return view('pegawai.presensi.riwayat_kehadiran.index', compact('kehadiran'));
     }
 
-    function absence(){
+    public function absence()
+    {
         return response()->json([
-            'data'  => PegawaiHasAbsensi::with('user')->where('user_id',Auth::user()->id)->get()
+            'data' => PegawaiHasAbsensi::with('user')->where('user_id', Auth::user()->id)->get()
         ]);
     }
+
+    public function storeAttendance(Request $request)
+    {
+        $user = Auth::user();
+
+        // Check if attendance for today already exists
+        $existingAttendance = PegawaiHasAbsensi::where('user_id', $user->id)
+                            ->whereDate('tanggal_kehadiran', now()->toDateString())
+                            ->first();
+
+        if ($existingAttendance) {
+            return response()->json(['status' => 'error', 'message' => 'Kehadiran sudah dicatat untuk hari ini.'], 400);
+        }
+
+        // Create a new attendance record
+        $attendance = new PegawaiHasAbsensi();
+        $attendance->user_id = $user->id;
+        $attendance->tanggal_kehadiran = now();
+        $attendance->status = 'hadir';
+        $attendance->jam_masuk = now();
+        $attendance->save();
+
+        return response()->json(['status' => 'success', 'message' => 'Kehadiran berhasil dicatat.']);
+    }
 }
+

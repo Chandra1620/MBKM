@@ -1,15 +1,17 @@
 <?php
+
 namespace App\Http\Controllers\Pegawai;
+
 use App\Http\Controllers\Controller;
 use App\Models\JabatanFungsional;
 use App\Models\JenisCuti;
 use App\Models\PegawaiFungsional;
 use App\Models\PerizinanCuti;
-use Carbon\Carbon;
-use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+use Illuminate\Support\Carbon;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class PerizinanController extends Controller
@@ -116,6 +118,7 @@ class PerizinanController extends Controller
                 ->route('perizinan-cuti.index')
                 ->with('error', 'Anda Harus Memiliki Jabatan Fungsional dulu');
         }
+        
         $attrs = $request->validate([
             'alasan' => 'required',
             'alamat_selama_cuti' => 'required',
@@ -124,6 +127,7 @@ class PerizinanController extends Controller
             'tgl_selesai' => 'required',
             'no_telp_bisa_dihubungi' => 'required'
         ]);
+
         $year = now()->year; // Mengambil tahun saat ini
         $totalRiwayatCuti = PerizinanCuti::where('user_id', $user->id)
             ->whereYear('tgl_mulai', $year)
@@ -135,6 +139,7 @@ class PerizinanController extends Controller
         }
 
         $perizinanCuti = new PerizinanCuti();
+
         $perizinanCuti->user_id = $user->id;
         $perizinanCuti->unit_kerja_id = $pegawaiFungsional->unit_kerja_has_jabatan_fungsional->unitkerja->id;
 
@@ -146,6 +151,30 @@ class PerizinanController extends Controller
         $perizinanCuti->no_telp_bisa_dihubungi = $attrs['no_telp_bisa_dihubungi'];
 
         $perizinanCuti->save();
+            
+        $results = DB::table('riwayat_fungsionals')
+        ->join('unit_kerja_has_jabatan_fungsionals', 'riwayat_fungsionals.unit_kerja_has_jabatan_fungsional_id', '=', 'unit_kerja_has_jabatan_fungsionals.id')
+        ->select('riwayat_fungsionals.*', 'unit_kerja_has_jabatan_fungsionals.*')
+        ->where("riwayat_fungsionals.user_id", "=", "$user->id")
+        ->get()
+        ->first();
+
+        $data = [
+            'name' => $user->name,
+            'unit_kerja' => $pegawaiFungsional->unit_kerja_has_jabatan_fungsional->unitkerja->name,
+            'jabatan_fungsional' => $results->name,
+            'nip' => $user->nip,
+            'jenis_cuti' => $attrs["jenis_cuti"],
+            'tax' => 20,
+            'total' => 220,
+            'images' => public_path('assets/test/pngwing.com.png'),
+            'icon' => public_path('assets/icon/check.svg')
+        ];
+        
+        // dd($data);
+
+        // $pdf = FacadePdf::loadView('pdf.test', data: $data);
+        // return $pdf->stream('Form Cuti.pdf');
 
         return redirect()->route('perizinan-cuti.index');
     }
@@ -184,6 +213,42 @@ class PerizinanController extends Controller
         }
         $perizinan->delete();
         return redirect()->route('perizinan-cuti.index');
+    }
+    public function pdfExporting($id)
+    {
+        $user = Auth::user();
+
+        $results = DB::table('riwayat_fungsionals')
+            ->join('unit_kerja_has_jabatan_fungsionals', 'riwayat_fungsionals.unit_kerja_has_jabatan_fungsional_id', '=', 'unit_kerja_has_jabatan_fungsionals.id')
+            ->select('riwayat_fungsionals.*', 'unit_kerja_has_jabatan_fungsionals.*')
+            ->where("riwayat_fungsionals.user_id", "=", "$user->id")
+            ->get()
+            ->first();
+
+        $results2 = DB::table('perizinan_cutis')
+            ->join('jenis_cutis', 'jenis_cutis.id', '=', 'perizinan_cutis.jenis_cuti_id')
+            ->where('perizinan_cutis.id', '=', $id)
+            ->get()
+            ->first();
+
+        $data = [
+            "name" => $user->name,
+            'nip' => $user->nip,
+            // "unit-kerja" =>
+            'jabatan_fungsional' => $results->name,
+            'jenis_cuti' => $results2->jenis_cuti_id,
+            'alasan' => $results2->alasan,
+            'alamat_cuti' => $results2->alamat_selama_cuti,
+            'tgl_mulai' => $results2->tgl_mulai,
+            'tgl_selesai' => $results2->tgl_selesai,
+            'images' => public_path('assets/test/pngwing.com.png'),
+            'icon' => public_path('assets/icon/check.svg')
+        ];
+
+        // dd($results2);
+
+        $pdf = FacadePdf::loadView('pdf.test', data: $data);
+        return $pdf->stream('Form Cuti.pdf');
     }
     public function exportPdf($id)
     {
@@ -570,4 +635,5 @@ class PerizinanController extends Controller
 
         return view('pegawai.perizinan.scan', compact('perizinanCuti', 'sisaCutiTahunIni', 'sisaCutiTahunN1', 'sisaCutiTahunN2'));
     }
+
 }

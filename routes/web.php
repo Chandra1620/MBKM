@@ -170,7 +170,6 @@ Route::middleware('auth')->group(function () {
         Route::put('/admin-pangkat-golongan/update/{id}', [AdminPangkatGolonganController::class, 'update'])->name('admin-pangkat-golongan.update');
         Route::delete('/admin-pangkat-golongan/{id}/delete', [AdminPangkatGolonganController::class, 'destroy'])->name('admin-pangkat-golongan.delete');
         Route::get('/admin-pangkat-golongan/downloadFile/{id}', [AdminPangkatGolonganController::class, 'downloadFile'])->name('admin-pangkat-golongan.download');
-
     });
     Route::middleware(['permission:mengelola-unit-kerja'])->group(function () {
         Route::get('/unit-kerja', [UnitKerjaController::class, 'index'])->name('unit-kerja.index');
@@ -273,17 +272,19 @@ Route::middleware('auth')->group(function () {
         Route::delete('/management-surat-keputusan/{id}', [ManagementSuratKeputusanController::class, 'destroy'])->name('management-surat-keputusan.destroy');
 
         Route::get('/admin-pangkat-golongan', [AdminPangkatGolonganController::class, 'index'])->name('admin-pangkat-golongan.index');
-
     });
 
     //todo
-    Route::get('/export-pdf/{id}', [PerizinanController::class, 'exportPdf'])->name('perizinan-cuti.exportPdf');
-    Route::get('/overview/{id}', [PerizinanController::class, 'overview'])->name('perizinan-cuti.overview');
+    // Route::get('/export-pdf/{id}', [PerizinanController::class, 'exportPdf'])->name('perizinan-cuti.exportPdf');
+    // Route::get('/overview/{id}', [PerizinanController::class, 'overview'])->name('perizinan-cuti.overview');
 
     Route::get('/perizinan-cuti', [PerizinanController::class, 'index'])->name('perizinan-cuti.index');
 
     Route::get('/perizinan-cuti/create', [PerizinanController::class, 'create'])->name('perizinan-cuti.create');
     Route::post('/perizinan-cuti/store', [PerizinanController::class, 'store'])->name('perizinan-cuti.store');
+    
+    Route::get("/perizinan-cuti-overview", [PerizinanController::class, 'overview'])->name('perizinan-cuti.overview');
+    Route::get("/perizinan-cuti/{id}/download", [PerizinanController::class, 'pdfExporting'])->name('perizinan-cuti.pdfExporting');
 
     Route::get('/perizinan-cuti/{id}/edit', [PerizinanController::class, 'edit'])->name('perizinan-cuti.edit');
     Route::put('/perizinan-cuti/{id}/update', [PerizinanController::class, 'update'])->name('perizinan-cuti.update');
@@ -501,11 +502,15 @@ Route::middleware('auth')->group(function () {
         Route::put('/log-harian/{id}/update', [LogHarianController::class, 'update'])->name('logharian.update');
         Route::delete('/log-harian/{id}/delete', [LogHarianController::class, 'destroy'])->name('logharian.destroy');
 
+        // Route::get('/riwayat-kehadiran', [RiwayatKehadiranController::class, 'index'])->name('riwayatkehadiran.index');
+        // Route::get('/riwayat-absensi', [RiwayatKehadiranController::class, 'absence'])->name('riwayatkehadiran.absensi');
+
         Route::get('/riwayat-kehadiran', [RiwayatKehadiranController::class, 'index'])->name('riwayatkehadiran.index');
         Route::get('/riwayat-absensi', [RiwayatKehadiranController::class, 'absence'])->name('riwayatkehadiran.absensi');
+        Route::post('/submit-attendance', [RiwayatKehadiranController::class, 'storeAttendance'])->name('riwayatkehadiran.store');
     });
 
-    Route::prefix('pegawai')->group(function() {
+    Route::prefix('pegawai')->group(function () {
         Route::get('riwayat-pekerjaan', [App\Http\Controllers\Pegawai\RiwayatPekerjaanController::class, 'index'])->name('riwayat-pekerjaan.index');
         Route::post('riwayat-pekerjaan/store', [App\Http\Controllers\Pegawai\RiwayatPekerjaanController::class, 'store'])->name('riwayat-pekerjaan.store');
         Route::get('riwayat-pekerjaan/edit/{id}', [App\Http\Controllers\Pegawai\RiwayatPekerjaanController::class, 'edit'])->name('riwayat-pekerjaan.edit');
@@ -513,8 +518,6 @@ Route::middleware('auth')->group(function () {
         Route::delete('riwayat-pekerjaan/delete/{id}', [App\Http\Controllers\Pegawai\RiwayatPekerjaanController::class, 'delete'])->name('riwayat-pekerjaan.delete');
         Route::get('riwayat-pekerjaan/{id}/info', [App\Http\Controllers\Pegawai\RiwayatPekerjaanController::class, 'info'])->name('riwayat-pekerjaan.info');
     });
-    
-
 });
 
 Route::get("/pdf", [DocumentController::class, "create"]);
