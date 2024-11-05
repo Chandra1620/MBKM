@@ -19,12 +19,14 @@ return new class extends Migration
             $table->string('nip')->unique();
             // $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('jenis_kelamin', ['l','p'])-> default('l');
+            $table->enum('jenis_kelamin', ['l','p'])->default('l');
             $table->string('tempat_lahir')->nullable();
             $table->string('tanggal_lahir')->nullable();
             $table->string('nama_ibu')->nullable();
             // $table->string('file_pendukung')->nullable();
             $table->string('role');
+            $table->string('role_khusus_1')->nullable()->constrained('roles')->onDelete('set null');
+            $table->string('role_khusus_2')->nullable()->constrained('roles')->onDelete('set null');
             $table->rememberToken();
             $table->timestamps();
         });
@@ -38,3 +40,4 @@ return new class extends Migration
         Schema::dropIfExists('users');
     }
 };
+

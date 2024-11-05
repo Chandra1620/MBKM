@@ -282,7 +282,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/perizinan-cuti/create', [PerizinanController::class, 'create'])->name('perizinan-cuti.create');
     Route::post('/perizinan-cuti/store', [PerizinanController::class, 'store'])->name('perizinan-cuti.store');
-    
+
     Route::get("/perizinan-cuti-overview", [PerizinanController::class, 'overview'])->name('perizinan-cuti.overview');
     Route::get("/perizinan-cuti/{id}/download", [PerizinanController::class, 'pdfExporting'])->name('perizinan-cuti.pdfExporting');
 
