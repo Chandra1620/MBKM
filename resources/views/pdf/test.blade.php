@@ -330,7 +330,7 @@
                 </td>
             </tr>
         </table>
-        <table>
+        {{-- <table>
             <tr>
                 <td>
                     <p>
@@ -356,7 +356,7 @@
                     </p>
                 </td>
             </tr>
-        </table>
+        </table> --}}
         {{-- <div class="header-lampiran">
             <div id="lampiran" class="lampiran">
             </div>
