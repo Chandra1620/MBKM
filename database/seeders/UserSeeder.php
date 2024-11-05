@@ -34,6 +34,7 @@ class UserSeeder extends Seeder
             'email' => 'rofan@polindra.ac.id',
             'nip' => '2105002',
             'role' => 'pegawai',
+            'role_khusus_2' => 'atasan',
             'password' => bcrypt(123456)
         ]);
 
@@ -61,6 +62,7 @@ class UserSeeder extends Seeder
             'email' => 'baddruzzaman@polindra.ac.id',
             'nip' => '2105003',
             'role' => 'pegawai',
+            'role_khusus_1' => 'wadir',
             'password' => bcrypt(123456)
         ]);
         Kependudukan::create([
@@ -87,6 +89,7 @@ class UserSeeder extends Seeder
             'email' => 'lubis@polindra.ac.id',
             'nip' => '2105004',
             'role' => 'pegawai',
+            'role_khusus_1' => 'wadir',
             'password' => bcrypt(123456)
         ]);
         Kependudukan::create([
@@ -114,6 +117,7 @@ class UserSeeder extends Seeder
             'email' => 'karsid@polindra.ac.id',
             'nip' => '2105005',
             'role' => 'pegawai',
+            'role_khusus_1' => 'wadir',
             'password' => bcrypt(123456)
         ]);
         Kependudukan::create([
