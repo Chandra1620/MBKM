@@ -362,7 +362,7 @@
                                         Judul Surat
                                     </th>
                                     <th scope="col"
-                                        class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Action
+                                        class="px-6 py-3     text-right text-xs font-medium text-gray-500 uppercase">Action
                                     </th>
                                 </tr>
                             </thead>
@@ -394,7 +394,7 @@
                                                     <form
                                                         action="{{ route('management-surat-tugas.edit', ['id' => $log->id]) }}">
                                                         <button type="submit"
-                                                            class="py-1 px-2 flex justify-center items-center space-x-2 text-sm font-semibold rounded-lg border border-transparent bg-green-600 text-white hover:bg-green-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                                                            class="py-1 px-2 flex justify-center items-center space-x-2 h-[2.2rem] text-sm font-semibold rounded-lg border border-transparent bg-green-600 text-white hover:bg-green-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
                                                             <svg class="h-5 w-5 text-white" viewBox="0 0 24 24"
                                                                 fill="none" stroke="currentColor" stroke-width="2"
                                                                 stroke-linecap="round" stroke-linejoin="round">
