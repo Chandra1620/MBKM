@@ -1,3 +1,4 @@
+@dd()
 <!DOCTYPE html>
 <html lang="en">
 
@@ -263,8 +264,12 @@
                     <br>
                     <img class="absolute" src="{{ $images }}" alt="tanda tangan" style="width:150px;">
                     <br>
-                    <span style="margin-top: 20px;">&#40;………………………………..……………….&#41;
-                        NIP ……………………………..</span>
+                    <span style="margin-top: 20px;">
+                        {{ $name }}
+                        <br>
+                        NIP
+                        {{ $nip }}
+                    </span>
                 </td>
             </tr>
             <tr>

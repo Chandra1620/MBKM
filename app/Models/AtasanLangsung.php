@@ -10,4 +10,8 @@ class AtasanLangsung extends Model
     use HasFactory;
 
     protected $table = 'atasan_langsung';
+    protected $fillable = [
+        "user_id",
+        "user_has_atasan_id"
+    ];
 }

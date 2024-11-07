@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -14,97 +13,77 @@ class RolePermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        // admin pegawai
-        // jabatan
-        Permission::create([
-            'name' => 'mengelola-role-permission',
-        ]);
-        
-        Permission::create([
-            'name' => 'mengelola-role',
-        ]);
-        Permission::create([
-            'name' => 'mengelola-permission',
-        ]);
-        Permission::create([
-            'name' => 'mengelola-user-role',
-        ]);
+        // List of permissions
+        $permissions = [
+            'mengelola-role-permission',
+            'mengelola-role',
+            'mengelola-permission',
+            'mengelola-user-role',
+            'mangelola-validasi-perizinan',
+            'mangelola-perizinan-wadir',
+            'mengelola-perizinan-atasan-langsung',
+            'mengelola-unit-kerja',
+            'mengelola-jabatan-struktural',
+            'mengelola-pegawai-struktural',
+            'mengelola-pegawai-fungsional',
+            'mengelola-pangkat-golongan',
+            'mengelola-surat-tugas-penelitian',
+            'mengelola-surat-tugas-dinas',
+            'mengelola-surat-keputusan',
+            'mengelola-berita',
+            'data-pegawai',
+            'mengelola-presensi',
+        ];
 
-        Permission::create([
-            'name' => 'mangelola-validasi-perizinan',
-        ]);
+        // Create permissions if they don't exist
+        foreach ($permissions as $permissionName) {
+            Permission::firstOrCreate(['name' => $permissionName]);
+        }
 
-        Permission::create([
-            'name' => 'mangelola-perizinan-wadir',
-        ]);
-        Permission::create([
-            'name' => 'mengelola-perizinan-atasan-langsung',
-        ]);
-        Permission::create([
-            'name' => 'mengelola-unit-kerja',
-        ]);
-        Permission::create([
-            'name' => 'mengelola-jabatan-struktural',
-        ]);
-        Permission::create([
-            'name' => 'mengelola-pegawai-struktural',
-        ]);
-        Permission::create([
-            'name' => 'mengelola-pegawai-fungsional',
-        ]);
-        Permission::create([
-            'name' => 'mengelola-pangkat-golongan',
-        ]);
-        // kegiatan
-        Permission::create([
-            'name' => 'mengelola-surat-tugas-penelitian',
-        ]);
-        Permission::create([
-            'name' => 'mengelola-surat-tugas-dinas',
-        ]);
-        Permission::create([
-            'name' => 'mengelola-surat-keputusan',
-        ]);
-        // berita
-        Permission::create([
-            'name' => 'mengelola-berita',
-        ]);
-        Permission::create([
-            'name' => 'data-pegawai',
-        ]);
-        // berita
-        Permission::create([
-            'name' => 'mengelola-presensi',
-        ]);
+        // List of roles
+        $roles = [
+            'admin',
+            'admin-pegawai',
+            'wadir',
+            'atasan-langsung',
+        ];
 
+        // Create roles if they don't exist
+        foreach ($roles as $roleName) {
+            Role::firstOrCreate(['name' => $roleName]);
+        }
 
-        Role::create(['name' => 'admin']);
-        Role::create(['name' => 'admin-pegawai']);
-        Role::create(['name' => 'wadir']);
-        Role::create(['name' => 'atasan-langsung']);
-
+        // Assign permissions to roles
         $roleAdmin = Role::findByName('admin');
-        $roleAdmin->givePermissionTo('mengelola-role-permission');
+        $roleAdmin->syncPermissions([
+            'mengelola-role-permission',
+        ]);
+
         $roleAdminPegawai = Role::findByName('admin-pegawai');
-        $roleAdminPegawai->givePermissionTo('mengelola-role-permission');
-        $roleAdminPegawai->givePermissionTo('mengelola-unit-kerja');
-        $roleAdminPegawai->givePermissionTo('mengelola-jabatan-struktural');
-        $roleAdminPegawai->givePermissionTo('mengelola-pegawai-struktural');
-        $roleAdminPegawai->givePermissionTo('mengelola-pegawai-fungsional');
-        $roleAdminPegawai->givePermissionTo('mengelola-pangkat-golongan');
-        $roleAdminPegawai->givePermissionTo('mengelola-surat-tugas-penelitian');
-        $roleAdminPegawai->givePermissionTo('mengelola-surat-tugas-dinas');
-        $roleAdminPegawai->givePermissionTo('mengelola-surat-keputusan');
-        $roleAdminPegawai->givePermissionTo('mengelola-berita');
-        $roleAdminPegawai->givePermissionTo('data-pegawai');
-        $roleAdminPegawai->givePermissionTo('mengelola-presensi');
-        $roleAdminPegawai->givePermissionTo('mangelola-validasi-perizinan');
+        $roleAdminPegawai->syncPermissions([
+            'mengelola-role-permission',
+            'mengelola-unit-kerja',
+            'mengelola-jabatan-struktural',
+            'mengelola-pegawai-struktural',
+            'mengelola-pegawai-fungsional',
+            'mengelola-pangkat-golongan',
+            'mengelola-surat-tugas-penelitian',
+            'mengelola-surat-tugas-dinas',
+            'mengelola-surat-keputusan',
+            'mengelola-berita',
+            'data-pegawai',
+            'mengelola-presensi',
+            'mangelola-validasi-perizinan',
+        ]);
 
         $roleAtasanLangsung = Role::findByName('atasan-langsung');
-        $roleAtasanLangsung->givePermissionTo('mengelola-perizinan-atasan-langsung');
+        $roleAtasanLangsung->syncPermissions([
+            'mengelola-perizinan-atasan-langsung',
+        ]);
 
-        $roleAtasanLangsung = Role::findByName('wadir');
-        $roleAtasanLangsung->givePermissionTo('mangelola-perizinan-wadir');
-
+        $roleWadir = Role::findByName('wadir');
+        $roleWadir->syncPermissions([
+            'mangelola-perizinan-wadir',
+        ]);
     }
 }

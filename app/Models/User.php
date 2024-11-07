@@ -29,12 +29,16 @@ class User extends Authenticatable implements JWTSubject
         'tanggal_lahir',
         'nama_ibu',
         'role',
+        'role_khusus_1',
+        'role_khusus_2',
+        'jabatan'
         // 'file_pendukung',
 
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * The attributes that should be hidden for
+     *  serialization.
      *
      * @var array<int, string>
      */

@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(JenisCutiSeeder::class);
         $this->call(BeritaSeeder::class);
         $this->call(AbsensiPegawaiSeeder::class);
-
+        $this->call(AtasanLangsungSeeder::class);
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
