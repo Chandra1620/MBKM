@@ -7,10 +7,10 @@ use App\Models\SuratTugas;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ManagementSuratTugasController extends Controller
 {
-
     public function index()
     {
         $user = User::whereIn('role', ['admin-pegawai', 'atasan-langsung', 'wadir', 'pegawai'])->get();
@@ -36,7 +36,7 @@ class ManagementSuratTugasController extends Controller
         $pengirimId = Auth::user()->id;
 
         $attrs = $request->validate([
-            "jenis_surat" => "required",
+            'jenis_surat' => 'required',
             'judul' => 'required',
             'deskripsi' => 'required',
             'nomor_surat' => 'required',
@@ -47,37 +47,81 @@ class ManagementSuratTugasController extends Controller
             'file_pendukung' => 'nullable|file|mimes:doc,docx,pdf|max:10240',
         ]);
 
-        // dd($attrs);
+        // dd($request->input("membersSelected"));
 
-            $surat = new SuratTugas([
-                'jenis_surat' => 'ST',
-                'judul' => $request->input('judul'),
-                'deskripsi' => $request->input('deskripsi'),
-                'nomor_surat' => $request->input('nomor_surat'),
-                'pengirim_id' => $pengirimId,
-                'tgl_berangkat' => $request->input('tgl_berangkat'),
-                'tgl_kembali' => $request->input('tgl_kembali'),
-                'ketua_id' => $request->input('leadersSelected'),
-                'anggota' => json_encode($request->input('membersSelected')),
-            ]);
+        $surat = new SuratTugas([
+            'jenis_surat' => 'ST',
+            'judul' => $request->input('judul'),
+            'deskripsi' => $request->input('deskripsi'),
+            'nomor_surat' => $request->input('nomor_surat'),
+            'pengirim_id' => $pengirimId,
+            'tempat_berangkat' => $request->input('tgl_berangkat'),
+            'tgl_kembali' => $request->input('tgl_kembali'),
+            'ketua_id' => $request->input('leadersSelected'),
+            'anggota' => json_encode($request->input('membersSelected')),
+        ]);
 
-            if ($request->File('file_pendukung')) {
-                $fileDocumentName = time() . '_' . $request->file('file_pendukung')->getClientOriginalName();
+        if ($request->File('file_pendukung')) {
+            $fileDocumentName = time() . '_' . $request->file('file_pendukung')->getClientOriginalName();
 
             $destinationPath = public_path("document/Surat/ST/");
 
             // Pastikan direktori tujuan tersedia, jika tidak, buat direktori
             if (!file_exists($destinationPath)) {
-                mkdir($destinationPath, 0777, true);
+                mkdir($destinationPath, 0755, true);
             }
             $request->file('file_pendukung')->move($destinationPath, $fileDocumentName);
             $surat->file_pendukung = $fileDocumentName;
-            }
+        }
 
-            // Simpan surat ke database
-            $surat->save();
+        // Simpan surat ke database
+        $surat->save();
 
         return redirect()->route('management-surat-tugas.index')->with('success', 'Surat berhasil dikirim');
+    }
+
+    public function update(Request $request, $id)
+    {
+        dd($request);
+        // Validasi input
+        $attrs = $request->validate([
+            'jenis_surat' => 'required',
+            'judul' => 'required',
+            'deskripsi' => 'required',
+            'nomor_surat' => 'required',
+            'leader' => 'required',
+            'member' => 'nullable',
+            'tempat_berangkat' => 'nullable',
+            'tgl_kembali' => 'nullable',
+            'file_pendukung' => 'required',
+        ]);
+
+        dd($attrs);
+
+        // Cek apakah data diklat ditemukan
+        $surat = SuratTugas::find($id);
+
+        if (!$surat) {
+            return abort(404, 'Data Surat Tugas tidak ditemukan');
+        }
+
+        // Update data diklat
+        $surat->jenis_surat = $attrs['jenis_surat'];
+        $surat->judul = $attrs['judul'];
+        $surat->deskripsi = $attrs['deskripsi'];
+        $surat->nomor_surat = $attrs['nomor_surat'];
+        $surat->tgl_berangkat = $attrs['tempat_berangkat'];
+        $surat->tgl_kembali = $attrs['tgl_kembali'];
+        $surat->file_pendukung = $attrs['file_pendukung'];
+        $surat->ketua_id = $attrs['leader'];
+        $surat->anggota = $attrs['member'];
+        
+
+        // Simpan perubahan
+        $surat->save();
+
+        // Redirect ke halaman index dengan pesan sukses
+        return redirect()->route('management-surat-tugas.index')->with('success', 'Berhasil mengubah data Surat Tugas');
     }
 
     public function downloadFile($id)
@@ -85,14 +129,13 @@ class ManagementSuratTugasController extends Controller
         $surat = SuratTugas::findOrFail($id);
 
         if ($surat->file_pendukung) {
-            $filePath = public_path("document/Surat/ST/" . $surat->file_pendukung);
+            $filePath = public_path('document/Surat/ST/' . $surat->file_pendukung);
 
             return response()->download($filePath, $surat->file_pendukung);
         } else {
             return back()->with('error', 'File pendukung tidak ditemukan');
         }
     }
-
 
     public function destroy($id)
     {
@@ -108,7 +151,7 @@ class ManagementSuratTugasController extends Controller
 
         // Check if an old file_pendukung exists and delete it
         if ($surat->file_pendukung) {
-            $oldfile_pendukung = public_path("document/Surat/ST/" . $surat->file_pendukung);
+            $oldfile_pendukung = public_path('document/Surat/ST/' . $surat->file_pendukung);
 
             if (file_exists($oldfile_pendukung)) {
                 unlink($oldfile_pendukung);
@@ -121,9 +164,23 @@ class ManagementSuratTugasController extends Controller
     }
 
     public function detail($id)
-    {
+    {         
+        $query = DB::table('surat_tugas')->select("anggota")
+        ->get();
+
+        $anggota = trim($query[0]->anggota, '"');
+        $anggota = explode(",", $anggota);
+
+        // dd($or);
+
+        # code...
+        $anggotaBrimob = DB::table('users')
+            ->whereIn('id', $anggota)
+            ->get();
+
         $user = Auth::user();
         $role = null;
+        $anggota = User::all();
 
         $surat = SuratTugas::findOrFail($id);
 
@@ -141,16 +198,32 @@ class ManagementSuratTugasController extends Controller
         $anggota = [];
 
         // Mendapatkan data anggota dari tabel Users berdasarkan ID
-        foreach ($anggotaIds as $anggotaId) {
-            // Menggunakan explode untuk memisahkan ID
-            $individualIds = explode(',', trim($anggotaId, '[]'));
+        // Cek dan ubah $anggotaIds menjadi array jika masih berbentuk string
+        // Cek apakah $anggotaIds berupa string, lalu ubah ke array jika perlu
+        if (is_string($anggotaIds)) {
+            $decoded = json_decode($anggotaIds, true);
 
-            foreach ($individualIds as $id) {
-                // Mengambil data anggota dari tabel Users berdasarkan ID
-                $user = User::find($id);
+            // Pastikan hasil json_decode adalah array
+            if (is_array($decoded)) {
+                $anggotaIds = $decoded;
+            } else {
+                $anggotaIds = []; // Set sebagai array kosong jika json_decode gagal
+            }
+        }
 
-                if ($user) {
-                    $anggota[] = $user;
+        // Pastikan $anggotaIds adalah array sebelum di-loop
+        if (is_array($anggotaIds)) {
+            foreach ($anggotaIds as $anggotaId) {
+                // Menggunakan explode untuk memisahkan ID jika formatnya masih string
+                $individualIds = explode(',', trim($anggotaId, '[]'));
+
+                foreach ($individualIds as $id) {
+                    // Mengambil data anggota dari tabel Users berdasarkan ID
+                    $user = User::find($id);
+
+                    if ($user) {
+                        $anggota[] = $user;
+                    }
                 }
             }
         }
@@ -158,6 +231,20 @@ class ManagementSuratTugasController extends Controller
         // Load relasi berdasarkan peran yang telah ditentukan
         $surat->load($role);
 
-        return view('admin.kepegawaian.management_kegiatan.detail_surat', compact('surat', 'role', 'anggota'));
+        return view('admin.kepegawaian.management_kegiatan.detail_surat', compact('surat', 'role', 'anggota', 'anggotaBrimob'));
+    }
+
+    public function edit($id)
+    {
+        // Mencari data PendidikanFormal berdasarkan ID
+        $surat = SuratTugas::find($id);
+
+        // Jika data tidak ditemukan, redirect ke halaman index dengan pesan error
+        if (!$surat) {
+            return redirect()->route('management-surat-tugas.index')->with('error', 'Data pendidikan tidak ditemukan.');
+        }
+
+        // Mengembalikan tampilan edit dengan data pendidikan yang ditemukan
+        return view('admin.kepegawaian.management_kegiatan.edit_surat_tugas', compact('surat'));
     }
 }

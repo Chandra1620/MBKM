@@ -42,11 +42,13 @@ use App\Http\Controllers\Pegawai\RiwayatKehadiranController;
 use App\Http\Controllers\Pegawai\RiwayatPekerjaanController;
 use App\Http\Controllers\pegawai\RiwayatPendidikanController;
 use App\Http\Controllers\Pegawai\SertifikasiController;
+use App\Http\Controllers\Pegawai\SisaCutiController as PegawaiSisaCutiController;
 use App\Http\Controllers\Pegawai\SKController;
 use App\Http\Controllers\Pegawai\STController;
 use App\Http\Controllers\Pegawai\STPDController;
 use App\Http\Controllers\Pegawai\SuratMeyuratController;
 use App\Http\Controllers\Pegawai\TesController;
+use App\Http\Controllers\SisaCutiController;
 use App\Http\Controllers\Wadir\RequestPerizinanWadirController;
 use App\Models\RiwayatFungsional;
 use App\Models\RiwayatPekerjaan;
@@ -188,6 +190,8 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['permission:mengelola-surat-tugas-penelitian'])->group(function () {
         Route::get('/management-surat-tugas', [ManagementSuratTugasController::class, 'index'])->name('management-surat-tugas.index');
         Route::post('/management-surat-tugas', [ManagementSuratTugasController::class, 'store'])->name('management-surat-tugas.store');
+        Route::get('/management-surat-tugas/{id}/edit', [ManagementSuratTugasController::class, 'edit'])->name('management-surat-tugas.edit');
+        Route::put('/management-surat-tugas/{id}/update', [ManagementSuratTugasController::class, 'update'])->name('management-surat-tugas.update');
     });
     Route::middleware(['permission:mengelola-surat-tugas-dinas'])->group(function () {
         Route::get('/management-surat-tugas-dinas', [ManagementSuratTugasDinasController::class, 'index'])->name('management-surat-tugas-dinas.index');
@@ -276,14 +280,13 @@ Route::middleware('auth')->group(function () {
     // Route::get('/export-pdf/{id}', [PerizinanController::class, 'exportPdf'])->name('perizinan-cuti.exportPdf');
     // Route::get('/overview/{id}', [PerizinanController::class, 'overview'])->name('perizinan-cuti.overview');
 
-    Route::get('/perizinan-cuti', [PerizinanController::class, 'index'])->name('perizinan-cuti.index');
+    Route::get('/sisa-cuti', [PegawaiSisaCutiController::class, 'index'])->name('sisa-cuti.index');
 
+    Route::get('/perizinan-cuti', [PerizinanController::class, 'index'])->name('perizinan-cuti.index');
     Route::get('/perizinan-cuti/create', [PerizinanController::class, 'create'])->name('perizinan-cuti.create');
     Route::post('/perizinan-cuti/store', [PerizinanController::class, 'store'])->name('perizinan-cuti.store');
-
     Route::get("/perizinan-cuti-overview", [PerizinanController::class, 'overview'])->name('perizinan-cuti.overview');
     Route::get("/perizinan-cuti/{id}/download", [PerizinanController::class, 'pdfExporting'])->name('perizinan-cuti.pdfExporting');
-
     Route::get('/perizinan-cuti/{id}/edit', [PerizinanController::class, 'edit'])->name('perizinan-cuti.edit');
     Route::put('/perizinan-cuti/{id}/update', [PerizinanController::class, 'update'])->name('perizinan-cuti.update');
     Route::delete('/perizinan-cuti/{id}/delete', [PerizinanController::class, 'destroy'])->name('perizinan-cuti.delete');
