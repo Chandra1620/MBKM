@@ -27,6 +27,8 @@ return new class extends Migration
             $table->string('role');
             $table->string('role_khusus_1')->nullable()->constrained('roles')->onDelete('set null');
             $table->string('role_khusus_2')->nullable()->constrained('roles')->onDelete('set null');
+            $table->string('jabatan')->nullable();
+            // $table->string('jabatan_atasan_langsung')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
