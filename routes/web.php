@@ -27,6 +27,7 @@ use App\Http\Controllers\AdminKepegawaian\UpdateDataPegawai\UpdateSertifikasiCon
 use App\Http\Controllers\AdminKepegawaian\UpdateDataPegawai\UpdateTesController;
 use App\Http\Controllers\AdminSystem\AdminPegawaiController;
 use App\Http\Controllers\AdminSystem\PegawaiController;
+use App\Http\Controllers\AtasanLangsung\AtasanLangsungController;
 use App\Http\Controllers\AtasanLangsung\RequestPerizinanAtasanLangsungController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
@@ -91,6 +92,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/admin-pegawai', [AdminPegawaiController::class, 'index'])->name('admin-pegawai.index');
         Route::get('/admin/admin-pegawai/{id}/edit', [AdminPegawaiController::class, 'edit'])->name('admin-pegawai.edit');
         Route::put('/admin/admin-pegawai/{id}/update', [AdminPegawaiController::class, 'update'])->name('admin-pegawai.update');
+
+        Route::get('/admin/atasan-langsung', [AtasanLangsungController::class, 'index'])->name('atasan-langsung.index');
     });
     //!: admin
     //!: ROLE PERMISSIN

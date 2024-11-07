@@ -1,0 +1,22 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\AtasanLangsung;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+
+class AtasanLangsungSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        // $atasanLangsung1 = AtasanLangsung::insert([
+        //     [
+        //         "" =>
+        //     ]
+        // ]);
+    }
+}
