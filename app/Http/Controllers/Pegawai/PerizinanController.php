@@ -118,7 +118,7 @@ class PerizinanController extends Controller
                 ->route('perizinan-cuti.index')
                 ->with('error', 'Anda Harus Memiliki Jabatan Fungsional dulu');
         }
-        
+
         $attrs = $request->validate([
             'alasan' => 'required',
             'alamat_selama_cuti' => 'required',
@@ -151,13 +151,13 @@ class PerizinanController extends Controller
         $perizinanCuti->no_telp_bisa_dihubungi = $attrs['no_telp_bisa_dihubungi'];
 
         $perizinanCuti->save();
-            
+
         $results = DB::table('riwayat_fungsionals')
-        ->join('unit_kerja_has_jabatan_fungsionals', 'riwayat_fungsionals.unit_kerja_has_jabatan_fungsional_id', '=', 'unit_kerja_has_jabatan_fungsionals.id')
-        ->select('riwayat_fungsionals.*', 'unit_kerja_has_jabatan_fungsionals.*')
-        ->where("riwayat_fungsionals.user_id", "=", "$user->id")
-        ->get()
-        ->first();
+            ->join('unit_kerja_has_jabatan_fungsionals', 'riwayat_fungsionals.unit_kerja_has_jabatan_fungsional_id', '=', 'unit_kerja_has_jabatan_fungsionals.id')
+            ->select('riwayat_fungsionals.*', 'unit_kerja_has_jabatan_fungsionals.*')
+            ->where("riwayat_fungsionals.user_id", "=", "$user->id")
+            ->get()
+            ->first();
 
         $data = [
             'name' => $user->name,
@@ -170,7 +170,7 @@ class PerizinanController extends Controller
             'images' => public_path('assets/test/pngwing.com.png'),
             'icon' => public_path('assets/icon/check.svg')
         ];
-        
+
         // dd($data);
 
         // $pdf = FacadePdf::loadView('pdf.test', data: $data);
@@ -214,13 +214,13 @@ class PerizinanController extends Controller
         $perizinan->delete();
         return redirect()->route('perizinan-cuti.index');
     }
-    public function pdfExporting($id)
-    {
+    public function pdfStream($id) {
         $user = Auth::user();
 
         $results = DB::table('riwayat_fungsionals')
             ->join('unit_kerja_has_jabatan_fungsionals', 'riwayat_fungsionals.unit_kerja_has_jabatan_fungsional_id', '=', 'unit_kerja_has_jabatan_fungsionals.id')
-            ->select('riwayat_fungsionals.*', 'unit_kerja_has_jabatan_fungsionals.*')
+            ->join("unit_kerjas", "unit_kerja_has_jabatan_fungsionals.unit_kerja_id", "=", "unit_kerjas.id")
+            ->select('riwayat_fungsionals.*', 'unit_kerja_has_jabatan_fungsionals.name AS jabatan', 'unit_kerjas.name AS unit_kerja')
             ->where("riwayat_fungsionals.user_id", "=", "$user->id")
             ->get()
             ->first();
@@ -231,16 +231,24 @@ class PerizinanController extends Controller
             ->get()
             ->first();
 
+        $start = Carbon::parse($results2->tgl_mulai);
+        $end = Carbon::parse($results2->tgl_selesai);
+
+        $totalDays = $start->diffInDays($end);
+
         $data = [
             "name" => $user->name,
             'nip' => $user->nip,
-            // "unit-kerja" =>
-            'jabatan_fungsional' => $results->name,
+            "unit_kerja" => $results->unit_kerja,
+            "tanggal_dibuat" => Carbon::parse($results2->created_at)->format('j F Y'),
+            'jabatan_fungsional' => $results->jabatan,
             'jenis_cuti' => $results2->jenis_cuti_id,
             'alasan' => $results2->alasan,
             'alamat_cuti' => $results2->alamat_selama_cuti,
-            'tgl_mulai' => $results2->tgl_mulai,
-            'tgl_selesai' => $results2->tgl_selesai,
+            'hari_total' => $totalDays,
+            "no_telp" => $results2->no_telp_bisa_dihubungi,
+            'tgl_mulai' => Carbon::createFromFormat('Y-m-d', $results2->tgl_mulai)->format('d-m-Y'),
+            'tgl_selesai' => Carbon::createFromFormat('Y-m-d', $results2->tgl_selesai)->format('d-m-Y'),
             'images' => public_path('assets/test/pngwing.com.png'),
             'icon' => public_path('assets/icon/check.svg')
         ];
@@ -249,6 +257,51 @@ class PerizinanController extends Controller
 
         $pdf = FacadePdf::loadView('pdf.test', data: $data);
         return $pdf->stream('Form Cuti.pdf');
+    }
+    public function pdfExporting($id)
+    {
+        $user = Auth::user();
+
+        $results = DB::table('riwayat_fungsionals')
+            ->join('unit_kerja_has_jabatan_fungsionals', 'riwayat_fungsionals.unit_kerja_has_jabatan_fungsional_id', '=', 'unit_kerja_has_jabatan_fungsionals.id')
+            ->join("unit_kerjas", "unit_kerja_has_jabatan_fungsionals.unit_kerja_id", "=", "unit_kerjas.id")
+            ->select('riwayat_fungsionals.*', 'unit_kerja_has_jabatan_fungsionals.name AS jabatan', 'unit_kerjas.name AS unit_kerja')
+            ->where("riwayat_fungsionals.user_id", "=", "$user->id")
+            ->get()
+            ->first();
+
+        $results2 = DB::table('perizinan_cutis')
+            ->join('jenis_cutis', 'jenis_cutis.id', '=', 'perizinan_cutis.jenis_cuti_id')
+            ->where('perizinan_cutis.id', '=', $id)
+            ->get()
+            ->first();
+        
+        $start = Carbon::parse($results2->tgl_mulai);
+        $end = Carbon::parse($results2->tgl_selesai);
+
+        $totalDays = $start->diffInDays($end);
+
+        $data = [
+            "name" => $user->name,
+            'nip' => $user->nip,
+            "unit_kerja" => $results->unit_kerja,
+            "tanggal_dibuat" => Carbon::parse($results2->created_at)->format('j F Y'),
+            'jabatan_fungsional' => $results->jabatan,
+            'jenis_cuti' => $results2->jenis_cuti_id,
+            'alasan' => $results2->alasan,
+            'alamat_cuti' => $results2->alamat_selama_cuti,
+            'hari_total' => $totalDays,
+            "no_telp" => $results2->no_telp_bisa_dihubungi,
+            'tgl_mulai' => Carbon::createFromFormat('Y-m-d', $results2->tgl_mulai)->format('d-m-Y'),
+            'tgl_selesai' => Carbon::createFromFormat('Y-m-d', $results2->tgl_selesai)->format('d-m-Y'),
+            'images' => public_path('assets/test/pngwing.com.png'),
+            'icon' => public_path('assets/icon/check.svg')
+        ];
+
+        // dd($results2);
+
+        $pdf = FacadePdf::loadView('pdf.test', data: $data);
+        return $pdf->download('Form Cuti.pdf');
     }
     public function exportPdf($id)
     {

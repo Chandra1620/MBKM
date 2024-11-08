@@ -106,7 +106,7 @@
                         <br>TENTANG TATA CARA PEMBERIAN CUTI PEGAWAI NEGERI SIPIL
                     </p>
                     <p class="teks-lampiran-2">
-                        Indramayu, ………………… 2024
+                        Indramayu, {{ $tanggal_dibuat }}
                     </p>
                     <p class="teks-lampiran-3">
                         Kepada
@@ -136,7 +136,7 @@
             </tr>
             <tr>
                 <td class="border padding-table-x" style="width: 20%;">Unit Kerja</td>
-                <td class="border padding-table-x" colspan="3"></td>
+                <td class="border padding-table-x" colspan="3">{{ $unit_kerja }}</td>
             </tr>
         </table>
         <table class="tabel margin-table-x-y">
@@ -203,11 +203,11 @@
             </tr>
             <tr>
                 <td class="border padding-table-x" style="width: 10%;">Selama</td>
-                <td class="border padding-table-x" style="width: 20%;">Hari/Bulan/Tahun</td>
+                <td class="border padding-table-x" style="width: 20%;">{{ $hari_total }} Hari</td>
                 <td class="border padding-table-x" style="width: 20%;">Mulai Tanggal</td>
-                <td class="border padding-table-x" style="width: 20%"></td>
+                <td class="border padding-table-x" style="width: 20%">{{ $tgl_mulai }}</td>
                 <td class="border padding-table-x" style="width: 10%;">s/d</td>
-                <td class="border padding-table-x" style="width: 20%;"></td>
+                <td class="border padding-table-x" style="width: 20%;">{{ $tgl_selesai }}</td>
             </tr>
         </table>
         <table class="tabel margin-table-x-y">
@@ -263,13 +263,17 @@
                     <br>
                     <img class="absolute" src="{{ $images }}" alt="tanda tangan" style="width:150px;">
                     <br>
-                    <span style="margin-top: 20px;">&#40;………………………………..……………….&#41;
-                        NIP ……………………………..</span>
+                    <span style="margin-top: 20px;">
+                        {{ $name }}
+                        <br>
+                        NIP
+                        {{ $nip }}
+                    </span>
                 </td>
             </tr>
             <tr>
                 <td class="border padding-table-x">{{ $alamat_cuti }}</td>
-                <td class="border padding-table-x"></td>
+                <td class="border padding-table-x">{{ $no_telp }}</td>
             </tr>
         </table>
         <table class="tabel margin-table-x-y">
@@ -284,10 +288,10 @@
                 <td class="border padding-table-x" style="width:25%;">TIDAK DISETUJUI ****</td>
             </tr>
             <tr>
-                <td class="border padding-table-x" style="width:0%;">a</td>
-                <td class="border padding-table-x" style="width:25%;">b</td>
-                <td class="border padding-table-x" style="width:50%;">c</td>
-                <td class="border padding-table-x" style="width:25%;">d</td>
+                <td class="border padding-table-x" style="height:20px; width:0%;"></td>
+                <td class="border padding-table-x" style="height:20px; width:25%;"></td>
+                <td class="border padding-table-x" style="height:20px; width:50%;"></td>
+                <td class="border padding-table-x" style="height:20px; width:25%;"></td>
             </tr>
             <tr>
                 <td colspan="3"></td>
