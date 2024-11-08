@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\sisaCuti;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,6 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(JenisCutiSeeder::class);
         $this->call(BeritaSeeder::class);
         $this->call(AbsensiPegawaiSeeder::class);
+        // $this->call(sisaCuti::class);
 
         // \App\Models\User::factory(10)->create();
 

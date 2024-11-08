@@ -57,41 +57,55 @@ class User extends Authenticatable implements JWTSubject
         'password' => 'hashed',
     ];
 
-    public function getJWTIdentifier(){
+    public function getJWTIdentifier()
+    {
         return $this->getKey();
     }
-    public function getJWTCustomClaims(){
+    public function getJWTCustomClaims()
+    {
         return [];
     }
-    public function kependudukan(){
+    public function kependudukan()
+    {
         return $this->hasOne(Kependudukan::class);
     }
-    public function keluarga(){
+    public function keluarga()
+    {
         return $this->hasOne(Keluarga::class);
     }
-    public function kepegawaian(){
+    public function kepegawaian()
+    {
         return $this->hasOne(Kepegawaian::class);
     }
-    public function alamatdankontak(){
+    public function alamatdankontak()
+    {
         return $this->hasOne(AlamatdanKontak::class);
     }
-    
-    public function lainlain(){
+
+    public function lainlain()
+    {
         return $this->hasOne(Lainlain::class);
     }
-    public function tandaTangan(){
+    public function tandaTangan()
+    {
         return $this->hasOne(TandaTangan::class);
     }
 
 
-    public function pegawaiFungsional(){
+    public function pegawaiFungsional()
+    {
         return $this->hasOne(PegawaiFungsional::class);
     }
-    public function pangkatGolongan(){
+    public function pangkatGolongan()
+    {
         return $this->hasOne(pangkat_golongan::class);
     }
-    public function pegawaiStruktural(){
+    public function pegawaiStruktural()
+    {
         return $this->hasOne(PegawaiHasStruktural::class, 'users_id');
     }
-
+    public function sisaCuti()
+    {
+        return $this->hasOne(SisaCuti::class, 'users_id' );
+    }
 }
