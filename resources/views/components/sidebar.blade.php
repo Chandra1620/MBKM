@@ -961,6 +961,9 @@
                     </a>
                 </li>
             @endif --}}
+            @if (Auth::user()->role_khusus_2 == "Atasan Langsung")
+                <p>Test Ada</p>
+            @endif
         </ul>
     </nav>
 </div>

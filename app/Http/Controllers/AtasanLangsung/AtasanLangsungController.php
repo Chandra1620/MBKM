@@ -10,7 +10,7 @@ class AtasanLangsungController extends Controller
 {
     public function index()
     {
-        $atasan = User::where('role_khusus_2', "=", 'atasan-langsung')->paginate(8);
+        $atasan = User::where('role_khusus_2', "=", 'Atasan Langsung')->paginate(8);
         return view('admin.system.atasan_langsung.index', compact('atasan'));
     }
 }

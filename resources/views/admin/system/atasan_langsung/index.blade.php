@@ -141,11 +141,11 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="py-1 px-4">
-                            {{ $atasan->links() }}
-                        </div>
                     </div>
                 </div>
+            </div>
+            <div class="py-1 px-4">
+                {{ $atasan->links() }}
             </div>
         </div>
     </div>

@@ -16,8 +16,9 @@ class PegawaiController extends Controller
 {
     public function index()
     {
-        $pegawai = User::whereIn('role', ['pegawai', 'atasan-langsung', 'wadir','direktur','admin-pegawai'])
-    ->paginate(8);
+        $pegawai = User::whereIn('role', ['pegawai', 'admin-pegawai'])
+            ->orderBy('name', 'asc')
+            ->paginate(8);
         return view('admin.system.pegawai.index', compact('pegawai'));
     }
 
@@ -62,7 +63,7 @@ class PegawaiController extends Controller
         TandaTangan::create([
             'user_id' => $user->id,
         ]);
-        
+
 
         return redirect()->route('pegawai.index');
     }
@@ -100,51 +101,51 @@ class PegawaiController extends Controller
         return redirect()->route('pegawai.index');
     }
     public function destroy($id)
-{
-    $pegawai = User::find($id);
+    {
+        $pegawai = User::find($id);
 
-    if (!$pegawai) {
-        return redirect()->route('pegawai.index')->with('error', 'Pegawai tidak ditemukan');
+        if (!$pegawai) {
+            return redirect()->route('pegawai.index')->with('error', 'Pegawai tidak ditemukan');
+        }
+
+        // Hapus relasi 'kependudukan'
+        if ($pegawai->kependudukan) {
+            $pegawai->kependudukan->delete();
+        }
+
+        // Hapus relasi 'keluarga'
+        if ($pegawai->keluarga) {
+            $pegawai->keluarga->delete();
+        }
+
+        // Hapus relasi 'kepegawaian'
+        if ($pegawai->kepegawaian) {
+            $pegawai->kepegawaian->delete();
+        }
+
+        // Hapus relasi 'alamatdankontak'
+        if ($pegawai->alamatdankontak) {
+            $pegawai->alamatdankontak->delete();
+        }
+
+        // Hapus relasi 'lainlain'
+        if ($pegawai->lainlain) {
+            $pegawai->lainlain->delete();
+        }
+
+        // Hapus relasi 'pegawaiStruktural' dan relasi-relasinya jika ada
+        if ($pegawai->pegawaiStruktural) {
+            // if ($pegawai->pegawaiStruktural->jabatanStruktural) {
+            //     $pegawai->pegawaiStruktural->jabatanStruktural->delete();
+            // }
+            $pegawai->pegawaiStruktural->delete();
+        }
+
+        // Hapus pegawai
+        $pegawai->delete();
+
+        return redirect()->route('pegawai.index')->with('success', 'Pegawai berhasil dihapus');
     }
-
-    // Hapus relasi 'kependudukan'
-    if ($pegawai->kependudukan) {
-        $pegawai->kependudukan->delete();
-    }
-
-    // Hapus relasi 'keluarga'
-    if ($pegawai->keluarga) {
-        $pegawai->keluarga->delete();
-    }
-
-    // Hapus relasi 'kepegawaian'
-    if ($pegawai->kepegawaian) {
-        $pegawai->kepegawaian->delete();
-    }
-
-    // Hapus relasi 'alamatdankontak'
-    if ($pegawai->alamatdankontak) {
-        $pegawai->alamatdankontak->delete();
-    }
-
-    // Hapus relasi 'lainlain'
-    if ($pegawai->lainlain) {
-        $pegawai->lainlain->delete();
-    }
-
-    // Hapus relasi 'pegawaiStruktural' dan relasi-relasinya jika ada
-    if ($pegawai->pegawaiStruktural) {
-        // if ($pegawai->pegawaiStruktural->jabatanStruktural) {
-        //     $pegawai->pegawaiStruktural->jabatanStruktural->delete();
-        // }
-        $pegawai->pegawaiStruktural->delete();
-    }
-
-    // Hapus pegawai
-    $pegawai->delete();
-
-    return redirect()->route('pegawai.index')->with('success', 'Pegawai berhasil dihapus');
-}
 
 
     public function updateRolePegawaiAdmin(Request $request, $id)

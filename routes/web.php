@@ -289,7 +289,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/perizinan-cuti/create', [PerizinanController::class, 'create'])->name('perizinan-cuti.create');
     Route::post('/perizinan-cuti/store', [PerizinanController::class, 'store'])->name('perizinan-cuti.store');
     Route::get("/perizinan-cuti-overview", [PerizinanController::class, 'overview'])->name('perizinan-cuti.overview');
+
+    Route::get("/perizinan-cuti/{id}/stream", [PerizinanController::class, 'pdfStream'])->name('perizinan-cuti.pdfStream');
     Route::get("/perizinan-cuti/{id}/download", [PerizinanController::class, 'pdfExporting'])->name('perizinan-cuti.pdfExporting');
+
     Route::get('/perizinan-cuti/{id}/edit', [PerizinanController::class, 'edit'])->name('perizinan-cuti.edit');
     Route::put('/perizinan-cuti/{id}/update', [PerizinanController::class, 'update'])->name('perizinan-cuti.update');
     Route::delete('/perizinan-cuti/{id}/delete', [PerizinanController::class, 'destroy'])->name('perizinan-cuti.delete');
