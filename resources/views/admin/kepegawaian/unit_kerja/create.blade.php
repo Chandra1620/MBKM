@@ -31,20 +31,20 @@
                         <label class="inline-block text-sm font-medium dark:text-white">
                             Atasan Langsung
                         </label>
-                        <select name="has_atasan_langsung" class="py-2 px-3 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
+                        <select name="has_atasan_langsung"
+                            class="py-2 px-3 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
                             <option value="0" hidden selected>Memiliki Atasan Langsung?</option>
                             <option value="1">Ya</option>
                             <option value="0">Tidak</option>
-                          </select>
-                          <label class="inline-block text-sm font-medium dark:text-white">
+                        </select>
+                        <label class="inline-block text-sm font-medium dark:text-white">
                             Nama
                         </label>
-                        <select name='jabatan_struktural_berwenang' class="py-2 px-3 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
+                        <select name='jabatan_struktural_berwenang'
+                            class="py-2 px-3 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
                             <option hidden selected>Jabatan Berwenang</option>
                             @foreach ($jabatnStrukturalBerwenang as $item)
-                            
-                            <option value="{{$item->id}}"> {{ $item->name }}</option>
-
+                                <option value="{{ $item->id }}"> {{ $item->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -56,7 +56,7 @@
                         </button>
                         <button type="submit"
                             class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
-                            Simpan 
+                            Simpan
                         </button>
                     </div>
 

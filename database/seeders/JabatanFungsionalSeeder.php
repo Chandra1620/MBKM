@@ -16,7 +16,9 @@ class JabatanFungsionalSeeder extends Seeder
         JabatanFungsional::create([
             'name' => 'dosen lektor',
         ]);
-
+        JabatanFungsional::create([
+            'name' => 'dosen lektor Kepala',
+        ]);
         JabatanFungsional::create([
             'name' => 'dosen asisten ahli',
         ]);
@@ -27,12 +29,14 @@ class JabatanFungsionalSeeder extends Seeder
             'name' => 'pustakawan terampil',
         ]);
         JabatanFungsional::create([
+            'name' => 'Pustakawan Ahli Pertama',
+        ]);
+        JabatanFungsional::create([
             'name' => 'pengelola situs/web',
         ]);
         JabatanFungsional::create([
             'name' => 'pengadministrasi umum',
         ]);
-
         JabatanFungsional::create([
             'name' => 'teknisi laboratorium',
         ]);
@@ -51,7 +55,6 @@ class JabatanFungsionalSeeder extends Seeder
         JabatanFungsional::create([
             'name' => 'perencana ahli pertama',
         ]);
-
         JabatanFungsional::create([
             'name' => 'arsiparis terampil',
         ]);
@@ -76,7 +79,6 @@ class JabatanFungsionalSeeder extends Seeder
         JabatanFungsional::create([
             'name' => 'Pranata Komputer Ahli Pertama',
         ]);
-
         JabatanFungsional::create([
             'name' => 'Pranata Komputer Terampil',
         ]);
@@ -94,6 +96,81 @@ class JabatanFungsionalSeeder extends Seeder
         ]);
         JabatanFungsional::create([
             'name' => 'Pengadministrasi Sarana dan Prasarana',
+        ]);
+        JabatanFungsional::create([
+            'name' => 'Ketua Jurusan Kesehatan',
+        ]);
+        JabatanFungsional::create([
+            'name' => 'Kepala UPA Pengembangan Karier dan Kewirausahaan',
+        ]);
+        JabatanFungsional::create([
+            'name' => 'Kepala UPA Bahasa',
+        ]);
+        JabatanFungsional::create([
+            'name' => 'Wakil Direktur Bidang Perencanaan, Keuangan, dan Umum',
+        ]);
+        JabatanFungsional::create([
+            'name' => 'Kepala Pusat Penelitian dan Pengabdian Kepada Masyarakat',
+        ]);
+        JabatanFungsional::create([
+            'name' => 'Ketua Jurusan Teknik Informatika',
+        ]);
+        JabatanFungsional::create([
+            'name' => 'Ketua Jurusan Teknik',
+        ]);
+        JabatanFungsional::create([
+            'name' => 'Kepala UPA TIK',
+        ]);
+        JabatanFungsional::create([
+            'name' => 'Kepala UPA Perpustakaan',
+        ]);
+        JabatanFungsional::create([
+            'name' => 'Kepala UPA Layanan Uji Kompetensi',
+        ]);
+        JabatanFungsional::create([
+            'name' => 'Wakil Direktur Bidang Akademik',
+        ]);
+        JabatanFungsional::create([
+            'name' => 'Kepala UPA Perawatan dan Perbaikan',
+        ]);
+        JabatanFungsional::create([
+            'name' => 'Direktur',
+        ]);
+        JabatanFungsional::create([
+            'name' => 'Wakil Direktur Bidang Kemahasiswaan dan Alumni',
+        ]);
+        JabatanFungsional::create([
+            'name' => 'Kepala UPA Lab Terpadu',
+        ]);
+        JabatanFungsional::create([
+            'name' => 'Kepala Bagian Akademik dan Kemahasiswaan',
+        ]);
+        JabatanFungsional::create([
+            'name' => 'Kepala Subbagian Akademik',
+        ]);
+        JabatanFungsional::create([
+            'name' => 'Kepala Bagian Perencanaan, Keuangan, dan Umum',
+        ]);
+        JabatanFungsional::create([
+            'name' => 'Kepala Subbagian Umum',
+        ]);
+        JabatanFungsional::create([
+            'name' => 'Petugas Teknologi Informasi Komputer',
+        ]);
+        JabatanFungsional::create([
+            'name' => 'Analis PK APBN Ahli Pertama',
+        ]);
+        JabatanFungsional::create([
+            'name' => 'Pranata Keuangan APBN Terampil',
+        ]);
+        JabatanFungsional::create([
+            'name' => 'Tenaga Peliputan',
+        ]);
+        JabatanFungsional::create([
+            'name' => 'Pengelola Informasi Akademik',
+        ]);
+        JabatanFungsional::create([
+            'name' => 'Pengelola Pengabdian Kepada Masyarakat',
         ]);
     }
 }
