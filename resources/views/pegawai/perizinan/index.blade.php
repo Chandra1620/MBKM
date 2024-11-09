@@ -1,3 +1,4 @@
+@dd()
 @extends('layouts.theme')
 
 @section('content')

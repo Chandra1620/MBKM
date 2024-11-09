@@ -386,7 +386,6 @@ class UserSeeder extends Seeder
                 'email' => 'fauzan.ishlakhuddin@polindra.ac.id',
                 'nip' => '199105222022031003',
                 'role' => 'pegawai',
-                'role_khusus_2' => 'Atasan Langsung',
                 'jabatan' => 'Asisten Ahli',
                 'password' => bcrypt('123456')
             ],
@@ -626,6 +625,7 @@ class UserSeeder extends Seeder
                 'email' => 'fauzan.amri@polindra.ac.id',
                 'nip' => '199509062022031007',
                 'role' => 'pegawai',
+                'role_khusus_2' => 'Atasan Langsung',
                 'jabatan' => 'Asisten Ahli',
                 'password' => bcrypt('123456')
             ],
