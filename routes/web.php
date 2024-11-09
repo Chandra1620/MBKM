@@ -527,6 +527,6 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-Route::get("/pdf", [DocumentController::class, "create"]);
+// Route::get("/pdf", [DocumentController::class, "create"]);
 
 require __DIR__ . '/auth.php';
