@@ -95,7 +95,17 @@ class PerizinanController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(8);
 
-        return view('pegawai.perizinan.index', compact(['perizinan', 'sisaCuti', 'totalCutiDiambil']));
+        /**
+         * Sisa Cuti
+         */
+        $izinCutiSisa = DB::table("cuti_sisas")
+            ->join("users", "cuti_sisas.user_id", "=", "users.id")
+            ->where('cuti_sisas.user_id', $user->id)
+            ->select(["cuti_sisas.*"])
+            ->get()
+            ->first();
+
+        return view('pegawai.perizinan.index', compact(['perizinan', 'izinCutiSisa', 'totalCutiDiambil']));
     }
 
     public function create()
@@ -221,7 +231,7 @@ class PerizinanController extends Controller
             ->join('unit_kerja_has_jabatan_fungsionals', 'riwayat_fungsionals.unit_kerja_has_jabatan_fungsional_id', '=', 'unit_kerja_has_jabatan_fungsionals.id')
             ->join("unit_kerjas", "unit_kerja_has_jabatan_fungsionals.unit_kerja_id", "=", "unit_kerjas.id")
             ->select('riwayat_fungsionals.*', 'unit_kerja_has_jabatan_fungsionals.name AS jabatan', 'unit_kerjas.name AS unit_kerja')
-            ->where("riwayat_fungsionals.user_id", "=", "$user->id")
+            ->where("riwayat_fungsionals.user_id", "=", $user->id)
             ->get()
             ->first();
 

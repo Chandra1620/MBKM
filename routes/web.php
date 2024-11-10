@@ -31,6 +31,7 @@ use App\Http\Controllers\AtasanLangsung\AtasanLangsungController;
 use App\Http\Controllers\AtasanLangsung\RequestPerizinanAtasanLangsungController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\ManagementPerizinanAtasanController;
 use App\Http\Controllers\Pegawai\DiklatController;
 use App\Http\Controllers\Pegawai\KegiatanController;
 use App\Http\Controllers\Pegawai\LogHarianController;
@@ -322,9 +323,10 @@ Route::middleware('auth')->group(function () {
         Route::put('/request-perizinan-atasan-langsung/{id}/tolak', [RequestPerizinanAtasanLangsungController::class, 'tolak'])->name('request-perizinan-atasan-langsung.tolak');
     });
 
-    Route::get('/management-perizinan-atasan', [ManagementPerizinanAdminController::class, 'index'])->name('management-perizinan-atasan.index');
-    Route::post('/management-perizinan-atasan/{id}/verifikasi', [ManagementPerizinanAdminController::class, 'verifikasi'])->name('management-perizinan-atasan.verifikasi');
-    Route::delete('/management-perizinan-atasan/{id}/denied', [ManagementPerizinanAdminController::class, 'ditolak'])->name('management-perizinan-atasan.ditolak');
+    Route::get('/management-perizinan-atasan', [ManagementPerizinanAtasanController::class, 'index'])->name('management-perizinan-atasan.index');
+    Route::post('/management-perizinan-atasan/{id}/verifikasi', [ManagementPerizinanAtasanController::class, 'verifikasi'])->name('management-perizinan-atasan.verifikasi');
+    Route::get('/perizinan-cuti-atasan/{id}/stream', [ManagementPerizinanAtasanController::class, 'stream'])->name('perizinan-cuti-atasan.pdfStream');
+    Route::delete('/management-perizinan-atasan/{id}/denied', [ManagementPerizinanAtasanController::class, 'ditolak'])->name('management-perizinan-atasan.ditolak');
     //!
 
     //? belum ada permission yg bener
