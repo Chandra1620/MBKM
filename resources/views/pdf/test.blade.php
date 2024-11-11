@@ -229,21 +229,21 @@
             </tr>
             <tr>
                 <td class="border padding-table-x" style="width:10%;">N-2</td>
-                <td class="border padding-table-x" style="width:10%;"></td>
+                <td class="border padding-table-x" style="width:10%;">{{ $n_minus_1 }}</td>
                 <td class="border padding-table-x" style="width:10%;"></td>
                 <td class="border padding-table-x" style="width:40%;">4. CUTI MELAHIRKAN</td>
                 <td class="border padding-table-x" style="width:30%;"></td>
             </tr>
             <tr>
                 <td class="border padding-table-x" style="width:10%;">N-1</td>
-                <td class="border padding-table-x" style="width:10%;"></td>
+                <td class="border padding-table-x" style="width:10%;">{{ $n_minus_1 }}</td>
                 <td class="border padding-table-x" style="width:10%;"></td>
                 <td class="border padding-table-x" style="width:40%;">5. CUTI KARENA ALASAN PENTING</td>
                 <td class="border padding-table-x" style="width:30%;"></td>
             </tr>
             <tr>
                 <td class="border padding-table-x" style="width:10%;">N</td>
-                <td class="border padding-table-x" style="width:10%;"></td>
+                <td class="border padding-table-x" style="width:10%;">{{ $n }}</td>
                 <td class="border padding-table-x" style="width:10%;"></td>
                 <td class="border padding-table-x" style="width:40%;">6. CUTI DI LUAR TANGGUNGAN NEGARA</td>
                 <td class="border padding-table-x" style="width:30%;"></td>
@@ -261,7 +261,9 @@
                     style="width:40%; height:50px; text-align: center;">
                     <span>Hormat Saya</span>
                     <br>
-                    <img class="absolute" src="{{ $images }}" alt="tanda tangan" style="width:150px;">
+                    @isset($ttd_pegawai)   
+                        <img class="absolute" src="{{ $images }}" alt="tanda tangan" style="width:150px;">
+                    @endisset
                     <br>
                     <span style="margin-top: 20px;">
                         {{ $name }}
@@ -298,10 +300,21 @@
                 <td class="border padding-table-x relative" style="width:35%; height:50px; text-align: center;">
                     Hormat Saya
                     <br>
-                    <img class="absolute" src="{{ $images }}" alt="tanda tangan" style="width:150px;">
+                    @isset($ttd_atasan_langsung)
+                        <img class="absolute" src="{{ $images }}" alt="tanda tangan" style="width:150px;">
+                    @endisset
                     <br>
-                    &#40;………………………………..……………….&#41;
-                    NIP ……………………………..
+                    @if (isset($atasan_name))
+                        <span style="margin-top: 20px;">
+                            {{ $atasan_name }}
+                            <br>
+                            NIP
+                            {{ $atasan_nip }}
+                        </span>
+                    @else
+                        &#40;………………………………..……………….&#41;
+                        NIP ……………………………..                                                  
+                    @endif
                 </td>
             </tr>
         </table>
@@ -327,10 +340,21 @@
                 <td class="border padding-table-x relative" style="width:35%; height:50px; text-align: center;">
                     Hormat Saya
                     <br>
-                    <img class="absolute" src="{{ $images }}" alt="tanda tangan" style="width:150px;">
+                    @isset($ttd_wadir)  
+                        <img class="absolute" src="{{ $images }}" alt="tanda tangan" style="width:150px;">
+                    @endisset
                     <br>
-                    &#40;………………………………..……………….&#41;
-                    NIP ……………………………..
+                    @if (isset($wadir_name))
+                        <span style="margin-top: 20px;">
+                            {{ $wadir_name }}
+                            <br>
+                            NIP
+                            {{ $wadir_nip }}
+                        </span>
+                    @else
+                        &#40;………………………………..……………….&#41;
+                        NIP ……………………………..                                                  
+                    @endif
                 </td>
             </tr>
         </table>
