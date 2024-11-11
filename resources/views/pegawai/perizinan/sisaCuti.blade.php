@@ -1,4 +1,3 @@
-@dd($sisaCuti)
 @extends('layouts.theme')
 
 @section('content')
@@ -21,16 +20,18 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                <tr>
-                    <td class="px-6 py-4 border-b">{{ $sisaCuti->nip }}</td>
-                    <td class="px-6 py-4 border-b">{{ $sisaCuti->name }}</td>
-                    <td class="px-6 py-4 border-b">{{ $year }}</td>
-                    <td class="px-6 py-4 border-b text-center">{{ $sisaCuti->n }}</td>
-                    <td class="px-6 py-4 border-b text-center">{{ $sisaCuti->n_minus_1 }}</td>
-                    <td class="px-6 py-4 border-b text-center">{{ $sisaCuti->n_minus_2 }}</td>
-                    <td class="px-6 py-4 border-b text-center"></td>
-                    <td class="px-6 py-4 border-b text-center">1</td>
-                </tr>
+                @foreach ($sisaCuti as $sisa)
+                    <tr>
+                        <td class="px-6 py-4 border-b">{{ $sisa->nip }}</td>
+                        <td class="px-6 py-4 border-b">{{ $sisa->name }}</td>
+                        <td class="px-6 py-4 border-b">{{ $year }}</td>
+                        <td class="px-6 py-4 border-b text-center">{{ $sisa->n }}</td>
+                        <td class="px-6 py-4 border-b text-center">{{ $sisa->n_minus_1 }}</td>
+                        <td class="px-6 py-4 border-b text-center">{{ $sisa->n_minus_2 }}</td>
+                        <td class="px-6 py-4 border-b text-center"></td>
+                        <td class="px-6 py-4 border-b text-center">1</td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
