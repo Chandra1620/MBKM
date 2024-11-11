@@ -5,13 +5,6 @@
     <div class="container">
         <div class="flex justify-between">
             <p class="pb-2 font-bold">Management Perizinan</p>
-            {{-- <a href="{{ route('jabatan-fungsional.create') }}">
-                <button type="button"
-                    class="py-2 px-3 mb-2 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
-                    Tambah
-                </button>
-            </a> --}}
-
         </div>
         <div class="flex flex-col">
             <div class="-m-1.5 overflow-x-auto">
@@ -61,7 +54,7 @@
                                         </th>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                            Verifikasi
+                                            Verifikasi Atasan Langsung
                                         </th>
 
                                         {{-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Address</th> --}}
@@ -76,13 +69,13 @@
                                         <tr>
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                {{ $item->user->nip }}</td>
+                                                {{ $item->nip }}</td>
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                {{ $item->user->name }}</td>
+                                                {{ $item->name }}</td>
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                {{ $item->jeniscuti->name }}</td>
+                                                {{ $item->name }}</td>
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                                                 {{ $item->alasan }}</td>
@@ -99,14 +92,21 @@
 
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                {{ $item->verifikasi_admin }}
+                                                {{ $item->pertimbangan_atasan_langsung }}
                                             </td>
                                             {{-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">New York No. 1 Lake Park</td> --}}
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium ">
                                                 <div class="flex justify-end">
-                                                    @if ($item->verifikasi_admin == '')
+
+
+                                                    
+                                                    {{-- INI NANTI DIEDIT BUTTONNYA DIUBAH JADI MIRIP FORM YANG DI DALEMNYA ADA INPUT TANDA TANGAN --}}
+
+
+
+                                                    @if ($item->pertimbangan_atasan_langsung == 'proses')
                                                         <form
-                                                            action="{{ route('management-perizinan.verifikasi', ['id' => $item->id]) }}"
+                                                            action="{{ route('management-perizinan-atasan.verifikasi', ['id' => $item->id_perizinan]) }}"
                                                             method="POST">
                                                             @csrf
                                                             <button type="submit"
@@ -121,25 +121,32 @@
                                                         Update
                                                     </button>
                                                 </a> --}}
-                                                    
+                                                <a href="{{ route('perizinan-cuti-atasan.pdfStream', ['id' => $item->user_id]) }}"
+                                                        class="flex justify-center items-center gap-3 px-3 rounded-md border-2 border-orange-200 font-semibold text-orange-500 hover:text-white hover:bg-orange-500 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+                                                        {{-- <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                            height="16" fill="currentColor" class="bi bi-eye"
+                                                            viewBox="0 0 16 16">
+                                                            <path
+                                                                d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z" />
+                                                            <path
+                                                                d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
+                                                        </svg> --}}
+                                                        Lihat Form
+                                                    </a>
                                                     <form
-                                                        action="{{ route('management-perizinan.ditolak', ['id' => $item->id]) }}"
+                                                        action="{{ route('management-perizinan.ditolak', ['id' => $item->user_id]) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit"
                                                             class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-red-200 font-semibold text-red-500 hover:text-white hover:bg-red-500 hover:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
-                                                            Hapus
+                                                            Ditolak
                                                         </button>
                                                     </form>
                                                 </div>
                                             </td>
                                         </tr>
                                     @endforeach
-
-
-
-
                                 </tbody>
                             </table>
                         </div>

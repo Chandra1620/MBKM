@@ -95,7 +95,17 @@ class PerizinanController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(8);
 
-        return view('pegawai.perizinan.index', compact(['perizinan', 'sisaCuti', 'totalCutiDiambil']));
+        /**
+         * Sisa Cuti
+         */
+        $izinCutiSisa = DB::table("cuti_sisas")
+            ->join("users", "cuti_sisas.user_id", "=", "users.id")
+            ->where('cuti_sisas.user_id', $user->id)
+            ->select(["cuti_sisas.*"])
+            ->get()
+            ->first();
+
+        return view('pegawai.perizinan.index', compact(['perizinan', 'izinCutiSisa', 'totalCutiDiambil']));
     }
 
     public function create()
@@ -210,13 +220,19 @@ class PerizinanController extends Controller
             ->join('unit_kerja_has_jabatan_fungsionals', 'riwayat_fungsionals.unit_kerja_has_jabatan_fungsional_id', '=', 'unit_kerja_has_jabatan_fungsionals.id')
             ->join("unit_kerjas", "unit_kerja_has_jabatan_fungsionals.unit_kerja_id", "=", "unit_kerjas.id")
             ->select('riwayat_fungsionals.*', 'unit_kerja_has_jabatan_fungsionals.name AS jabatan', 'unit_kerjas.name AS unit_kerja')
-            ->where("riwayat_fungsionals.user_id", "=", "$user->id")
+            ->where("riwayat_fungsionals.user_id", "=", $user->id)
             ->get()
             ->first();
 
         $results2 = DB::table('perizinan_cutis')
             ->join('jenis_cutis', 'jenis_cutis.id', '=', 'perizinan_cutis.jenis_cuti_id')
             ->where('perizinan_cutis.id', '=', $id)
+            ->get()
+            ->first();
+
+        $results3 = DB::table('users')
+            ->join("cuti_sisas", "cuti_sisas.user_id", "=", "users.id")
+            ->where('users.id', '=', $id)
             ->get()
             ->first();
 
@@ -239,7 +255,10 @@ class PerizinanController extends Controller
             'tgl_mulai' => Carbon::createFromFormat('Y-m-d', $results2->tgl_mulai)->format('d-m-Y'),
             'tgl_selesai' => Carbon::createFromFormat('Y-m-d', $results2->tgl_selesai)->format('d-m-Y'),
             'images' => public_path('assets/test/pngwing.com.png'),
-            'icon' => public_path('assets/icon/check.svg')
+            'icon' => public_path('assets/icon/check.svg'),
+            "n" => $results3->n,
+            "n_minus_1" => $results3->n_minus_1,
+            "n_minus_2" => $results3->n_minus_2,
         ];
 
         // dd($results2);

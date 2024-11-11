@@ -31,6 +31,7 @@ use App\Http\Controllers\AtasanLangsung\AtasanLangsungController;
 use App\Http\Controllers\AtasanLangsung\RequestPerizinanAtasanLangsungController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\ManagementPerizinanAtasanController;
 use App\Http\Controllers\Pegawai\DiklatController;
 use App\Http\Controllers\Pegawai\KegiatanController;
 use App\Http\Controllers\Pegawai\LogHarianController;
@@ -71,14 +72,11 @@ Route::get('/', function () {
 });
 Route::get('/perizinan-cuti/{id}/scan', [PerizinanController::class, 'outputScan'])->name('perizinan-cuti.scan');
 
-
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     //!: admin
     Route::middleware(['checkUserRole:admin'])->group(function () {
-
-
         Route::get('/admin/pegawai', [PegawaiController::class, 'index'])->name('pegawai.index');
         Route::get('/admin/pegawai/create', [PegawaiController::class, 'create'])->name('pegawai.create');
         Route::post('/admin/pegawai', [PegawaiController::class, 'store'])->name('pegawai.store');
@@ -98,9 +96,7 @@ Route::middleware('auth')->group(function () {
     //!: admin
     //!: ROLE PERMISSIN
 
-
     Route::middleware(['permission:mengelola-role-permission'])->group(function () {
-
         Route::get('/mengelola-role', [MengelolaRolePermissionController::class, 'role'])->name('mengelola-role.index');
         Route::post('/mengelola-role', [MengelolaRolePermissionController::class, 'store_role'])->name('mengelola-role.store');
         Route::put('/mengelola-role/{id}/update', [MengelolaRolePermissionController::class, 'update_role'])->name('mengelola-role.update');
@@ -115,7 +111,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/mengelola-user-role', [MengelolaRolePermissionController::class, 'userHasRole'])->name('mengelola-user-role.index');
         // Route::delete('/mengelola-user-role/{id}/delete', [MengelolaRolePermissionController::class, 'deletedUserHasRole'])->name('mengelola-user-role.delete');
     });
-
 
     //!: END ROLE PERMISSION
 
@@ -212,7 +207,6 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware(['checkUserRole:admin-pegawai'])->group(function () {
-
         // Data Pegawai
         Route::get('/data-pegawai', [DataPegawaiController::class, 'index'])->name('data-pegawai.index');
         Route::get('/data-pegawai/detail/{id}', [DataPegawaiController::class, 'detail_pegawai'])->name('data-pegawai.detail');
@@ -288,10 +282,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/perizinan-cuti', [PerizinanController::class, 'index'])->name('perizinan-cuti.index');
     Route::get('/perizinan-cuti/create', [PerizinanController::class, 'create'])->name('perizinan-cuti.create');
     Route::post('/perizinan-cuti/store', [PerizinanController::class, 'store'])->name('perizinan-cuti.store');
-    Route::get("/perizinan-cuti-overview", [PerizinanController::class, 'overview'])->name('perizinan-cuti.overview');
+    Route::get('/perizinan-cuti-overview', [PerizinanController::class, 'overview'])->name('perizinan-cuti.overview');
 
-    Route::get("/perizinan-cuti/{id}/stream", [PerizinanController::class, 'pdfStream'])->name('perizinan-cuti.pdfStream');
-    Route::get("/perizinan-cuti/{id}/download", [PerizinanController::class, 'pdfExporting'])->name('perizinan-cuti.pdfExporting');
+    Route::get('/perizinan-cuti/{id}/stream', [PerizinanController::class, 'pdfStream'])->name('perizinan-cuti.pdfStream');
+    Route::get('/perizinan-cuti/{id}/download', [PerizinanController::class, 'pdfExporting'])->name('perizinan-cuti.pdfExporting');
 
     Route::get('/perizinan-cuti/{id}/edit', [PerizinanController::class, 'edit'])->name('perizinan-cuti.edit');
     Route::put('/perizinan-cuti/{id}/update', [PerizinanController::class, 'update'])->name('perizinan-cuti.update');
@@ -328,6 +322,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/request-perizinan-atasan-langsung/{id}/tidakdisetujui', [RequestPerizinanAtasanLangsungController::class, 'formtidakdisetujui'])->name('request-perizinan-atasan-langsung.formtidakdisetujui');
         Route::put('/request-perizinan-atasan-langsung/{id}/tolak', [RequestPerizinanAtasanLangsungController::class, 'tolak'])->name('request-perizinan-atasan-langsung.tolak');
     });
+
+    Route::get('/management-perizinan-atasan', [ManagementPerizinanAtasanController::class, 'index'])->name('management-perizinan-atasan.index');
+    Route::post('/management-perizinan-atasan/{id}/verifikasi', [ManagementPerizinanAtasanController::class, 'verifikasi'])->name('management-perizinan-atasan.verifikasi');
+    Route::get('/perizinan-cuti-atasan/{id}/stream', [ManagementPerizinanAtasanController::class, 'stream'])->name('perizinan-cuti-atasan.pdfStream');
+    Route::delete('/management-perizinan-atasan/{id}/denied', [ManagementPerizinanAtasanController::class, 'ditolak'])->name('management-perizinan-atasan.ditolak');
     //!
 
     //? belum ada permission yg bener
@@ -351,7 +350,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/management-update-update-alamat-dan-kontak/{id}/verifikasi', [UpdateAlamatdanKontakController::class, 'verifikasi'])->name('update-alamatdankontak.verifikasi');
     Route::post('/management-update-update-alamat-dan-kontak/{id}/ditolak', [UpdateAlamatdanKontakController::class, 'ditolak'])->name('update-alamatdankontak.ditolak');
 
-
     Route::get('/management-update-sertifikasi', [UpdateSertifikasiController::class, 'index'])->name('update-sertifikasi.index');
     Route::post('/management-update-sertifikasi/{id}/verifikasi', [UpdateSertifikasiController::class, 'verifikasi'])->name('update-sertifikasi.verifikasi');
     Route::post('/management-update-sertifikasi/{id}/ditolak', [UpdateSertifikasiController::class, 'ditolak'])->name('update-sertifikasi.ditolak');
@@ -370,13 +368,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/management-update-riwayat-pekerjaan/{id}/verifikasi', [UpdateRiwayatPekerjaanController::class, 'verifikasi'])->name('update-riwayatpekerjaan.verifikasi');
     Route::post('/management-update-riwayat-pekerjaan/{id}/ditolak', [UpdateRiwayatPekerjaanController::class, 'ditolak'])->name('update-riwayatpekerjaan.ditolak');
 
-
     //? belum ada permission yg bener
 
-
     Route::middleware(['checkUserRole:atasan-langsung,admin-pegawai,pegawai,wadir,direktur,admin'])->group(function () {
-
-
         Route::get('/pangkat-golongan', [PangkatGolonganController::class, 'index'])->name('pangkat-golongan.index');
         Route::get('/pangkat-golongan/tambah', [PangkatGolonganController::class, 'create'])->name('pangkat-golongan.create');
         Route::post('/pangkat-golongan/store', [PangkatGolonganController::class, 'store'])->name('pangkat-golongan.store');
@@ -385,7 +379,6 @@ Route::middleware('auth')->group(function () {
         Route::delete('/pangkat-golongan/{id}/delete', [PangkatGolonganController::class, 'destroy'])->name('pangkat-golongan.delete');
         Route::get('pangkat-golongan/{id}/detail', [PangkatGolonganController::class, 'detail'])->name('pangkat-golongan.detail');
         Route::get('/pangkat-golongan/downloadFile/{id}', [PangkatGolonganController::class, 'downloadFile'])->name('pangkat-golongan.download');
-
 
         Route::get('/jabatan-fungsional', [RiwayatFungsionalController::class, 'index'])->name('riwayat-fungsional');
         Route::get('/jabatan-fungsional/tambah', [RiwayatFungsionalController::class, 'create'])->name('riwayat-fungsional.create');
@@ -410,7 +403,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/STPD/export-PDF/{id}', [STPDController::class, 'exportPdf'])->name('stpd.downloadPDF');
         Route::delete('/surat-tugas-dinas-luar/{id}', [STPDController::class, 'destroy'])->name('stpd.destroy');
 
-
         Route::get('/pendidikan-formal', [PendidikanFormalController::class, 'index'])->name('pendidikanformal.index');
         Route::post('/pendidikan-formal', [PendidikanFormalController::class, 'store'])->name('pendidikanformal.store');
         Route::get('/pendidikan-formal/{id}/edit', [PendidikanFormalController::class, 'edit'])->name('pendidikanformal.edit');
@@ -425,7 +417,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/diklat/{id}/info', [DiklatController::class, 'info'])->name('diklat.info');
         Route::delete('/diklat/{id}/delete', [DiklatController::class, 'delete'])->name('diklat.delete');
 
-
         Route::get('/riwayat-pendidikan', [RiwayatPendidikanController::class, 'index'])->name('riwayat-pendidikan.index');
 
         //! RIWAYAT PEKERJAAN
@@ -437,7 +428,6 @@ Route::middleware('auth')->group(function () {
         Route::delete('/riwayat-pekerjaan/{id}/delete', [RiwayatPekerjaanController::class, 'delete'])->name('riwayat-pekerjaan.delete');
 
         //! RIWAYAT PEKERJAAN
-
 
         Route::get('/diklat', [DiklatController::class, 'index'])->name('diklat.index');
         Route::post('/diklat', [DiklatController::class, 'store'])->name('diklat.store');
@@ -527,6 +517,6 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-Route::get("/pdf", [DocumentController::class, "create"]);
+// Route::get("/pdf", [DocumentController::class, "create"]);
 
 require __DIR__ . '/auth.php';

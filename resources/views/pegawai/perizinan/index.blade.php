@@ -21,7 +21,7 @@
                                 <div class="grow ml-5">
                                     <h3
                                         class="group-hover:text-blue-600 font-semibold text-gray-800 dark:group-hover:text-gray-400 dark:text-gray-200">
-                                        {{ $sisaCuti }}
+                                        {{ $izinCutiSisa->n }}
                                     </h3>
                                     <p class="text-sm text-gray-500">
                                         Total Sisa Cuti Tahunan

@@ -12,6 +12,7 @@ class AtasanLangsung extends Model
     protected $table = 'atasan_langsung';
     protected $fillable = [
         "user_id",
-        "user_has_atasan_id"
+        "user_has_atasan_id",
+        "atasan_has_wadir_id",
     ];
 }

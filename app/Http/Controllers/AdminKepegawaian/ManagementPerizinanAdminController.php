@@ -22,6 +22,8 @@ class ManagementPerizinanAdminController extends Controller
         //     )
         //     ->paginate(8);
         $perizinan = PerizinanCuti::with(['user', 'jeniscuti'])->paginate(8);
+        // dd($perizinan);
+
         return view('admin.kepegawaian.management_perizinan.index', compact('perizinan'));
     }
 
