@@ -19,7 +19,7 @@ class ManagementPerizinanAtasanController extends Controller
             ->join('atasan_langsung', 'atasan_langsung.user_id', '=', 'perizinan_cutis.user_id')
             ->where('atasan_langsung.user_has_atasan_id', $user->id)
             ->where('perizinan_cutis.verifikasi_admin', "!=", null)
-            ->select('perizinan_cutis.*', 'users.*', 'atasan_langsung.*')
+            ->select('perizinan_cutis.*', 'users.*', 'atasan_langsung.*', 'perizinan_cutis.id AS id_perizinan')
             ->paginate(8);
 
         // dd($perizinan);
@@ -30,7 +30,12 @@ class ManagementPerizinanAtasanController extends Controller
         /**
          * Verifikasi perizinan cuti atasan langsung
          */
-        return $id;
+        // dd($id);
+        DB::table("perizinan_cutis")
+            ->where("id", "=", $id)
+            ->update(["pertimbangan_atasan_langsung" => "disetujui"]);
+
+        return $this->index();
     }
     public function stream($id)
     {
@@ -82,8 +87,8 @@ class ManagementPerizinanAtasanController extends Controller
             "n" => $results3->n,
             "n_minus_1" => $results3->n_minus_1,
             "n_minus_2" => $results3->n_minus_2,
-            "ttd_pegawai" => $results2->ttd_pegawai,
-            "ttd_atasan" => $results2->ttd_atasan,
+            // "ttd_pegawai" => $results2->ttd_pegawai,
+            // "ttd_atasan" => $results2->ttd_atasan,
         ];
 
         // dd($results2);

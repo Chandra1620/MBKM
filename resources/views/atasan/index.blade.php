@@ -97,9 +97,16 @@
                                             {{-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">New York No. 1 Lake Park</td> --}}
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium ">
                                                 <div class="flex justify-end">
+
+
+                                                    
+                                                    {{-- INI NANTI DIEDIT BUTTONNYA DIUBAH JADI MIRIP FORM YANG DI DALEMNYA ADA INPUT TANDA TANGAN --}}
+
+
+
                                                     @if ($item->pertimbangan_atasan_langsung == 'proses')
                                                         <form
-                                                            action="{{ route('management-perizinan-atasan.verifikasi', ['id' => $item->id]) }}"
+                                                            action="{{ route('management-perizinan-atasan.verifikasi', ['id' => $item->id_perizinan]) }}"
                                                             method="POST">
                                                             @csrf
                                                             <button type="submit"
