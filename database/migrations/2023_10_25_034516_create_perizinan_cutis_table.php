@@ -26,6 +26,9 @@ return new class extends Migration
             $table->string('keputusan_pejabat_berwenang')->default('proses');
             $table->string('file_pendukung')->nullable();
             $table->string('alasan_dari_atasan')->nullable();
+            $table->string('ttd_pegawai')->nullable();
+            $table->string('ttd_atasan')->nullable();
+            $table->string('ttd_wadir')->nullable();
 
             $table->timestamps();
 

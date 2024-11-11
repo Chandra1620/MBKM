@@ -20,7 +20,10 @@ class PerizinanCuti extends Model
         'keputusan_pejabat_berwenang',
         'file_pendukung',
         'alasan_dari_atasan',
-        'unit_kerja_id'
+        'unit_kerja_id',
+        'ttd_pegawai',
+        'ttd_atasan',
+        'ttd_wadir'
     ];
     public function jeniscuti(){
         return $this->belongsTo(JenisCuti::class,'jenis_cuti_id');

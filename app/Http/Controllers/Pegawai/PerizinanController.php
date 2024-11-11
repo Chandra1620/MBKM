@@ -116,43 +116,45 @@ class PerizinanController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
+         dd($request->all());
+        // Validasi Input
+        $attrs = $request->validate([
+            'alasan' => 'required',
+            'alamat_selama_cuti' => 'required',
+            'jenis_cuti' => 'required|exists:jenis_cutis,id',
+            'tgl_mulai' => 'required|date',
+            'tgl_selesai' => 'required|date|after_or_equal:tgl_mulai',
+            'no_telp_bisa_dihubungi' => 'required',
+            'ttd_pegawai' => 'required|mimes:png|max:2048'
+        ]);
+
         $user = Auth::user();
         $pegawaiFungsional = PegawaiFungsional::with('unit_kerja_has_jabatan_fungsional.unitkerja')
             ->where('user_id', $user->id)
             ->first();
-        // dd($pegawaiFungsional->unit_kerja_has_jabatan_fungsional->unitkerja->name);
+
         if (!$pegawaiFungsional) {
-            // dd('buat jabatan fungsional terleih dalu');
             return redirect()
                 ->route('perizinan-cuti.index')
                 ->with('error', 'Anda Harus Memiliki Jabatan Fungsional dulu');
         }
 
-        $attrs = $request->validate([
-            'alasan' => 'required',
-            'alamat_selama_cuti' => 'required',
-            'jenis_cuti' => 'required|exists:jenis_cutis,id', // Pastikan jenis_cuti adalah ID yang valid
-            'tgl_mulai' => 'required',
-            'tgl_selesai' => 'required',
-            'no_telp_bisa_dihubungi' => 'required'
-        ]);
-
-        $year = now()->year; // Mengambil tahun saat ini
+        // Hitung Total Cuti Tahunan
+        $year = now()->year;
         $totalRiwayatCuti = PerizinanCuti::where('user_id', $user->id)
             ->whereYear('tgl_mulai', $year)
             ->count();
-        if ($totalRiwayatCuti > 60) {
+
+        if ($totalRiwayatCuti >= 60) {
             return redirect()
                 ->route('perizinan-cuti.index')
                 ->with('error', 'Anda Sudah Mengambil Jatah Cuti');
         }
 
+        // Simpan Data Cuti
         $perizinanCuti = new PerizinanCuti();
-
         $perizinanCuti->user_id = $user->id;
         $perizinanCuti->unit_kerja_id = $pegawaiFungsional->unit_kerja_has_jabatan_fungsional->unitkerja->id;
-
         $perizinanCuti->alasan = $attrs['alasan'];
         $perizinanCuti->alamat_selama_cuti = $attrs['alamat_selama_cuti'];
         $perizinanCuti->jenis_cuti_id = $attrs['jenis_cuti'];
@@ -160,34 +162,20 @@ class PerizinanController extends Controller
         $perizinanCuti->tgl_selesai = $attrs['tgl_selesai'];
         $perizinanCuti->no_telp_bisa_dihubungi = $attrs['no_telp_bisa_dihubungi'];
 
+        // Proses Upload Tanda Tangan
+        if ($request->hasFile('ttd_pegawai')) {
+            $file = $request->file('ttd_pegawai');
+            $fileName = 'ttd_pegawai_' . $user->id . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/ttd_pegawai'), $fileName);
+            $perizinanCuti->ttd_pegawai = 'uploads/ttd_pegawai/' . $fileName;
+        }
+
         $perizinanCuti->save();
 
-        $results = DB::table('riwayat_fungsionals')
-            ->join('unit_kerja_has_jabatan_fungsionals', 'riwayat_fungsionals.unit_kerja_has_jabatan_fungsional_id', '=', 'unit_kerja_has_jabatan_fungsionals.id')
-            ->select('riwayat_fungsionals.*', 'unit_kerja_has_jabatan_fungsionals.*')
-            ->where("riwayat_fungsionals.user_id", "=", "$user->id")
-            ->get()
-            ->first();
-
-        $data = [
-            'name' => $user->name,
-            'unit_kerja' => $pegawaiFungsional->unit_kerja_has_jabatan_fungsional->unitkerja->name,
-            'jabatan_fungsional' => $results->name,
-            'nip' => $user->nip,
-            'jenis_cuti' => $attrs["jenis_cuti"],
-            'tax' => 20,
-            'total' => 220,
-            'images' => public_path('assets/test/pngwing.com.png'),
-            'icon' => public_path('assets/icon/check.svg')
-        ];
-
-        // dd($data);
-
-        // $pdf = FacadePdf::loadView('pdf.test', data: $data);
-        // return $pdf->stream('Form Cuti.pdf');
-
-        return redirect()->route('perizinan-cuti.index');
+        return redirect()->route('perizinan-cuti.index')
+            ->with('success', 'Pengajuan Cuti berhasil dibuat');
     }
+
 
     public function edit($id)
     {
@@ -224,7 +212,8 @@ class PerizinanController extends Controller
         $perizinan->delete();
         return redirect()->route('perizinan-cuti.index');
     }
-    public function pdfStream($id) {
+    public function pdfStream($id)
+    {
         $user = Auth::user();
 
         $results = DB::table('riwayat_fungsionals')
@@ -294,7 +283,7 @@ class PerizinanController extends Controller
             ->where('perizinan_cutis.id', '=', $id)
             ->get()
             ->first();
-        
+
         $start = Carbon::parse($results2->tgl_mulai);
         $end = Carbon::parse($results2->tgl_selesai);
 
@@ -461,51 +450,12 @@ class PerizinanController extends Controller
         $sisaCutiN2 = 12 - $cutiTahunIniN2; //59
         if ($sisaCutiN2 >= 6) {
             $sisaCutiN2 = 6;
+        
         } elseif ($sisaCutiN2 >= 1) {
             $sisaCutiN2 = 0;
         } else {
             $sisaCutiN2 = 12 - $cutiTahunIniN1; //59
         }
-        // //! end tahun n - 2
-        // dd($sisaCutiN2,$sisaCutiN1, $sisaCuti);
-
-        // dd($tandaTanganAtasanLangsung);
-        // gabole null
-        // if ($tandaTanganUser) {
-        //     $qrCodeUser = base64_encode(
-        //         QrCode::format('svg')
-        //             ->size(200)
-        //             ->errorCorrection('H')
-        //             ->generate($tandaTanganUser),
-        //     );
-        // } else {
-        //     $qrCodeUser = '';
-        // }
-        // tanda tangan user
-
-        // $tandaTanganUser
-        // tanda tangan atasan langsung
-        // if ($tandaTanganAtasanLangsung) {
-        //     $qrCodeAtasanLangsung = base64_encode(
-        //         QrCode::format('svg')
-        //             ->size(200)
-        //             ->errorCorrection('H')
-        //             ->generate($tandaTanganAtasanLangsung),
-        //     );
-        // } else {
-        //     $qrCodeAtasanLangsung = '';
-        // }
-        // tanda tangan wadir
-        // if ($tandaTanganWadir) {
-        //     $qrCodeWadir = base64_encode(
-        //         QrCode::format('svg')
-        //             ->size(200)
-        //             ->errorCorrection('H')
-        //             ->generate($tandaTanganWadir),
-        //     );
-        // } else {
-        //     $qrCodeWadir = '';
-        // }
 
         $carbonDate = Carbon::parse($perizinanCuti->created_at)->locale('id');
 
@@ -535,9 +485,9 @@ class PerizinanController extends Controller
 
         // dd($qrCodeUser);
 
-        $pdf = PDF::loadView('admin.template.pdf_perizinan', compact('namaAtasanLangsung', 'nipAtasanLangsung', 'namaPejabatBerwenang', 'nipPejabatBerwenang', 'qrCodePerizinan', 'createdAtIndo', 'perizinanCuti', 'jeniscuti', 'sisaCuti', 'sisaCutiN1', 'sisaCutiN2', 'totalLamanyaCuti'));
+        // $pdf = PDF::loadView('admin.template.pdf_perizinan', compact('namaAtasanLangsung', 'nipAtasanLangsung', 'namaPejabatBerwenang', 'nipPejabatBerwenang', 'qrCodePerizinan', 'createdAtIndo', 'perizinanCuti', 'jeniscuti', 'sisaCuti', 'sisaCutiN1', 'sisaCutiN2', 'totalLamanyaCuti'));
         // Download the PDF
-        return $pdf->download('periznan-cuti.pdf');
+        // return $pdf->download('periznan-cuti.pdf');
     }
 
     public function overview($id)
@@ -707,5 +657,4 @@ class PerizinanController extends Controller
 
         return view('pegawai.perizinan.scan', compact('perizinanCuti', 'sisaCutiTahunIni', 'sisaCutiTahunN1', 'sisaCutiTahunN2'));
     }
-
 }
