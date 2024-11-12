@@ -16,15 +16,14 @@ class SisaCutiController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $year = Carbon::now()->year;
 
+        // Ambil data cuti dengan pagination
         $sisaCuti = DB::table("cuti_sisas")
             ->join("users", "cuti_sisas.user_id", "=", "users.id")
-            ->where("user_id", $user->id)
+            ->where("cuti_sisas.user_id", $user->id)
             ->select("cuti_sisas.*", "users.*")
-            ->get()
-            ->first();
-
-        $year = Carbon::now()->year;
+            ->paginate(8);
 
         return view('pegawai.perizinan.sisaCuti', compact("sisaCuti", "year"));
     }

@@ -1,4 +1,4 @@
-@dd($sisaCuti)
+{{-- @dd($sisaCuti) --}}
 @extends('layouts.theme')
 
 @section('content')
@@ -21,17 +21,24 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                <tr>
-                    <td class="px-6 py-4 border-b">{{ $sisaCuti->nip }}</td>
-                    <td class="px-6 py-4 border-b">{{ $sisaCuti->name }}</td>
-                    <td class="px-6 py-4 border-b">{{ $year }}</td>
-                    <td class="px-6 py-4 border-b text-center">{{ $sisaCuti->n }}</td>
-                    <td class="px-6 py-4 border-b text-center">{{ $sisaCuti->n_minus_1 }}</td>
-                    <td class="px-6 py-4 border-b text-center">{{ $sisaCuti->n_minus_2 }}</td>
-                    <td class="px-6 py-4 border-b text-center"></td>
-                    <td class="px-6 py-4 border-b text-center">1</td>
-                </tr>
+                @foreach ($sisaCuti as $cuti)
+                    <tr>
+                        <td class="px-6 py-4 border-b">{{ $cuti->nip }}</td>
+                        <td class="px-6 py-4 border-b">{{ $cuti->name }}</td>
+                        <td class="px-6 py-4 border-b">{{ $year }}</td>
+                        <td class="px-6 py-4 border-b text-center">{{ $cuti->n }}</td>
+                        <td class="px-6 py-4 border-b text-center">{{ $cuti->n_minus_1 }}</td>
+                        <td class="px-6 py-4 border-b text-center">{{ $cuti->n_minus_2 }}</td>
+                        <td class="px-6 py-4 border-b text-center">{{ $cuti->n + $cuti->n_minus_1 + $cuti->n_minus_2 }}</td>
+                        <td class="px-6 py-4 border-b text-center">1</td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
+
+        <!-- Pagination Links -->
+        <div class="mt-4">
+            {{ $sisaCuti->links() }}
+        </div>
     </div>
 @endsection
