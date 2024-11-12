@@ -14,7 +14,7 @@
                     </p>
                 </div>
 
-                <form method="POST" action="{{ route('perizinan-cuti.store') }}">
+                <form method="POST" action="{{ route('perizinan-cuti.store') }}" enctype="multipart/form-data">
                     @csrf
 
                     <!-- Section -->
@@ -79,6 +79,15 @@
                                 placeholder="Tanggal Selesai" id="tgl_selesai">
                         </div>
 
+                        <label class="inline-block text-sm font-medium dark:text-white">
+                            Tanda Tangan Pegawai
+                        </label>
+
+                        <div class="my-1 space-y-3">
+                            <input name="ttd_pegawai" type="file"
+                                class="py-2 px-3 pr-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
+                        </div>
+
                         <script>
                             var inputTanggalMulai = document.getElementById("tgl_mulai");
                             var inputTanggalSelesai = document.getElementById("tgl_selesai");
@@ -88,12 +97,7 @@
                             inputTanggalMulai.setAttribute("min", today);
                             inputTanggalSelesai.setAttribute("min", today);
                         </script>
-
-
-
-
                     </div>
-
 
                     <div class="mt-5 flex justify-end gap-x-2">
                         <button type="button"
@@ -105,9 +109,7 @@
                             Save changes
                         </button>
                     </div>
-
                 </form>
-
 
             </div>
             <!-- End Card -->

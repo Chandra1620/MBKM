@@ -1,4 +1,3 @@
-@dd()
 @extends('layouts.theme')
 
 @section('content')
@@ -22,7 +21,7 @@
                                 <div class="grow ml-5">
                                     <h3
                                         class="group-hover:text-blue-600 font-semibold text-gray-800 dark:group-hover:text-gray-400 dark:text-gray-200">
-                                        {{ $sisaCuti }}
+                                        {{ $izinCutiSisa->n }}
                                     </h3>
                                     <p class="text-sm text-gray-500">
                                         Total Sisa Cuti Tahunan
@@ -232,20 +231,13 @@
                                                                         </svg>
                                                                     </button>
                                                                 </div>
-
                                                                 <div class="p-4 sm:p-14 text-center overflow-y-auto">
-
                                                                     {{-- !start tracking --}}
                                                                     <div class="flex items-center">
-                                                                        <div
-                                                                            class="w-[80px] h-[80px] rounded-full flex justify-center items-center {{ $izin->verifikasi_admin == null ? 'bg-blue-100' : 'bg-blue-700' }}">
-
-                                                                            <div
-                                                                                class="w-[70px] h-[70px] rounded-full  {{ $izin->verifikasi_admin == null ? 'bg-blue-100' : 'bg-blue-300' }} flex justify-center items-center">
-                                                                                Admin
-                                                                            </div>
+                                                                        <div class="w-[80px] h-[80px] rounded-full flex justify-center items-center {{ $izin->verifikasi_admin == null ? 'bg-blue-100' : 'bg-blue-700' }}">
+                                                                            <div class="w-[70px] h-[70px] rounded-full  {{ $izin->verifikasi_admin == null ? 'bg-blue-100' : 'bg-blue-300' }} flex justify-center items-center">Admin</div>
                                                                         </div>
-                                                                        {{-- TODO start garus --}}
+                                                                        {{-- TODO start garis --}}
                                                                         <div
                                                                             class="w-[50px] h-[5px] {{ $izin->verifikasi_admin == null ? 'bg-blue-100' : 'bg-blue-700' }}">
                                                                         </div>
@@ -263,18 +255,12 @@
                                                                             class="w-[50px] h-[5px] {{ $izin->pertimbangan_atasan_langsung == 'proses' ? 'bg-blue-100' : 'bg-blue-700' }}">
                                                                         </div>
                                                                         {{-- TODO end garis --}}
-                                                                        <div
-                                                                            class="w-[80px] h-[80px] rounded-full {{ $izin->keputusan_pejabat_berwenang == 'proses' ? 'bg-blue-100' : 'bg-blue-700' }} flex justify-center items-center ">
-
-                                                                            <div
-                                                                                class="w-[70px] h-[70px] rounded-full  flex justify-center items-center  {{ $izin->keputusan_pejabat_berwenang == 'proses' ? 'bg-blue-100' : 'bg-blue-300' }}">
-                                                                                Wadir
-                                                                            </div>
+                                                                        <div class="w-[80px] h-[80px] rounded-full {{ $izin->keputusan_pejabat_berwenang == 'proses' ? 'bg-blue-100' : 'bg-blue-700' }} flex justify-center items-center ">
+                                                                            <div class="w-[70px] h-[70px] rounded-full  flex justify-center items-center  {{ $izin->keputusan_pejabat_berwenang == 'proses' ? 'bg-blue-100' : 'bg-blue-300' }}">Wadir</div>
                                                                         </div>
                                                                     </div>
                                                                     {{-- !end tracking --}}
                                                                 </div>
-
                                                                 <div class="p-4">
                                                                     <div class="flex items-center">
                                                                         <div
@@ -302,20 +288,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-
-
-                                                    {{-- @if ($izin->keputusan_pejabat_berwenang == 'diizinkan')
-                                                        <a
-                                                            href="{{ route('perizinan-cuti.exportPdf', ['id' => $izin->id]) }}">
-                                                            <button type="button"
-                                                                class="py-3 mr-2 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-yellow-200 font-semibold text-yellow-500 hover:text-white hover:bg-yellow-500 hover:border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
-                                                                Export PDF
-                                                            </button>
-                                                        </a>
-                                                    @endif --}}
-
-
                                                     @if ($izin->keputusan_pejabat_berwenang == 'proses')
                                                         <form
                                                             action="{{ route('perizinan-cuti.delete', ['id' => $izin->id]) }}"
@@ -336,15 +308,10 @@
                                                             </button>
                                                         </form>
                                                     @endif
-
                                                 </div>
-
-
-
                                             </td>
                                         </tr>
                                     @endforeach
-
                                 </tbody>
                             </table>
                         </div>
@@ -355,8 +322,6 @@
                 </div>
             </div>
         </div>
-
-
 
         @if (session('error'))
             <script>

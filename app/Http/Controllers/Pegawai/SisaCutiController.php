@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Pegawai;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class SisaCutiController extends Controller
 {
@@ -12,7 +15,29 @@ class SisaCutiController extends Controller
      */
     public function index()
     {
-        return view('pegawai.perizinan.sisaCuti');
+
+        $count = DB::table("cuti_sisas")->count();
+
+        $user = Auth::user();
+        $year = Carbon::now()->year;
+
+        if ($user->role == "pegawai") {
+            $sisaCuti = DB::table("cuti_sisas")
+                ->join("users", "cuti_sisas.user_id", "=", "users.id")
+                ->where("user_id", $user->id)
+                ->select("cuti_sisas.*", "users.*")
+                ->paginate(8);
+        } else {
+            $sisaCuti = DB::table("cuti_sisas")
+                ->join("users", "cuti_sisas.user_id", "=", "users.id")
+                ->paginate(8);
+        }
+
+        // dd($sisaCuti);
+        
+        $year = Carbon::now()->year;
+
+        return view('pegawai.perizinan.sisaCuti', compact("sisaCuti", "year"));
     }
 
     /**
