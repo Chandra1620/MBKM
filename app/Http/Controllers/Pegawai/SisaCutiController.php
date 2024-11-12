@@ -26,14 +26,11 @@ class SisaCutiController extends Controller
                 ->join("users", "cuti_sisas.user_id", "=", "users.id")
                 ->where("user_id", $user->id)
                 ->select("cuti_sisas.*", "users.*")
-                ->get();
+                ->paginate(8);
         } else {
             $sisaCuti = DB::table("cuti_sisas")
                 ->join("users", "cuti_sisas.user_id", "=", "users.id")
-                ->select("cuti_sisas.*", "users.*")
-                ->offset(1)
-                ->limit($count - 1)
-                ->get();
+                ->paginate(8);
         }
 
         // dd($sisaCuti);
