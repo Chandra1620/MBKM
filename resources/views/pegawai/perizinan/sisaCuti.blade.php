@@ -1,4 +1,4 @@
-{{-- @dd($sisaCuti) --}}
+@dd($sisaCuti)
 @extends('layouts.theme')
 
 @section('content')
@@ -20,7 +20,6 @@
                     <th class="text-gray-500 text-xs font-medium border border-gray-300">Dipakai</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                 @foreach ($sisaCuti as $cuti)
                     <tr>
                         <td class="px-6 py-4 border-b">{{ $cuti->nip }}</td>

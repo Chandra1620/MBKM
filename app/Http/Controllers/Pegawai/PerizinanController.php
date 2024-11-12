@@ -116,7 +116,6 @@ class PerizinanController extends Controller
 
     public function store(Request $request)
     {
-        //  dd($request->all());
         // Validasi Input
         $attrs = $request->validate([
             'alasan' => 'required',
@@ -125,7 +124,7 @@ class PerizinanController extends Controller
             'tgl_mulai' => 'required|date',
             'tgl_selesai' => 'required|date|after_or_equal:tgl_mulai',
             'no_telp_bisa_dihubungi' => 'required',
-            'ttd_pegawai' => 'required|mimes:png|max:2048'
+            'ttd_pegawai' => 'required|mimes:png,image/x-png|max:2048'
         ]);
 
         $user = Auth::user();
@@ -259,6 +258,7 @@ class PerizinanController extends Controller
             "n" => $results3->n,
             "n_minus_1" => $results3->n_minus_1,
             "n_minus_2" => $results3->n_minus_2,
+            "ttd_pegawai" => $results2->ttd_pegawai
         ];
 
         // dd($results2);

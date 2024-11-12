@@ -15,15 +15,30 @@ class SisaCutiController extends Controller
      */
     public function index()
     {
+
+        $count = DB::table("cuti_sisas")->count();
+
         $user = Auth::user();
         $year = Carbon::now()->year;
 
-        // Ambil data cuti dengan pagination
-        $sisaCuti = DB::table("cuti_sisas")
-            ->join("users", "cuti_sisas.user_id", "=", "users.id")
-            ->where("cuti_sisas.user_id", $user->id)
-            ->select("cuti_sisas.*", "users.*")
-            ->paginate(8);
+        if ($user->role == "pegawai") {
+            $sisaCuti = DB::table("cuti_sisas")
+                ->join("users", "cuti_sisas.user_id", "=", "users.id")
+                ->where("user_id", $user->id)
+                ->select("cuti_sisas.*", "users.*")
+                ->get();
+        } else {
+            $sisaCuti = DB::table("cuti_sisas")
+                ->join("users", "cuti_sisas.user_id", "=", "users.id")
+                ->select("cuti_sisas.*", "users.*")
+                ->offset(1)
+                ->limit($count - 1)
+                ->get();
+        }
+
+        // dd($sisaCuti);
+        
+        $year = Carbon::now()->year;
 
         return view('pegawai.perizinan.sisaCuti', compact("sisaCuti", "year"));
     }

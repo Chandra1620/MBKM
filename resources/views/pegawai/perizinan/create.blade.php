@@ -14,7 +14,7 @@
                     </p>
                 </div>
 
-                <form method="POST" action="{{ route('perizinan-cuti.store') }}">
+                <form method="POST" action="{{ route('perizinan-cuti.store') }}" enctype="multipart/form-data">
                     @csrf
 
                     <!-- Section -->
@@ -85,8 +85,7 @@
 
                         <div class="my-1 space-y-3">
                             <input name="ttd_pegawai" type="file"
-                                class="py-2 px-3 pr-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
-                                accept=".png">
+                                class="py-2 px-3 pr-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
                         </div>
 
                         <script>
