@@ -137,9 +137,9 @@
 
                                                                             <!-- Form -->
                                                                             <form method="POST"
-                                                                                action="{{ route('management-perizinan-atasan.verifikasi', ['id' => $item->user_id]) }}">
+                                                                                action="{{ route('management-perizinan-atasan.verifikasi', ['id' => $item->id_perizinan]) }}">
                                                                                 @csrf
-                                                                                @method('PUT')
+                                                                                @method('POST')
                                                                                 <div class="text-left">
                                                                                     <label for="file_pendukung"
                                                                                         class="block text-sm mb-2 dark:text-white">Tanda Tangan</label>
@@ -185,7 +185,7 @@
                                                         Update
                                                     </button>
                                                 </a> --}}
-                                                    <a href="{{ route('perizinan-cuti-atasan.pdfStream', ['id' => $item->user_id]) }}"
+                                                    <a href="{{ route('perizinan-cuti-atasan.pdfStream', ['id' => $item->id_perizinan]) }}"
                                                         class="flex justify-center items-center gap-3 px-3 py-3 rounded-md border-2 border-orange-200 font-semibold text-orange-500 hover:text-white hover:bg-orange-500 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
                                                         {{-- <svg xmlns="http://www.w3.org/2000/svg" width="16"
                                                             height="16" fill="currentColor" class="bi bi-eye"
@@ -199,7 +199,7 @@
                                                     </a>
                                                     @if ($item->pertimbangan_atasan_langsung == 'proses')
                                                         <form
-                                                            action="{{ route('management-perizinan.ditolak', ['id' => $item->user_id]) }}"
+                                                            action="{{ route('management-perizinan.ditolak', ['id' => $item->id_perizinan]) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')

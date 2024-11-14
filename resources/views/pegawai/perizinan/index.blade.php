@@ -1,3 +1,4 @@
+{{-- @dd($perizinan) --}}
 @extends('layouts.theme')
 
 @section('content')
@@ -169,7 +170,7 @@
                                             {{-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">New York No. 1 Lake Park</td> --}}
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium ">
                                                 <div class="flex justify-end">
-                                                    <div class="text-center">
+                                                    {{-- <div class="text-center">
                                                         <button type="button"
                                                             class="py-3 mr-2 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-blue-200 font-semibold text-blue-500 hover:text-white hover:bg-blue-500 hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
                                                             data-hs-overlay="#hs-cookies">
@@ -183,7 +184,7 @@
                                                             </svg>
                                                             Tracer
                                                         </button>
-                                                    </div>
+                                                    </div> --}}
                                                     <a href="{{ route('perizinan-cuti.pdfStream', ['id' => $izin->id]) }}"
                                                         class="flex justify-center items-center gap-3 px-3 me-2 rounded-md border-2 border-orange-200 font-semibold text-orange-500 hover:text-white hover:bg-orange-500 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16"
@@ -208,7 +209,7 @@
                                                         </svg>
                                                         Download
                                                     </a>
-                                                    <div id="hs-cookies"
+                                                    <!-- <div id="hs-cookies"
                                                         class="hs-overlay hidden w-full h-full fixed top-0 start-0 z-[60] overflow-x-hidden overflow-y-auto">
                                                         <div
                                                             class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto">
@@ -235,7 +236,7 @@
                                                                     {{-- !start tracking --}}
                                                                     <div class="flex items-center">
                                                                         <div class="w-[80px] h-[80px] rounded-full flex justify-center items-center {{ $izin->verifikasi_admin == null ? 'bg-blue-100' : 'bg-blue-700' }}">
-                                                                            <div class="w-[70px] h-[70px] rounded-full  {{ $izin->verifikasi_admin == null ? 'bg-blue-100' : 'bg-blue-300' }} flex justify-center items-center">Admin</div>
+                                                                            <div class="w-[70px] h-[70px] rounded-full  {{ $izin->verifikasi_admin === null ? 'bg-blue-100' : 'bg-blue-300' }} flex justify-center items-center">Admin</div>
                                                                         </div>
                                                                         {{-- TODO start garis --}}
                                                                         <div
@@ -282,12 +283,10 @@
                                                                         </div>
                                                                         <p> &nbsp; belum divalidasi</p>
                                                                     </div>
-
-
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                     @if ($izin->keputusan_pejabat_berwenang == 'proses')
                                                         <form
                                                             action="{{ route('perizinan-cuti.delete', ['id' => $izin->id]) }}"
@@ -308,6 +307,46 @@
                                                             </button>
                                                         </form>
                                                     @endif
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-3 flex gap-3 items-center" colspan="2">
+                                                <span>Status Persetujuan:</span>
+                                                <div id="approval-status" class="flex">
+                                                    <div id="admin-kepegawaian" class="flex items-center">
+                                                        @if ($izin->verifikasi_admin == null)
+                                                            <div class="w-4 h-4 border outline-2 outline outline-slate-300 rounded-full bg-slate-200"></div>
+                                                            <div class="bg-slate-300 borderline h-1 w-3"></div>
+                                                            <div class="bg-slate-300 borderline h-1 w-3"></div>
+                                                        @else   
+                                                            <div class="w-4 h-4 border outline-2 outline outline-blue-700 rounded-full bg-blue-700"></div>
+                                                            <div class="bg-blue-700 borderline h-1 w-3"></div>
+                                                            @if ($izin->pertimbangan_atasan_langsung == "disetujui")
+                                                                <div class="bg-blue-700 borderline h-1 w-3"></div>
+                                                            @else
+                                                                <div class="bg-slate-300 borderline h-1 w-3"></div>
+                                                            @endif
+                                                        @endif
+                                                    </div>
+                                                    <div id="atasan-langsung" class="flex items-center">
+                                                        @if ($izin->pertimbangan_atasan_langsung == "proses")
+                                                            <div class="w-4 h-4 border outline-2 outline outline-slate-300 rounded-full bg-slate-200"></div>
+                                                            <div class="bg-slate-300 borderline h-1 w-3"></div>
+                                                            <div class="bg-slate-300 borderline h-1 w-3"></div>
+                                                        @else
+                                                            <div class="w-4 h-4 border outline-2 outline outline-blue-700 rounded-full bg-blue-700"></div>
+                                                            <div class="bg-blue-700 borderline h-1 w-3"></div> 
+                                                            <div class="bg-slate-300 borderline h-1 w-3"></div>
+                                                        @endif
+                                                    </div>
+                                                    <div id="wakil-direktur" class="flex items-center">
+                                                        @if ($izin->keputusan_pejabat_berwenang == "proses")
+                                                            <div class="w-4 h-4 border outline-2 outline outline-slate-300 rounded-full bg-slate-200"></div>
+                                                        @else   
+                                                            <div class="w-4 h-4 border outline-2 outline outline-blue-700 rounded-full bg-blue-700"></div>
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             </td>
                                         </tr>

@@ -214,7 +214,7 @@ class PerizinanController extends Controller
     public function pdfStream($id)
     {
         $user = Auth::user();
-
+        
         $results = DB::table('riwayat_fungsionals')
             ->join('unit_kerja_has_jabatan_fungsionals', 'riwayat_fungsionals.unit_kerja_has_jabatan_fungsional_id', '=', 'unit_kerja_has_jabatan_fungsionals.id')
             ->join("unit_kerjas", "unit_kerja_has_jabatan_fungsionals.unit_kerja_id", "=", "unit_kerjas.id")
@@ -228,6 +228,8 @@ class PerizinanController extends Controller
             ->where('perizinan_cutis.id', '=', $id)
             ->get()
             ->first();
+            
+        // dd($results2);
 
         $results3 = DB::table('users')
             ->join("cuti_sisas", "cuti_sisas.user_id", "=", "users.id")
@@ -244,7 +246,7 @@ class PerizinanController extends Controller
             "name" => $user->name,
             'nip' => $user->nip,
             "unit_kerja" => $results->unit_kerja,
-            "tanggal_dibuat" => Carbon::parse($results2->created_at)->format('j F Y'),
+            "tanggal_dibuat" => Carbon::parse($results2->tgl_mulai)->format('j F Y'),
             'jabatan_fungsional' => $results->jabatan,
             'jenis_cuti' => $results2->jenis_cuti_id,
             'alasan' => $results2->alasan,

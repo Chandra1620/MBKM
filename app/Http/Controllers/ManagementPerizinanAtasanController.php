@@ -27,6 +27,7 @@ class ManagementPerizinanAtasanController extends Controller
     }
     public function verifikasi($id)
     {
+        // dd($id);
         /**
          * Verifikasi perizinan cuti atasan langsung
          */
@@ -35,7 +36,7 @@ class ManagementPerizinanAtasanController extends Controller
             ->where("id", "=", $id)
             ->update(["pertimbangan_atasan_langsung" => "disetujui"]);
 
-        return $this->index();
+        return redirect()->route("management-perizinan-atasan.index");
     }
     public function stream($id)
     {
