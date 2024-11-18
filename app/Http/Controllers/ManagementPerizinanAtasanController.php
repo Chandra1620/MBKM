@@ -14,20 +14,22 @@ class ManagementPerizinanAtasanController extends Controller
     {
         $user = Auth::user();
 
+        // dd($user->id);
+
         $perizinan = DB::table('perizinan_cutis')
             ->join('users', 'users.id', '=', 'perizinan_cutis.user_id')
             ->join('atasan_langsung', 'atasan_langsung.user_id', '=', 'perizinan_cutis.user_id')
             ->where('atasan_langsung.user_has_atasan_id', $user->id)
             ->where('perizinan_cutis.verifikasi_admin', "!=", null)
-            ->select('perizinan_cutis.*', 'users.*', 'atasan_langsung.*', 'perizinan_cutis.id AS id_perizinan')
+            ->select('perizinan_cutis.*', 'users.*', 'atasan_langsung.*', 'perizinan_cutis.id AS id_perizinan', 'atasan_langsung.user_has_atasan_id AS id_atasan')
             ->paginate(8);
 
         // dd($perizinan);
         return view("atasan.index", compact('perizinan'));
     }
-    public function verifikasi(Request $request, $id)
+    public function verifikasi(Request $request, $id, $id_atasan)
     {
-        // dd($id);
+        // dd($id_atasan);
         /**
          * Verifikasi perizinan cuti atasan langsung
          */
@@ -42,6 +44,22 @@ class ManagementPerizinanAtasanController extends Controller
             ->where("id", "=", $id)
             ->update(["pertimbangan_atasan_langsung" => "disetujui"]);
 
+        /**
+         * Seleksi Wadir berdasarkan atasan
+         */
+        $getWadir = DB::table("atasan_langsung")
+            ->where("user_id", "=", $id_atasan)
+            ->get()
+            ->first();
+
+        // dd($getWadir->user_has_atasan_id);
+
+        DB::table("perizinan_cuti_to_wadirs")
+            ->insert([
+                "perizinan_cuti_id" => $id,
+                "wadir_id" => $getWadir->user_has_atasan_id
+            ]);
+
         if ($request->hasFile('ttd_atasan')) {
             $file = $request->file('ttd_atasan');
             $fileName = 'ttd_atasan_' . $user->id . '_' . time() . '.' . $file->getClientOriginalExtension();
@@ -49,7 +67,8 @@ class ManagementPerizinanAtasanController extends Controller
 
             DB::table("perizinan_cutis")
                 ->where("id", "=", $id)
-                ->update(["ttd_atasan" => "uploads/ttd_atasan/$fileName"]);;
+                ->update(["ttd_atasan" => "uploads/ttd_atasan/$fileName"]);
+            ;
         }
 
         return redirect()->route("management-perizinan-atasan.index");
