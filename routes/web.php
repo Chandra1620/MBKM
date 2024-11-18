@@ -284,7 +284,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/perizinan-cuti/store', [PerizinanController::class, 'store'])->name('perizinan-cuti.store');
     Route::get('/perizinan-cuti-overview', [PerizinanController::class, 'overview'])->name('perizinan-cuti.overview');
 
-    Route::get('/perizinan-cuti/{id}/stream', [PerizinanController::class, 'pdfStream'])->name('perizinan-cuti.pdfStream');
+    Route::get('/perizinan-cuti/{id}/user/{id_pegawai}/stream', [PerizinanController::class, 'pdfStream'])->name('perizinan-cuti.pdfStream');
     Route::get('/perizinan-cuti/{id}/download', [PerizinanController::class, 'pdfExporting'])->name('perizinan-cuti.pdfExporting');
 
     Route::get('/perizinan-cuti/{id}/edit', [PerizinanController::class, 'edit'])->name('perizinan-cuti.edit');

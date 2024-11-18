@@ -262,7 +262,7 @@
                     <span>Hormat Saya</span>
                     <br>
                     @isset($ttd_pegawai)   
-                        <img class="absolute" src="{{ $images }}" alt="tanda tangan" style="width:150px;">
+                        <img class="absolute" src="{{ $ttd_pegawai }}" alt="tanda tangan" style="width:150px;">
                     @endisset
                     <br>
                     <span style="margin-top: 20px;">
@@ -285,23 +285,39 @@
             </tr>
             <tr>
                 <td class="border padding-table-x" style="width: 0%;">DISETUJUI</td>
-                <td class="border padding-table-x" style="width:25%;">PERUBAHAN ****</td>
-                <td class="border padding-table-x" style="width:50%;">DITANGGUHKAN ****</td>
-                <td class="border padding-table-x" style="width:25%;">TIDAK DISETUJUI ****</td>
+                <td class="border padding-table-x" style="width:20%;">PERUBAHAN ****</td>
+                <td class="border padding-table-x" style="width:40%;">DITANGGUHKAN ****</td>
+                <td class="border padding-table-x" style="width:20%;">TIDAK DISETUJUI ****</td>
             </tr>
             <tr>
-                <td class="border padding-table-x" style="height:20px; width:0%;"></td>
-                <td class="border padding-table-x" style="height:20px; width:25%;"></td>
-                <td class="border padding-table-x" style="height:20px; width:50%;"></td>
-                <td class="border padding-table-x" style="height:20px; width:25%;"></td>
+                <td class="border padding-table-x" style="height:20px; width:0%;">
+                    @if ($atasan_disetujui == "disetujui")
+                        <img src={{ $icon }} alt="tanda tangan">
+                    @endif
+                </td>
+                <td class="border padding-table-x" style="height:20px; width:20%;">
+                    @if ($atasan_disetujui == "dirubah")
+                        <img src={{ $icon }} alt="tanda tangan">
+                    @endif
+                </td>
+                <td class="border padding-table-x" style="height:20px; width:40%;">
+                    @if ($atasan_disetujui == "ditangguhkan")
+                        <img src={{ $icon }} alt="tanda tangan">
+                    @endif
+                </td>
+                <td class="border padding-table-x" style="height:20px; width:20%;">
+                    @if ($atasan_disetujui == "ditolak")
+                        <img src={{ $icon }} alt="tanda tangan">
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td colspan="3"></td>
-                <td class="border padding-table-x relative" style="width:35%; height:50px; text-align: center;">
+                <td class="border padding-table-x relative" style="width:70%; height:50px; text-align: center;">
                     Hormat Saya
                     <br>
                     @isset($ttd_atasan_langsung)
-                        <img class="absolute" src="{{ $images }}" alt="tanda tangan" style="width:150px;">
+                        <img class="absolute" src="{{ $ttd_atasan_langsung }}" alt="tanda tangan" style="width:150px;">
                     @endisset
                     <br>
                     @if (isset($atasan_name))
@@ -337,7 +353,7 @@
             </tr>
             <tr>
                 <td colspan="3"></td>
-                <td class="border padding-table-x relative" style="width:35%; height:50px; text-align: center;">
+                <td class="border padding-table-x relative" style="width:70%; height:50px; text-align: center;">
                     Hormat Saya
                     <br>
                     @isset($ttd_wadir)  

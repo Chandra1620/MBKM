@@ -137,7 +137,7 @@
 
                                                                             <!-- Form -->
                                                                             <form method="POST"
-                                                                                action="{{ route('management-perizinan-atasan.verifikasi', ['id' => $item->id_perizinan]) }}">
+                                                                                action="{{ route('management-perizinan-atasan.verifikasi', ['id' => $item->id_perizinan]) }}" enctype="multipart/form-data">
                                                                                 @csrf
                                                                                 @method('POST')
                                                                                 <div class="text-left">
@@ -146,7 +146,7 @@
                                                                                     <div class="relative">
                                                                                         <input type="file"
                                                                                             id="file_pendukung"
-                                                                                            name="file_pendukung"
+                                                                                            name="ttd_atasan"
                                                                                             value="{{ $pendidikan->file_pendukung ?? '' }}"
                                                                                             class="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                                                                                             required>
@@ -185,7 +185,7 @@
                                                         Update
                                                     </button>
                                                 </a> --}}
-                                                    <a href="{{ route('perizinan-cuti-atasan.pdfStream', ['id' => $item->id_perizinan]) }}"
+                                                    <a href="{{ route('perizinan-cuti-atasan.pdfStream', ['id' => $item->user_id]) }}"
                                                         class="flex justify-center items-center gap-3 px-3 py-3 rounded-md border-2 border-orange-200 font-semibold text-orange-500 hover:text-white hover:bg-orange-500 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
                                                         {{-- <svg xmlns="http://www.w3.org/2000/svg" width="16"
                                                             height="16" fill="currentColor" class="bi bi-eye"
@@ -199,7 +199,7 @@
                                                     </a>
                                                     @if ($item->pertimbangan_atasan_langsung == 'proses')
                                                         <form
-                                                            action="{{ route('management-perizinan.ditolak', ['id' => $item->id_perizinan]) }}"
+                                                            action="{{ route('management-perizinan.ditolak', ['id' => $item->user_id]) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')

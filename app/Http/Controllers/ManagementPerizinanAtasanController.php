@@ -25,16 +25,32 @@ class ManagementPerizinanAtasanController extends Controller
         // dd($perizinan);
         return view("atasan.index", compact('perizinan'));
     }
-    public function verifikasi($id)
+    public function verifikasi(Request $request, $id)
     {
         // dd($id);
         /**
          * Verifikasi perizinan cuti atasan langsung
          */
-        // dd($id);
+
+        $request->validate([
+            'ttd_atasan' => 'required|mimes:png,image/x-png|max:2048'
+        ]);
+
+        $user = Auth::user();
+
         DB::table("perizinan_cutis")
             ->where("id", "=", $id)
             ->update(["pertimbangan_atasan_langsung" => "disetujui"]);
+
+        if ($request->hasFile('ttd_atasan')) {
+            $file = $request->file('ttd_atasan');
+            $fileName = 'ttd_atasan_' . $user->id . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/ttd_atasan'), $fileName);
+
+            DB::table("perizinan_cutis")
+                ->where("id", "=", $id)
+                ->update(["ttd_atasan" => "uploads/ttd_atasan/$fileName"]);;
+        }
 
         return redirect()->route("management-perizinan-atasan.index");
     }
@@ -63,7 +79,22 @@ class ManagementPerizinanAtasanController extends Controller
             ->get()
             ->first();
         // dd($user->id);
-        // dd($results3);
+        // dd($results2);
+
+        $results4 = DB::table("atasan_langsung")
+            ->join("users", "users.id", "=", "atasan_langsung.user_id")
+            ->where('atasan_langsung.user_id', '=', $id)
+            ->get()
+            ->first();
+
+        // dd($results4->user_has_atasan_id);
+
+        $results5 = DB::table("users")
+            ->where("id", "=", $results4->user_has_atasan_id)
+            ->get()
+            ->first();
+
+        // dd($results5);
 
         $start = Carbon::parse($results2->tgl_mulai);
         $end = Carbon::parse($results2->tgl_selesai);
@@ -83,13 +114,16 @@ class ManagementPerizinanAtasanController extends Controller
             "no_telp" => $results2->no_telp_bisa_dihubungi,
             'tgl_mulai' => Carbon::createFromFormat('Y-m-d', $results2->tgl_mulai)->format('d-m-Y'),
             'tgl_selesai' => Carbon::createFromFormat('Y-m-d', $results2->tgl_selesai)->format('d-m-Y'),
-            'images' => public_path('assets/test/pngwing.com.png'),
+            // 'images' => public_path('assets/test/pngwing.com.png'),
             'icon' => public_path('assets/icon/check.svg'),
             "n" => $results3->n,
             "n_minus_1" => $results3->n_minus_1,
             "n_minus_2" => $results3->n_minus_2,
-            // "ttd_pegawai" => $results2->ttd_pegawai,
-            // "ttd_atasan" => $results2->ttd_atasan,
+            "ttd_pegawai" => $results2->ttd_pegawai,
+            "atasan_name" => $results5->name,
+            "atasan_nip" => $results5->nip,
+            "atasan_disetujui" => $results2->pertimbangan_atasan_langsung,
+            "ttd_atasan_langsung" => $results2->ttd_atasan,
         ];
 
         // dd($results2);
