@@ -22,6 +22,7 @@ class ManagementPerizinanAtasanController extends Controller
             ->where('atasan_langsung.user_has_atasan_id', $user->id)
             ->where('perizinan_cutis.verifikasi_admin', "!=", null)
             ->select('perizinan_cutis.*', 'users.*', 'atasan_langsung.*', 'perizinan_cutis.id AS id_perizinan', 'atasan_langsung.user_has_atasan_id AS id_atasan')
+            ->orderBy("perizinan_cutis.id", "DESC")
             ->paginate(8);
 
         // dd($perizinan);

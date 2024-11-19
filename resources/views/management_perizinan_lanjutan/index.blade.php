@@ -1,10 +1,13 @@
 {{-- @dd($perizinan) --}}
+{{-- @foreach ($perizinan as $item)
+    @dd($item->applicant_nip)
+@endforeach --}}
 @extends('layouts.theme')
 
 @section('content')
     <div class="container">
         <div class="flex justify-between">
-            <p class="pb-2 font-bold">Management Perizinan</p>
+            <p class="pb-2 font-bold">Keputusan Perizinan</p>
         </div>
         <div class="flex flex-col">
             <div class="-m-1.5 overflow-x-auto">
@@ -69,19 +72,19 @@
                                         <tr>
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                {{ $item->nip }}</td>
+                                                {{ $item->applicant_nip }}</td>
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                {{ $item->name }}</td>
+                                                {{ $item->applicant_name }}</td>
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                {{ $item->name }}</td>
+                                                {{ $item->cuti_name }}</td>
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                                                 {{ $item->alasan }}</td>
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                {{ $item->pertimbangan_atasan_langsung }}</td>
+                                                {{ $item->keputusan_pejabat_berwenang }}</td>
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                                                 {{ $item->tgl_mulai }}</td>
@@ -92,7 +95,7 @@
 
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                {{ $item->pertimbangan_atasan_langsung }}
+                                                {{ $item->keputusan_pejabat_berwenang }}
                                             </td>
                                             {{-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">New York No. 1 Lake Park</td> --}}
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium ">
@@ -104,7 +107,7 @@
 
 
 
-                                                    @if ($item->pertimbangan_atasan_langsung == 'proses')
+                                                    @if ($item->keputusan_pejabat_berwenang == 'proses')
                                                         {{-- <form
                                                             action="{{ route('management-perizinan-atasan.verifikasi', ['id' => $item->id_perizinan]) }}"
                                                             method="POST">
@@ -137,7 +140,7 @@
 
                                                                             <!-- Form -->
                                                                             <form method="POST"
-                                                                                action="{{ route('management-perizinan-atasan.verifikasi', ['id' => $item->id_perizinan, 'id_atasan' => $item->id_atasan]) }}" enctype="multipart/form-data">
+                                                                                action="{{ route('management-perizinan-lanjutan.verifikasi', ['id_perizinan' => $item->perizinan_cuti_id]) }}" enctype="multipart/form-data">
                                                                                 @csrf
                                                                                 @method('POST')
                                                                                 <div class="text-left">
@@ -197,7 +200,7 @@
                                                         </svg> --}}
                                                         Lihat Form
                                                     </a>
-                                                    @if ($item->pertimbangan_atasan_langsung == 'proses')
+                                                    @if ($item->keputusan_pejabat_berwenang == 'proses')
                                                         <form
                                                             action="{{ route('management-perizinan.ditolak', ['id' => $item->user_id]) }}"
                                                             method="POST">

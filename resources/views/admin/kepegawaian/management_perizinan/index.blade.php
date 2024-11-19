@@ -49,7 +49,7 @@
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Alasan
                                         </th>
                                         <th scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status Verifikasi Keseluruhan
                                         </th>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tgl
@@ -61,7 +61,7 @@
                                         </th>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                            Verifikasi
+                                            Tanggal Verifikasi
                                         </th>
 
                                         {{-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Address</th> --}}

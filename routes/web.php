@@ -330,6 +330,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/management-perizinan-atasan/{id}/denied', [ManagementPerizinanAtasanController::class, 'ditolak'])->name('management-perizinan-atasan.ditolak');
 
     Route::get("/management-perizinan-lanjutan", [ManagementPerizinanLanjutanController::class, 'index'])->name("management-perizinan-lanjutan.index");
+    Route::get("/management-perizinan-lanjutan/{id_perizinan}/verifikasi", [ManagementPerizinanLanjutanController::class, 'verifikasi'])->name("management-perizinan-lanjutan.verifikasi");
     //!
 
     //? belum ada permission yg bener

@@ -42,7 +42,7 @@
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Alasan
                                         </th>
                                         <th scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status Verfikasi Keseluruhan
                                         </th>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tgl
@@ -81,7 +81,7 @@
                                                 {{ $item->alasan }}</td>
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                {{ $item->pertimbangan_atasan_langsung }}</td>
+                                                {{ $item->keputusan_pejabat_berwenang }}</td>
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                                                 {{ $item->tgl_mulai }}</td>
