@@ -21,7 +21,9 @@ class ManagementPerizinanAdminController extends Controller
         //         'users.name as nama_user'               // Nama user
         //     )
         //     ->paginate(8);
-        $perizinan = PerizinanCuti::with(['user', 'jeniscuti'])->paginate(8);
+        $perizinan = PerizinanCuti::with(['user', 'jeniscuti'])
+            ->orderBy("id", "DESC")
+            ->paginate(8);
         // dd($perizinan);
 
         return view('admin.kepegawaian.management_perizinan.index', compact('perizinan'));

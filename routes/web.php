@@ -32,6 +32,7 @@ use App\Http\Controllers\AtasanLangsung\RequestPerizinanAtasanLangsungController
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\ManagementPerizinanAtasanController;
+use App\Http\Controllers\ManagementPerizinanLanjutanController;
 use App\Http\Controllers\Pegawai\DiklatController;
 use App\Http\Controllers\Pegawai\KegiatanController;
 use App\Http\Controllers\Pegawai\LogHarianController;
@@ -327,6 +328,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/management-perizinan-atasan/{id}/{id_atasan}/verifikasi', [ManagementPerizinanAtasanController::class, 'verifikasi'])->name('management-perizinan-atasan.verifikasi');
     Route::get('/perizinan-cuti-atasan/{id}/stream', [ManagementPerizinanAtasanController::class, 'stream'])->name('perizinan-cuti-atasan.pdfStream');
     Route::delete('/management-perizinan-atasan/{id}/denied', [ManagementPerizinanAtasanController::class, 'ditolak'])->name('management-perizinan-atasan.ditolak');
+
+    Route::get("/management-perizinan-lanjutan", [ManagementPerizinanLanjutanController::class, 'index'])->name("management-perizinan-lanjutan.index");
     //!
 
     //? belum ada permission yg bener

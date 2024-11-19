@@ -25,8 +25,8 @@ return new class extends Migration
             $table->string('nama_ibu')->nullable();
             // $table->string('file_pendukung')->nullable();
             $table->string('role');
-            $table->string('role_khusus_1')->nullable()->constrained('roles')->onDelete('set null');
-            $table->string('role_khusus_2')->nullable()->constrained('roles')->onDelete('set null');
+            $table->string('role_khusus_1')->nullable();
+            $table->string('role_khusus_2')->nullable();
             $table->string('jabatan')->nullable();
             // $table->string('jabatan_atasan_langsung')->nullable();
             $table->rememberToken();
