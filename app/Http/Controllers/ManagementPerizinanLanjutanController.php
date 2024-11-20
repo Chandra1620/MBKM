@@ -56,7 +56,7 @@ class ManagementPerizinanLanjutanController extends Controller
         if ($request->hasFile('ttd_wadir')) {
             $file = $request->file('ttd_wadir');
             $fileName = 'ttd_wadir_' . $user->id . '_' . time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/ttd_atasan'), $fileName);
+            $file->move(public_path('uploads/ttd_wadir'), $fileName);
 
             DB::table("perizinan_cutis")
                 ->where("id", "=", $id_perizinan)

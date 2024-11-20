@@ -357,7 +357,7 @@
                     Hormat Saya
                     <br>
                     @isset($ttd_wadir)  
-                        <img class="absolute" src="{{ $images }}" alt="tanda tangan" style="width:150px;">
+                        <img class="absolute" src="{{ $ttd_wadir }}" alt="tanda tangan" style="width:150px;">
                     @endisset
                     <br>
                     @if (isset($wadir_name))

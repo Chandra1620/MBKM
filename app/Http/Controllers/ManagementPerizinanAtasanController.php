@@ -90,6 +90,7 @@ class ManagementPerizinanAtasanController extends Controller
         $results2 = DB::table('perizinan_cutis')
             ->join('jenis_cutis', 'jenis_cutis.id', '=', 'perizinan_cutis.jenis_cuti_id')
             ->where('perizinan_cutis.id', '=', $id_perizinan)
+            ->select("perizinan_cutis.*", "jenis_cutis.*", "perizinan_cutis.id AS id_perizinan")
             ->get()
             ->first();
 
@@ -119,7 +120,7 @@ class ManagementPerizinanAtasanController extends Controller
         if ($results2->pertimbangan_atasan_langsung == "disetujui") {
             $results6 = DB::table("perizinan_cuti_to_wadirs")
                 ->join("users", "users.id", "=", "perizinan_cuti_to_wadirs.wadir_id")
-                ->where("perizinan_cuti_to_wadirs.perizinan_cuti_id", "=", $results2->id)
+                ->where("perizinan_cuti_to_wadirs.perizinan_cuti_id", "=", $results2->id_perizinan)
                 ->get()
                 ->first();
         } else {
@@ -129,7 +130,7 @@ class ManagementPerizinanAtasanController extends Controller
             ];
         }
 
-
+        // dd($results2->id_perizinan);
         // dd($results6);
 
         $start = Carbon::parse($results2->tgl_mulai);
@@ -161,7 +162,8 @@ class ManagementPerizinanAtasanController extends Controller
             "atasan_disetujui" => $results2->pertimbangan_atasan_langsung,
             "ttd_atasan_langsung" => $results2->ttd_atasan,
             "wadir_name" => $results6->name,
-            "wadir_nip" => $results6->nip
+            "wadir_nip" => $results6->nip,
+            "ttd_wadir" => $results2->ttd_wadir
         ];
 
         // dd($results2);
