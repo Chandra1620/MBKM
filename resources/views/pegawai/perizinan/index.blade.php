@@ -336,8 +336,11 @@
                                                             <div class="bg-slate-300 borderline h-1 w-3"></div>
                                                         @else
                                                             <div class="w-4 h-4 border outline-2 outline outline-blue-700 rounded-full bg-blue-700"></div>
-                                                            <div class="bg-blue-700 borderline h-1 w-3"></div> 
-                                                            <div class="bg-slate-300 borderline h-1 w-3"></div>
+                                                            @if ($izin->keputusan_pejabat_berwenang == "disetujui")
+                                                                <div class="bg-blue-700 borderline h-1 w-3"></div>
+                                                            @else
+                                                                <div class="bg-slate-300 borderline h-1 w-3"></div>
+                                                            @endif
                                                         @endif
                                                     </div>
                                                     <div id="wakil-direktur" class="flex items-center">

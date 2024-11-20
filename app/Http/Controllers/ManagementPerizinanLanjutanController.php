@@ -34,7 +34,36 @@ class ManagementPerizinanLanjutanController extends Controller
 
         return view('management_perizinan_lanjutan.index', compact('perizinan'));
     }
-    public function verifikasi($id_perizinan) {
-        dd($id_perizinan);
+    public function verifikasi(Request $request, $id_perizinan) {
+
+        // dd("ok");
+        // dd($id_perizinan);
+        // dd($id_atasan);
+        /**
+         * Verifikasi perizinan cuti atasan langsung
+         */
+
+        $request->validate([
+            'ttd_wadir' => 'required|mimes:png,image/x-png|max:2048'
+        ]);
+
+        $user = Auth::user();
+
+        DB::table("perizinan_cutis")
+            ->where("id", "=", $id_perizinan)
+            ->update(["keputusan_pejabat_berwenang" => "disetujui"]);
+
+        if ($request->hasFile('ttd_wadir')) {
+            $file = $request->file('ttd_wadir');
+            $fileName = 'ttd_wadir_' . $user->id . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/ttd_atasan'), $fileName);
+
+            DB::table("perizinan_cutis")
+                ->where("id", "=", $id_perizinan)
+                ->update(["ttd_wadir" => "uploads/ttd_wadir/$fileName"]);
+            ;
+        }
+
+        return redirect()->route("management-perizinan-lanjutan.index");
     }
 }

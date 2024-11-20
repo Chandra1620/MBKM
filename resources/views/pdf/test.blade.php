@@ -88,7 +88,7 @@
         }
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <title>Invoice</title>
+    <title>Lampiran Cuti</title>
 </head>
 
 <body>

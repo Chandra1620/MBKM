@@ -74,10 +74,10 @@ class ManagementPerizinanAtasanController extends Controller
 
         return redirect()->route("management-perizinan-atasan.index");
     }
-    public function stream($id)
+    public function stream($id, $id_perizinan)
     {
 
-        // dd($id);
+        // dd($id_perizinan);
 
         $results = DB::table('riwayat_fungsionals')
             ->join('unit_kerja_has_jabatan_fungsionals', 'riwayat_fungsionals.unit_kerja_has_jabatan_fungsional_id', '=', 'unit_kerja_has_jabatan_fungsionals.id')
@@ -89,7 +89,7 @@ class ManagementPerizinanAtasanController extends Controller
 
         $results2 = DB::table('perizinan_cutis')
             ->join('jenis_cutis', 'jenis_cutis.id', '=', 'perizinan_cutis.jenis_cuti_id')
-            ->where('perizinan_cutis.user_id', '=', $id)
+            ->where('perizinan_cutis.id', '=', $id_perizinan)
             ->get()
             ->first();
 
@@ -115,6 +115,22 @@ class ManagementPerizinanAtasanController extends Controller
             ->first();
 
         // dd($results5);
+
+        if ($results2->pertimbangan_atasan_langsung == "disetujui") {
+            $results6 = DB::table("perizinan_cuti_to_wadirs")
+                ->join("users", "users.id", "=", "perizinan_cuti_to_wadirs.wadir_id")
+                ->where("perizinan_cuti_to_wadirs.perizinan_cuti_id", "=", $results2->id)
+                ->get()
+                ->first();
+        } else {
+            $results6 = (object)[
+                "name" => null,
+                "nip" => null
+            ];
+        }
+
+
+        // dd($results6);
 
         $start = Carbon::parse($results2->tgl_mulai);
         $end = Carbon::parse($results2->tgl_selesai);
@@ -144,6 +160,8 @@ class ManagementPerizinanAtasanController extends Controller
             "atasan_nip" => $results5->nip,
             "atasan_disetujui" => $results2->pertimbangan_atasan_langsung,
             "ttd_atasan_langsung" => $results2->ttd_atasan,
+            "wadir_name" => $results6->name,
+            "wadir_nip" => $results6->nip
         ];
 
         // dd($results2);
