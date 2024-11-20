@@ -32,6 +32,7 @@ use App\Http\Controllers\AtasanLangsung\RequestPerizinanAtasanLangsungController
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\ManagementPerizinanAtasanController;
+use App\Http\Controllers\ManagementPerizinanLanjutanController;
 use App\Http\Controllers\Pegawai\DiklatController;
 use App\Http\Controllers\Pegawai\KegiatanController;
 use App\Http\Controllers\Pegawai\LogHarianController;
@@ -284,7 +285,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/perizinan-cuti/store', [PerizinanController::class, 'store'])->name('perizinan-cuti.store');
     Route::get('/perizinan-cuti-overview', [PerizinanController::class, 'overview'])->name('perizinan-cuti.overview');
 
-    Route::get('/perizinan-cuti/{id}/stream', [PerizinanController::class, 'pdfStream'])->name('perizinan-cuti.pdfStream');
+    Route::get('/perizinan-cuti/{id}/user/{id_pegawai}/stream', [PerizinanController::class, 'pdfStream'])->name('perizinan-cuti.pdfStream');
     Route::get('/perizinan-cuti/{id}/download', [PerizinanController::class, 'pdfExporting'])->name('perizinan-cuti.pdfExporting');
 
     Route::get('/perizinan-cuti/{id}/edit', [PerizinanController::class, 'edit'])->name('perizinan-cuti.edit');
@@ -324,9 +325,12 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::get('/management-perizinan-atasan', [ManagementPerizinanAtasanController::class, 'index'])->name('management-perizinan-atasan.index');
-    Route::post('/management-perizinan-atasan/{id}/verifikasi', [ManagementPerizinanAtasanController::class, 'verifikasi'])->name('management-perizinan-atasan.verifikasi');
-    Route::get('/perizinan-cuti-atasan/{id}/stream', [ManagementPerizinanAtasanController::class, 'stream'])->name('perizinan-cuti-atasan.pdfStream');
+    Route::post('/management-perizinan-atasan/{id}/{id_atasan}/verifikasi', [ManagementPerizinanAtasanController::class, 'verifikasi'])->name('management-perizinan-atasan.verifikasi');
+    Route::get('/perizinan-cuti-atasan/{id}/stream/{id_perizinan}', [ManagementPerizinanAtasanController::class, 'stream'])->name('perizinan-cuti-atasan.pdfStream');
     Route::delete('/management-perizinan-atasan/{id}/denied', [ManagementPerizinanAtasanController::class, 'ditolak'])->name('management-perizinan-atasan.ditolak');
+
+    Route::get("/management-perizinan-lanjutan", [ManagementPerizinanLanjutanController::class, 'index'])->name("management-perizinan-lanjutan.index");
+    Route::post("/management-perizinan-lanjutan/{id_perizinan}/verifikasi", [ManagementPerizinanLanjutanController::class, 'verifikasi'])->name("management-perizinan-lanjutan.verifikasi");
     //!
 
     //? belum ada permission yg bener

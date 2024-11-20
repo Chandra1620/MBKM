@@ -30,6 +30,8 @@ class SisaCutiController extends Controller
         } else {
             $sisaCuti = DB::table("cuti_sisas")
                 ->join("users", "cuti_sisas.user_id", "=", "users.id")
+                ->where("users.name", "!=", "admin")
+                ->orderBy("users.name", "ASC")
                 ->paginate(8);
         }
 

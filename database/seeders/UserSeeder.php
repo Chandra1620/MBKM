@@ -227,7 +227,7 @@ class UserSeeder extends Seeder
                 'email' => 'ahmad.lubis@polindra.ac.id',
                 'nip' => '198605102019031011',
                 'role' => 'pegawai',
-                'role_khusus_1' => 'Wadir Bidang Perencanaan, Keuangan, dan Umum',
+                'role_khusus_1' => 'Wadir',
                 'role_khusus_2' => 'Atasan Langsung',
                 'jabatan' => 'Wakil Direktur Bidang Perencanaan, Keuangan, dan Umum',
                 'password' => bcrypt('123456')
@@ -442,7 +442,7 @@ class UserSeeder extends Seeder
                 'email' => 'badruzzaman@polindra.ac.id',
                 'nip' => '198409162019031004',
                 'role' => 'pegawai',
-                'role_khusus_1' => 'Wadir Bidang Akademik',
+                'role_khusus_1' => 'Wadir',
                 'role_khusus_2' => 'Atasan Langsung',
                 'jabatan' => 'Wakil Direktur Bidang Akademik',
                 'password' => bcrypt('123456')
@@ -541,7 +541,7 @@ class UserSeeder extends Seeder
                 'email' => 'rofan.aziz@polindra.ac.id',
                 'nip' => '198506212020121004',
                 'role' => 'pegawai',
-                'role_khusus_1' => 'Wadir Bidang Perencanaan, Keuangan, dan Umum',
+                'role_khusus_1' => 'Wadir',
                 'role_khusus_2' => 'Atasan Langsung',
                 'jabatan' => 'Direktur',
                 'password' => bcrypt('123456')
@@ -567,7 +567,7 @@ class UserSeeder extends Seeder
                 'email' => 'karsid@polindra.ac.id',
                 'nip' => '198307182021211001',
                 'role' => 'pegawai',
-                'role_khusus_1' => 'Wadir Bidang Kemahasiswaan dan Alumni',
+                'role_khusus_1' => 'Wadir',
                 'role_khusus_2' => 'Atasan Langsung',
                 'jabatan' => 'Wakil Direktur Bidang Kemahasiswaan dan Alumni',
                 'password' => bcrypt('123456')
@@ -1216,7 +1216,7 @@ class UserSeeder extends Seeder
             ]);
 
             if (isset($userData['role_khusus_1'])) {
-                $user->role_khusus_2 = $userData['role_khusus_1'];
+                $user->role_khusus_1 = $userData['role_khusus_1'];
                 $user->save();
             }
             if (isset($userData['role_khusus_2'])) {

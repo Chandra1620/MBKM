@@ -1,10 +1,13 @@
 {{-- @dd($perizinan) --}}
+{{-- @foreach ($perizinan as $item)
+    @dd($item->applicant_nip)
+@endforeach --}}
 @extends('layouts.theme')
 
 @section('content')
     <div class="container">
         <div class="flex justify-between">
-            <p class="pb-2 font-bold">Management Perizinan</p>
+            <p class="pb-2 font-bold">Keputusan Perizinan</p>
         </div>
         <div class="flex flex-col">
             <div class="-m-1.5 overflow-x-auto">
@@ -42,7 +45,7 @@
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Alasan
                                         </th>
                                         <th scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status Verfikasi Keseluruhan
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status
                                         </th>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tgl
@@ -69,13 +72,13 @@
                                         <tr>
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                {{ $item->nip }}</td>
+                                                {{ $item->applicant_nip }}</td>
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                {{ $item->name }}</td>
+                                                {{ $item->applicant_name }}</td>
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                {{ $item->name }}</td>
+                                                {{ $item->cuti_name }}</td>
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                                                 {{ $item->alasan }}</td>
@@ -92,7 +95,7 @@
 
                                             <td
                                                 class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                {{ $item->pertimbangan_atasan_langsung }}
+                                                {{ $item->keputusan_pejabat_berwenang }}
                                             </td>
                                             {{-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">New York No. 1 Lake Park</td> --}}
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium ">
@@ -104,7 +107,7 @@
 
 
 
-                                                    @if ($item->pertimbangan_atasan_langsung == 'proses')
+                                                    @if ($item->keputusan_pejabat_berwenang == 'proses')
                                                         {{-- <form
                                                             action="{{ route('management-perizinan-atasan.verifikasi', ['id' => $item->id_perizinan]) }}"
                                                             method="POST">
@@ -137,7 +140,7 @@
 
                                                                             <!-- Form -->
                                                                             <form method="POST"
-                                                                                action="{{ route('management-perizinan-atasan.verifikasi', ['id' => $item->id_perizinan, 'id_atasan' => $item->id_atasan]) }}" enctype="multipart/form-data">
+                                                                                action="{{ route('management-perizinan-lanjutan.verifikasi', ['id_perizinan' => $item->perizinan_cuti_id]) }}" enctype="multipart/form-data">
                                                                                 @csrf
                                                                                 @method('POST')
                                                                                 <div class="text-left">
@@ -146,7 +149,7 @@
                                                                                     <div class="relative">
                                                                                         <input type="file"
                                                                                             id="file_pendukung"
-                                                                                            name="ttd_atasan"
+                                                                                            name="ttd_wadir"
                                                                                             value="{{ $pendidikan->file_pendukung ?? '' }}"
                                                                                             class="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                                                                                             required>
@@ -185,7 +188,7 @@
                                                         Update
                                                     </button>
                                                 </a> --}}
-                                                    <a href="{{ route('perizinan-cuti-atasan.pdfStream', ['id' => $item->user_id, "id_perizinan" => $item->id_perizinan]) }}"
+                                                    <a href="{{ route('perizinan-cuti-atasan.pdfStream', ['id' => $item->user_id]) }}"
                                                         class="flex justify-center items-center gap-3 px-3 py-3 rounded-md border-2 border-orange-200 font-semibold text-orange-500 hover:text-white hover:bg-orange-500 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
                                                         {{-- <svg xmlns="http://www.w3.org/2000/svg" width="16"
                                                             height="16" fill="currentColor" class="bi bi-eye"
@@ -197,7 +200,7 @@
                                                         </svg> --}}
                                                         Lihat Form
                                                     </a>
-                                                    @if ($item->pertimbangan_atasan_langsung == 'proses')
+                                                    @if ($item->keputusan_pejabat_berwenang == 'proses')
                                                         <form
                                                             action="{{ route('management-perizinan.ditolak', ['id' => $item->user_id]) }}"
                                                             method="POST">

@@ -14,34 +14,70 @@ class ManagementPerizinanAtasanController extends Controller
     {
         $user = Auth::user();
 
+        // dd($user->id);
+
         $perizinan = DB::table('perizinan_cutis')
             ->join('users', 'users.id', '=', 'perizinan_cutis.user_id')
             ->join('atasan_langsung', 'atasan_langsung.user_id', '=', 'perizinan_cutis.user_id')
             ->where('atasan_langsung.user_has_atasan_id', $user->id)
             ->where('perizinan_cutis.verifikasi_admin', "!=", null)
-            ->select('perizinan_cutis.*', 'users.*', 'atasan_langsung.*', 'perizinan_cutis.id AS id_perizinan')
+            ->select('perizinan_cutis.*', 'users.*', 'atasan_langsung.*', 'perizinan_cutis.id AS id_perizinan', 'atasan_langsung.user_has_atasan_id AS id_atasan')
+            ->orderBy("perizinan_cutis.id", "DESC")
             ->paginate(8);
 
         // dd($perizinan);
         return view("atasan.index", compact('perizinan'));
     }
-    public function verifikasi($id)
+    public function verifikasi(Request $request, $id, $id_atasan)
     {
-        // dd($id);
+        // dd($id_atasan);
         /**
          * Verifikasi perizinan cuti atasan langsung
          */
-        // dd($id);
+
+        $request->validate([
+            'ttd_atasan' => 'required|mimes:png,image/x-png|max:2048'
+        ]);
+
+        $user = Auth::user();
+
         DB::table("perizinan_cutis")
             ->where("id", "=", $id)
             ->update(["pertimbangan_atasan_langsung" => "disetujui"]);
 
+        /**
+         * Seleksi Wadir berdasarkan atasan
+         */
+        $getWadir = DB::table("atasan_langsung")
+            ->where("user_id", "=", $id_atasan)
+            ->get()
+            ->first();
+
+        // dd($getWadir->user_has_atasan_id);
+
+        DB::table("perizinan_cuti_to_wadirs")
+            ->insert([
+                "perizinan_cuti_id" => $id,
+                "wadir_id" => $getWadir->user_has_atasan_id
+            ]);
+
+        if ($request->hasFile('ttd_atasan')) {
+            $file = $request->file('ttd_atasan');
+            $fileName = 'ttd_atasan_' . $user->id . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/ttd_atasan'), $fileName);
+
+            DB::table("perizinan_cutis")
+                ->where("id", "=", $id)
+                ->update(["ttd_atasan" => "uploads/ttd_atasan/$fileName"]);
+            ;
+        }
+
         return redirect()->route("management-perizinan-atasan.index");
     }
-    public function stream($id)
+    public function stream($id, $id_perizinan)
     {
 
-        // dd($id);
+        // dd($id_perizinan);
 
         $results = DB::table('riwayat_fungsionals')
             ->join('unit_kerja_has_jabatan_fungsionals', 'riwayat_fungsionals.unit_kerja_has_jabatan_fungsional_id', '=', 'unit_kerja_has_jabatan_fungsionals.id')
@@ -53,7 +89,7 @@ class ManagementPerizinanAtasanController extends Controller
 
         $results2 = DB::table('perizinan_cutis')
             ->join('jenis_cutis', 'jenis_cutis.id', '=', 'perizinan_cutis.jenis_cuti_id')
-            ->where('perizinan_cutis.user_id', '=', $id)
+            ->where('perizinan_cutis.id', '=', $id_perizinan)
             ->get()
             ->first();
 
@@ -63,7 +99,38 @@ class ManagementPerizinanAtasanController extends Controller
             ->get()
             ->first();
         // dd($user->id);
-        // dd($results3);
+        // dd($results2);
+
+        $results4 = DB::table("atasan_langsung")
+            ->join("users", "users.id", "=", "atasan_langsung.user_id")
+            ->where('atasan_langsung.user_id', '=', $id)
+            ->get()
+            ->first();
+
+        // dd($results4->user_has_atasan_id);
+
+        $results5 = DB::table("users")
+            ->where("id", "=", $results4->user_has_atasan_id)
+            ->get()
+            ->first();
+
+        // dd($results5);
+
+        if ($results2->pertimbangan_atasan_langsung == "disetujui") {
+            $results6 = DB::table("perizinan_cuti_to_wadirs")
+                ->join("users", "users.id", "=", "perizinan_cuti_to_wadirs.wadir_id")
+                ->where("perizinan_cuti_to_wadirs.perizinan_cuti_id", "=", $results2->id)
+                ->get()
+                ->first();
+        } else {
+            $results6 = (object)[
+                "name" => null,
+                "nip" => null
+            ];
+        }
+
+
+        // dd($results6);
 
         $start = Carbon::parse($results2->tgl_mulai);
         $end = Carbon::parse($results2->tgl_selesai);
@@ -83,13 +150,18 @@ class ManagementPerizinanAtasanController extends Controller
             "no_telp" => $results2->no_telp_bisa_dihubungi,
             'tgl_mulai' => Carbon::createFromFormat('Y-m-d', $results2->tgl_mulai)->format('d-m-Y'),
             'tgl_selesai' => Carbon::createFromFormat('Y-m-d', $results2->tgl_selesai)->format('d-m-Y'),
-            'images' => public_path('assets/test/pngwing.com.png'),
+            // 'images' => public_path('assets/test/pngwing.com.png'),
             'icon' => public_path('assets/icon/check.svg'),
             "n" => $results3->n,
             "n_minus_1" => $results3->n_minus_1,
             "n_minus_2" => $results3->n_minus_2,
-            // "ttd_pegawai" => $results2->ttd_pegawai,
-            // "ttd_atasan" => $results2->ttd_atasan,
+            "ttd_pegawai" => $results2->ttd_pegawai,
+            "atasan_name" => $results5->name,
+            "atasan_nip" => $results5->nip,
+            "atasan_disetujui" => $results2->pertimbangan_atasan_langsung,
+            "ttd_atasan_langsung" => $results2->ttd_atasan,
+            "wadir_name" => $results6->name,
+            "wadir_nip" => $results6->nip
         ];
 
         // dd($results2);

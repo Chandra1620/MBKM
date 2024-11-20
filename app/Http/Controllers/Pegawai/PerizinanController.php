@@ -211,8 +211,9 @@ class PerizinanController extends Controller
         $perizinan->delete();
         return redirect()->route('perizinan-cuti.index');
     }
-    public function pdfStream($id)
+    public function pdfStream($id, $id_pegawai)
     {
+        // dd($id_pegawai);
         $user = Auth::user();
         
         $results = DB::table('riwayat_fungsionals')
@@ -237,6 +238,17 @@ class PerizinanController extends Controller
             ->get()
             ->first();
 
+        $results4 = DB::table("atasan_langsung")
+            ->join("users", "users.id", "=", "atasan_langsung.user_id")
+            ->where('atasan_langsung.user_id', '=', $id_pegawai)
+            ->get()
+            ->first();
+
+        $results5 = DB::table("users")
+            ->where("id", "=", $results4->user_has_atasan_id)
+            ->get()
+            ->first();
+
         $start = Carbon::parse($results2->tgl_mulai);
         $end = Carbon::parse($results2->tgl_selesai);
 
@@ -255,12 +267,16 @@ class PerizinanController extends Controller
             "no_telp" => $results2->no_telp_bisa_dihubungi,
             'tgl_mulai' => Carbon::createFromFormat('Y-m-d', $results2->tgl_mulai)->format('d-m-Y'),
             'tgl_selesai' => Carbon::createFromFormat('Y-m-d', $results2->tgl_selesai)->format('d-m-Y'),
-            'images' => public_path('assets/test/pngwing.com.png'),
+            // 'images' => public_path('assets/test/pngwing.com.png'),
             'icon' => public_path('assets/icon/check.svg'),
             "n" => $results3->n,
             "n_minus_1" => $results3->n_minus_1,
             "n_minus_2" => $results3->n_minus_2,
-            "ttd_pegawai" => $results2->ttd_pegawai
+            "ttd_pegawai" => $results2->ttd_pegawai,
+            "atasan_name" => $results5->name,
+            "atasan_nip" => $results5->nip,
+            "atasan_disetujui" => $results2->pertimbangan_atasan_langsung,
+            "ttd_atasan_langsung" => $results2->ttd_atasan,
         ];
 
         // dd($results2);
