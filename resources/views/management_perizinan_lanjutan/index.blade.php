@@ -140,7 +140,7 @@
 
                                                                             <!-- Form -->
                                                                             <form method="POST"
-                                                                                action="{{ route('management-perizinan-lanjutan.verifikasi', ['id_perizinan' => $item->perizinan_cuti_id]) }}" enctype="multipart/form-data">
+                                                                                action="{{ route('management-perizinan-lanjutan.verifikasi', ['id_perizinan' => $item->perizinan_cuti_id, 'id_pegawai' => $item->user_id]) }}" enctype="multipart/form-data">
                                                                                 @csrf
                                                                                 @method('POST')
                                                                                 <div class="text-left">

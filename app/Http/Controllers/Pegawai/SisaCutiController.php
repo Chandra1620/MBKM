@@ -27,19 +27,50 @@ class SisaCutiController extends Controller
                 ->where("user_id", $user->id)
                 ->select("cuti_sisas.*", "users.*")
                 ->paginate(8);
+
+            $carbonStart = null;
+            $carbonEnd = null;
         } else {
+
             $sisaCuti = DB::table("cuti_sisas")
+                ->join("users", "cuti_sisas.user_id", "=", "users.id")
+                ->get();
+
+            // dd($sisaCuti);
+
+            foreach ($sisaCuti as $sisaCutiPerson) {
+
+                dd($sisaCutiPerson);
+                $carbonNow = Carbon::now();
+                $carbonStart = Carbon::createFromFormat('Y-m-d H:i:s', $sisaCutiPerson->waktu_mulai_pergantian);
+                $carbonEnd = Carbon::createFromFormat('Y-m-d H:i:s', $sisaCutiPerson->waktu_selesai_pergantian);
+
+                if ($carbonNow->timestamp >= $carbonEnd->timestamp) {
+
+                    $newStart = Carbon::now();
+                    $newEnd = $newStart->copy()->addMinutes(5);
+
+                    // dd($newStart->timestamp, $newEnd->timestamp);
+                    // $updatedCuti = DB::table('cuti_sisas')->update([
+                    //     "waktu_mulai_pergantian" => $newStart->toDateTimeString(),
+                    //     "waktu_selesai_pergantian" => $newEnd->toDateTimeString()
+                    // ]);
+                } else {
+                    dd("Salah");
+                }
+            }
+
+            $sisaCutiVisualized = DB::table("cuti_sisas")
                 ->join("users", "cuti_sisas.user_id", "=", "users.id")
                 ->where("users.name", "!=", "admin")
                 ->orderBy("users.name", "ASC")
                 ->paginate(8);
         }
 
-        // dd($sisaCuti);
-        
+
         $year = Carbon::now()->year;
 
-        return view('pegawai.perizinan.sisaCuti', compact("sisaCuti", "year"));
+        return view('pegawai.perizinan.sisaCuti', compact("sisaCuti", "year", "carbonStart", "carbonEnd"));
     }
 
     /**
