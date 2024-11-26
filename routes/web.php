@@ -13,6 +13,7 @@ use App\Http\Controllers\AdminKepegawaian\ManagementSuratTugasController;
 use App\Http\Controllers\AdminKepegawaian\ManagementSuratTugasDinasController;
 use App\Http\Controllers\AdminKepegawaian\PegawaiFungsoinalController;
 use App\Http\Controllers\AdminKepegawaian\PegawaiStrukturalController;
+use App\Http\Controllers\AdminKepegawaian\PerizinanManualController;
 use App\Http\Controllers\AdminKepegawaian\UnitKerjaController;
 use App\Http\Controllers\AdminKepegawaian\UnitKerjaHasJabatanFungsionalController;
 use App\Http\Controllers\AdminKepegawaian\UpdateDataPegawai\UpdateAlamatdanKontakController;
@@ -206,6 +207,12 @@ Route::middleware('auth')->group(function () {
         Route::post('/management-perizinan/{id}/verifikasi', [ManagementPerizinanAdminController::class, 'verifikasi'])->name('management-perizinan.verifikasi');
         Route::delete('/management-perizinan/{id}/denied', [ManagementPerizinanAdminController::class, 'ditolak'])->name('management-perizinan.ditolak');
     });
+
+
+    Route::get('/perizinan-manual', [PerizinanManualController::class, 'index'])->name('perizinan-manual.index');
+    Route::get('/perizinan-manual/create', [PerizinanManualController::class, 'create'])->name('perizinan-manual.create');
+    Route::post('/perizinan-manual/store', [PerizinanManualController::class, 'store'])->name('perizinan-manual.store');
+ 
 
     Route::middleware(['checkUserRole:admin-pegawai'])->group(function () {
         // Data Pegawai
