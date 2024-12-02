@@ -122,6 +122,11 @@
                                                     </button>
                                                 </a> --}}
                                                     
+                                                    <a
+                                                        href="{{ route('perizinan-cuti.pdfStream', ['id' => $item->id, 'id_pegawai' => $item->user_id]) }}"
+                                                        class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-yellow-200 font-semibold text-yellow-500 hover:text-white hover:bg-yellow-500 hover:border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+                                                            overview
+                                                    </a>
                                                     <form
                                                         action="{{ route('management-perizinan.ditolak', ['id' => $item->id]) }}"
                                                         method="POST">
