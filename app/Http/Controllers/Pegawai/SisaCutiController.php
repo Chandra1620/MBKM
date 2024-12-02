@@ -40,27 +40,41 @@ class SisaCutiController extends Controller
 
             foreach ($sisaCuti as $sisaCutiPerson) {
 
-                dd($sisaCutiPerson);
                 $carbonNow = Carbon::now();
                 $carbonStart = Carbon::createFromFormat('Y-m-d H:i:s', $sisaCutiPerson->waktu_mulai_pergantian);
                 $carbonEnd = Carbon::createFromFormat('Y-m-d H:i:s', $sisaCutiPerson->waktu_selesai_pergantian);
 
                 if ($carbonNow->timestamp >= $carbonEnd->timestamp) {
 
-                    $newStart = Carbon::now();
+                    $newStart = $carbonStart->copy()->addMinutes(5);
+                    // dd($newStart);
+
                     $newEnd = $newStart->copy()->addMinutes(5);
+                    // dd($newEnd);
 
                     // dd($newStart->timestamp, $newEnd->timestamp);
-                    // $updatedCuti = DB::table('cuti_sisas')->update([
-                    //     "waktu_mulai_pergantian" => $newStart->toDateTimeString(),
-                    //     "waktu_selesai_pergantian" => $newEnd->toDateTimeString()
-                    // ]);
-                } else {
-                    dd("Salah");
+
+                    // Hitung nilai baru untuk n, n_minus_1, dan n_minus_2
+                    $n_previous = $sisaCutiPerson->n;            // Nilai n saat ini
+                    $n_minus_1 = $sisaCutiPerson->n_minus_1;     // Nilai n_minus_1 (1 periode sebelumnya)
+                    $n_minus_2 = $sisaCutiPerson->n_minus_2;     // Nilai n_minus_2 (2 periode sebelumnya)
+
+                    // Simulasikan tambahan cuti baru (12)
+                    $tambahanCuti = 12;
+
+                    $n_new = $n_previous + $tambahanCuti;
+
+                    $updatedCuti = DB::table('cuti_sisas')->update([
+                        "waktu_mulai_pergantian" => $newStart->toDateTimeString(),
+                        "waktu_selesai_pergantian" => $newEnd->toDateTimeString(),
+                        "n" => $n_new,
+                        "n_minus_1" => $n_previous,
+                        "n_minus_2" => $n_minus_1
+                    ]);
                 }
             }
 
-            $sisaCutiVisualized = DB::table("cuti_sisas")
+            $sisaCuti = DB::table("cuti_sisas")
                 ->join("users", "cuti_sisas.user_id", "=", "users.id")
                 ->where("users.name", "!=", "admin")
                 ->orderBy("users.name", "ASC")

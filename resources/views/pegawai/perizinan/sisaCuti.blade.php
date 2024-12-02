@@ -1,8 +1,10 @@
 {{-- @dd("$carbonStart->timestamp . $carbonEnd->timestamp") --}}
+{{-- @dd($sisaCuti) --}}
 @extends('layouts.theme')
 
 @section('content')
     <div class="overflow-hidden">
+        {{-- <p class="mb-5">Sisa Cuti Selanjutnya akan diupdate pada tanggal: <br/></p> --}}
         <p class="font-bold pb-4">Sisa Cuti</p>
         <table class="min-w-full divide-y divide-gray-50 dark:divide-gray-700 border border-gray-300 dark:border-gray-700">
             <thead class="bg-gray-50 dark:bg-gray-700 border border-gray-300">
