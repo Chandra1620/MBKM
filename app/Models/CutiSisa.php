@@ -30,7 +30,7 @@ class CutiSisa extends Model
     {
         static::creating(function ($model) {
             // Set the your_timestamp_column to 1 year ahead of the current time
-            $model->waktu_selesai_pergantian = Carbon::now()->addMinutes(50);
+            $model->waktu_selesai_pergantian = Carbon::now()->addMinutes(5);
         });
     }
 }

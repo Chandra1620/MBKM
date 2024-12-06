@@ -28,17 +28,20 @@ class ManagementPerizinanLanjutanController extends Controller
                 "jenis_cutis.name as cuti_name",
                 "perizinan_cutis.*"
             ])
+            ->orderBy("perizinan_cutis.id", "DESC")
             ->paginate(8);
 
         // dd($perizinan);
 
         return view('management_perizinan_lanjutan.index', compact('perizinan'));
     }
-    public function verifikasi(Request $request, $id_perizinan) {
+    public function verifikasi(Request $request, $id_perizinan, $id_pegawai)
+    {
 
         // dd("ok");
         // dd($id_perizinan);
         // dd($id_atasan);
+        // dd($id_pegawai);
         /**
          * Verifikasi perizinan cuti atasan langsung
          */
@@ -49,20 +52,26 @@ class ManagementPerizinanLanjutanController extends Controller
 
         $user = Auth::user();
 
-        DB::table("perizinan_cutis")
-            ->where("id", "=", $id_perizinan)
-            ->update(["keputusan_pejabat_berwenang" => "disetujui"]);
-
-        if ($request->hasFile('ttd_wadir')) {
-            $file = $request->file('ttd_wadir');
-            $fileName = 'ttd_wadir_' . $user->id . '_' . time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/ttd_wadir'), $fileName);
-
+        DB::transaction(function () use ($id_perizinan, $id_pegawai, $request, $user) {
             DB::table("perizinan_cutis")
                 ->where("id", "=", $id_perizinan)
-                ->update(["ttd_wadir" => "uploads/ttd_wadir/$fileName"]);
-            ;
-        }
+                ->update(["keputusan_pejabat_berwenang" => "disetujui"]);
+
+            if ($request->hasFile('ttd_wadir')) {
+                $file = $request->file('ttd_wadir');
+                $fileName = 'ttd_wadir_' . $user->id . '_' . time() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('uploads/ttd_wadir'), $fileName);
+
+                DB::table("perizinan_cutis")
+                    ->where("id", "=", $id_perizinan)
+                    ->update(["ttd_wadir" => "uploads/ttd_wadir/$fileName"]);
+                ;
+            }
+
+            DB::table("cuti_sisas")
+                ->where("user_id", "=", $id_pegawai)
+                ->decrement("n", "1");
+        });
 
         return redirect()->route("management-perizinan-lanjutan.index");
     }
