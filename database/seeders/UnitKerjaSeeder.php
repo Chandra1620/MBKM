@@ -21,6 +21,32 @@ class UnitKerjaSeeder extends Seeder
         $wadir2 = JabatanStruktural::where('name', 'wadir 2')->first();
         // $wadir3 = JabatanStruktural::where('name', 'wadir 3')->first();
 
+        $jabatanStrukturalPolindra = JabatanStruktural::create([
+            'name' => 'Politeknik Negeri Indramayu'
+        ]);
+        $PoliteknikNegeriIndramayu = UnitKerja::create([
+            'name' => 'Politeknik Negeri Indramayu',
+            'has_atasan_langsung' =>true,
+            'jabatan_berwenang_id' => $wadir2->id,
+            'atasan_langsung_id' => $jabatanStrukturalPolindra->id,
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Direktur',
+            'unit_kerja_id' => $PoliteknikNegeriIndramayu->id,
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Wakil Direktur Bidang Akademik',
+            'unit_kerja_id' => $PoliteknikNegeriIndramayu->id,
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Wakil Direktur Bidang Perencanaan, Keuangan, dan Umum',
+            'unit_kerja_id' => $PoliteknikNegeriIndramayu->id,
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Wakil Direktur Bidang Kemahasiswaan, Alumnim, dan Kerja Sama',
+            'unit_kerja_id' => $PoliteknikNegeriIndramayu->id,
+        ]);
+
         $jabatanStrukturalKesehatan = JabatanStruktural::create([
             'name' => 'ketua jurusan kesehatan'
         ]);
@@ -33,11 +59,87 @@ class UnitKerjaSeeder extends Seeder
         ]);
 
         UnitKerjaHasJabatanFungsional::create([
-            'name' => 'dosen lektor',
+            'name' => 'Ketua Jurusan',
             'unit_kerja_id' => $jurusanKesehatan->id,
         ]);
         UnitKerjaHasJabatanFungsional::create([
-            'name' => 'dosen ahli',
+            'name' => 'Sekretaris Jurusan',
+            'unit_kerja_id' => $jurusanKesehatan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Koordinator Program Studi',
+            'unit_kerja_id' => $jurusanKesehatan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Profesor',
+            'unit_kerja_id' => $jurusanKesehatan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Lektor Kepala',
+            'unit_kerja_id' => $jurusanKesehatan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Lektor',
+            'unit_kerja_id' => $jurusanKesehatan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Asisten Ahli',
+            'unit_kerja_id' => $jurusanKesehatan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Arsiparis Ahli Pertama',
+            'unit_kerja_id' => $jurusanKesehatan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Arsiparis Penyelia',
+            'unit_kerja_id' => $jurusanKesehatan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Arsiparis Mahir',
+            'unit_kerja_id' => $jurusanKesehatan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Arsiparis Terampil',
+            'unit_kerja_id' => $jurusanKesehatan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata Komputer Terampil',
+            'unit_kerja_id' => $jurusanKesehatan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengolah Data dan Informasi',
+            'unit_kerja_id' => $jurusanKesehatan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengadministrasi Perkantoran',
+            'unit_kerja_id' => $jurusanKesehatan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Operator Layanan Operasional',
+            'unit_kerja_id' => $jurusanKesehatan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata Laboratorium Pendidikan Ahli Muda',
+            'unit_kerja_id' => $jurusanKesehatan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata Laboratorium Pendidikan Ahli Pertama',
+            'unit_kerja_id' => $jurusanKesehatan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata Laboratorium Pendidikan Penyelia',
+            'unit_kerja_id' => $jurusanKesehatan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata Laboratorium Pendidikan  Mahir',
+            'unit_kerja_id' => $jurusanKesehatan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata Laboratorium Pendidikan Terampil',
+            'unit_kerja_id' => $jurusanKesehatan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Teknisi Laboratorium',
             'unit_kerja_id' => $jurusanKesehatan->id
         ]);
         
@@ -62,11 +164,83 @@ class UnitKerjaSeeder extends Seeder
 
         ]);
         UnitKerjaHasJabatanFungsional::create([
-            'name' => 'dosen lektor',
+            'name' => 'Ketua Jurusan',
             'unit_kerja_id' => $jurusanTI->id
         ]);
         UnitKerjaHasJabatanFungsional::create([
-            'name' => 'dosen ahli',
+            'name' => 'Sekretaris Jurusan',
+            'unit_kerja_id' => $jurusanTI->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Koordinator Program Studi',
+            'unit_kerja_id' => $jurusanTI->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Profesor',
+            'unit_kerja_id' => $jurusanTI->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Lektor Kepala',
+            'unit_kerja_id' => $jurusanTI->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Lektor',
+            'unit_kerja_id' => $jurusanTI->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Asisten Ahli',
+            'unit_kerja_id' => $jurusanTI->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata Laboratorium Pendidikan Ahli Pertama',
+            'unit_kerja_id' => $jurusanTI->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata Laboratorium Pendidikan Penyelia',
+            'unit_kerja_id' => $jurusanTI->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata Laboratorium Pendidikan  Mahir',
+            'unit_kerja_id' => $jurusanTI->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata Laboratorium Pendidikan Terampil',
+            'unit_kerja_id' => $jurusanTI->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Arsiparis Ahli Pertama',
+            'unit_kerja_id' => $jurusanTI->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Arsiparis Penyelia',
+            'unit_kerja_id' => $jurusanTI->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Arsiparis Mahir',
+            'unit_kerja_id' => $jurusanTI->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Arsiparis Terampil',
+            'unit_kerja_id' => $jurusanTI->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Operator Laboratorium',
+            'unit_kerja_id' => $jurusanTI->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengolah Data dan Informasi',
+            'unit_kerja_id' => $jurusanTI->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengadministrasi Perkantoran',
+            'unit_kerja_id' => $jurusanTI->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Operator Layanan Operasional',
+            'unit_kerja_id' => $jurusanTI->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Teknisi Laboratorium',
             'unit_kerja_id' => $jurusanTI->id
         ]);
         
@@ -93,11 +267,87 @@ class UnitKerjaSeeder extends Seeder
 
         ]);
         UnitKerjaHasJabatanFungsional::create([
-            'name' => 'dosen lektor',
+            'name' => 'Ketua Jurusan',
             'unit_kerja_id' => $jurusanteknik->id
         ]);
         UnitKerjaHasJabatanFungsional::create([
-            'name' => 'dosen ahli',
+            'name' => 'Sekretaris Jurusan',
+            'unit_kerja_id' => $jurusanteknik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Koordinator Program Studi',
+            'unit_kerja_id' => $jurusanteknik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Profesor',
+            'unit_kerja_id' => $jurusanteknik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Lektor Kepala',
+            'unit_kerja_id' => $jurusanteknik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Lektor',
+            'unit_kerja_id' => $jurusanteknik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Asisten Ahli',
+            'unit_kerja_id' => $jurusanteknik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Arsiparis Ahli Pertama',
+            'unit_kerja_id' => $jurusanteknik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Arsiparis Penyelia',
+            'unit_kerja_id' => $jurusanteknik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Arsiparis Mahir',
+            'unit_kerja_id' => $jurusanteknik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Arsiparis Terampil',
+            'unit_kerja_id' => $jurusanteknik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengolah Data dan Informasi',
+            'unit_kerja_id' => $jurusanteknik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengadministrasi Perkantoran',
+            'unit_kerja_id' => $jurusanteknik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Operator Layanan Operasional',
+            'unit_kerja_id' => $jurusanteknik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata Laboratorium Pendidikan Ahli Madya',
+            'unit_kerja_id' => $jurusanteknik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata Laboratorium Pendidikan Ahli Muda',
+            'unit_kerja_id' => $jurusanteknik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata Laboratorium Pendidikan Ahli Pertama',
+            'unit_kerja_id' => $jurusanteknik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata Laboratorium Pendidikan Penyelia',
+            'unit_kerja_id' => $jurusanteknik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata Laboratorium Pendidikan  Mahir',
+            'unit_kerja_id' => $jurusanteknik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata Laboratorium Pendidikan Terampil',
+            'unit_kerja_id' => $jurusanteknik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Teknisi Laboratorium',
             'unit_kerja_id' => $jurusanteknik->id
         ]);
         
@@ -124,11 +374,15 @@ class UnitKerjaSeeder extends Seeder
 
         ]);
         UnitKerjaHasJabatanFungsional::create([
-            'name' => 'dosen lektor',
+            'name' => 'Pengolah Data dan Informasi',
             'unit_kerja_id' => $pusatPenjaminMutudanPengembanganPembelajaran->id
         ]);
         UnitKerjaHasJabatanFungsional::create([
-            'name' => 'dosen ahli',
+            'name' => 'Pengelola Pengembangan Pembelajaran dan Penjaminan Mutu Pendidikan',
+            'unit_kerja_id' => $pusatPenjaminMutudanPengembanganPembelajaran->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengadministrasi Perkantoran',
             'unit_kerja_id' => $pusatPenjaminMutudanPengembanganPembelajaran->id
         ]);
         
@@ -155,11 +409,27 @@ class UnitKerjaSeeder extends Seeder
 
         ]);
         UnitKerjaHasJabatanFungsional::create([
-            'name' => 'dosen lektor',
+            'name' => 'Kepala UPA Perpustakaan',
             'unit_kerja_id' => $upaPerpustakaan->id
         ]);
         UnitKerjaHasJabatanFungsional::create([
-            'name' => 'dosen ahli',
+            'name' => 'Pustakawan Ahli Pertama',
+            'unit_kerja_id' => $upaPerpustakaan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pustakawan Terampil',
+            'unit_kerja_id' => $upaPerpustakaan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengolah Data dan Informasi',
+            'unit_kerja_id' => $upaPerpustakaan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengadministrasi Perkantoran',
+            'unit_kerja_id' => $upaPerpustakaan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Operator Layanan Operasional',
             'unit_kerja_id' => $upaPerpustakaan->id
         ]);
         
@@ -184,11 +454,43 @@ class UnitKerjaSeeder extends Seeder
 
         ]);
         UnitKerjaHasJabatanFungsional::create([
-            'name' => 'dosen lektor',
+            'name' => 'Kepala UPA Teknologi Informasi, dan Komunikasi',
             'unit_kerja_id' => $upaTik->id
         ]);
         UnitKerjaHasJabatanFungsional::create([
-            'name' => 'dosen ahli',
+            'name' => 'Pranata Komputer Ahli Muda',
+            'unit_kerja_id' => $upaTik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata Komputer Ahli Pertama',
+            'unit_kerja_id' => $upaTik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata Komputer Terampil',
+            'unit_kerja_id' => $upaTik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Penata Kelola Sistem dan Teknologi Informasi',
+            'unit_kerja_id' => $upaTik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengolah Data dan Informasi',
+            'unit_kerja_id' => $upaTik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengelola Situs/Web',
+            'unit_kerja_id' => $upaTik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengadministrasi Perkantoran',
+            'unit_kerja_id' => $upaTik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengadministrasi Umum',
+            'unit_kerja_id' => $upaTik->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Operator Layanan Operasional',
             'unit_kerja_id' => $upaTik->id
         ]);
         
@@ -214,11 +516,15 @@ class UnitKerjaSeeder extends Seeder
 
         ]);
         UnitKerjaHasJabatanFungsional::create([
-            'name' => 'dosen lektor',
+            'name' => 'Arsiparis Ahli Pertama',
             'unit_kerja_id' => $pusatPenelitiandanPengabdian->id
         ]);
         UnitKerjaHasJabatanFungsional::create([
-            'name' => 'dosen ahli',
+            'name' => 'Pengolah Data dan Informasi',
+            'unit_kerja_id' => $pusatPenelitiandanPengabdian->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengadministrasi Perkantoran',
             'unit_kerja_id' => $pusatPenelitiandanPengabdian->id
         ]);
         
@@ -244,7 +550,22 @@ class UnitKerjaSeeder extends Seeder
             'atasan_langsung_id' => $strukturalUpaBahasa->id,
 
         ]);
-        
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Kepala UPA Bahasa',
+            'unit_kerja_id' => $upabahasa->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengolah Data dan Informasi',
+            'unit_kerja_id' => $upabahasa->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengadministrasi Perkantoran',
+            'unit_kerja_id' => $upabahasa->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Operator Layanan Operasional',
+            'unit_kerja_id' => $upabahasa->id
+        ]);
         // UnitKerjaHasAtasanLangsung::create([
         //     'unit_kerja_id' => $upabahasa->id,
         //     'jabatan_struktural_id' => $strukturalUpaBahasa->id
@@ -265,7 +586,22 @@ class UnitKerjaSeeder extends Seeder
             'atasan_langsung_id' => $strukturalPerawatandanPerbaikan->id,
 
         ]);
-        
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Kepala UPA Perawatan dan Perbaikan',
+            'unit_kerja_id' => $upaPerawatandanPerbaikan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengolah Data dan Informasi',
+            'unit_kerja_id' => $upaPerawatandanPerbaikan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengadministrasi Perkantoran',
+            'unit_kerja_id' => $upaPerawatandanPerbaikan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Operator Layanan Operasional',
+            'unit_kerja_id' => $upaPerawatandanPerbaikan->id
+        ]);
         // UnitKerjaHasAtasanLangsung::create([
         //     'unit_kerja_id' => $upaPerawatandanPerbaikan->id,
         //     'jabatan_struktural_id' => $strukturalPerawatandanPerbaikan->id
@@ -287,7 +623,18 @@ class UnitKerjaSeeder extends Seeder
             'atasan_langsung_id' => $strukturalUpaPengKarir->id,
 
         ]);
-        
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Kepala UPA Pengembangan Karier dan Kewirausahaan',
+            'unit_kerja_id' => $upaPengKarirDanKewirausahaan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengolah Data dan Informasi',
+            'unit_kerja_id' => $upaPengKarirDanKewirausahaan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengadministrasi Perkantoran',
+            'unit_kerja_id' => $upaPengKarirDanKewirausahaan->id
+        ]);
         // UnitKerjaHasAtasanLangsung::create([
         //     'unit_kerja_id' => $upaPengKarirDanKewirausahaan->id,
         //     'jabatan_struktural_id' => $strukturalUpaPengKarir->id
@@ -306,9 +653,23 @@ class UnitKerjaSeeder extends Seeder
             'has_atasan_langsung' =>true,
             'jabatan_berwenang_id' => $wadir2->id,
             'atasan_langsung_id' => $strukturalUpaUjiKompetensi->id,
-
         ]);
-        
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Kepala UPA Layanan Uji Kompetensi',
+            'unit_kerja_id' => $upaPengLayananUjiKompetensi->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengolah Data dan Informasi',
+            'unit_kerja_id' => $upaPengLayananUjiKompetensi->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Operator Layanan Operasional',
+            'unit_kerja_id' => $upaPengLayananUjiKompetensi->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengadministrasi Perkantoran',
+            'unit_kerja_id' => $upaPengLayananUjiKompetensi->id
+        ]);
         // UnitKerjaHasAtasanLangsung::create([
         //     'unit_kerja_id' => $upaPengLayananUjiKompetensi->id,
         //     'jabatan_struktural_id' => $strukturalUpaUjiKompetensi->id
@@ -327,9 +688,23 @@ class UnitKerjaSeeder extends Seeder
             'has_atasan_langsung' => true,
             'jabatan_berwenang_id' => $wadir2->id,
             'atasan_langsung_id' => $strukturalLaboratoriumTerpadu->id,
-
         ]);
-        
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Kepala UPA Laboratorium Terpadu',
+            'unit_kerja_id' => $upaPengLaboratoriumTerpadu->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengolah Data dan Informasi',
+            'unit_kerja_id' => $upaPengLaboratoriumTerpadu->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Operator Layanan Operasional',
+            'unit_kerja_id' => $upaPengLaboratoriumTerpadu->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengadministrasi Perkantoran',
+            'unit_kerja_id' => $upaPengLaboratoriumTerpadu->id
+        ]);
         // UnitKerjaHasAtasanLangsung::create([
         //     'unit_kerja_id' => $upaPengLaboratoriumTerpadu->id,
         //     'jabatan_struktural_id' => $strukturalLaboratoriumTerpadu->id
@@ -346,47 +721,211 @@ class UnitKerjaSeeder extends Seeder
             'jabatan_berwenang_id' => $wadir2->id,
             'atasan_langsung_id' => $wadir2->id,
         ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Kepala Bagian Perencanaan, Keuangan, dan Umum',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Kepala Subbagian Umum',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Analis Pengelolaan Keuangan APBN Ahli Madya',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Arsiparis Ahli Madya',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Perencana Ahli Madya',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Analis Pengelolaan Keuangan APBN Ahli Muda',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Analis SDM Aparatur Ahli Muda',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Perencana Ahli Muda',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Arsiparis Ahli Muda',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata Keuangan APBN Penyelia',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Analis Pengelolaan Keuangan APBN Ahli Pertama',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Analis SDM Aparatur Ahli Pertama',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Perencana Ahli Pertama',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata Keuangan APBN Mahir',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata Hubungan Masyarakat Ahli Pertama',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata SDM Aparatur Penyelia',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata Keuangan APBN Terampil',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata SDM Aparatur Mahir',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata SDM Aparatur Terampil',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Arsiparis Ahli Pertama',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Arsiparis Penyelia',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Arsiparis Mahir',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Penyusun Materi Hukum dan Perundang-undangan',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Penelaah Teknis Kebijakan',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Analis Sumber Daya Manusia Aparatur',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Bendahara',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Penyusun Laporan Keuangan',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Arsiparis Terampil',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengelola Keprotokolan',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengolah Data dan Informasi',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengelola Barang Milik Negara',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengolah Data',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengelola Keuangan',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengadministrasi Perkantoran',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Operator Layanan Operasional',
+            'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id
+        ]);
         // UnitKerjaHasAtasanBerwenang::create([
         //     'unit_kerja_id' => $bagianPerencanaanKeuangandanUmum->id,
         //     'jabatan_struktural_id' => $wadir2->id
         // ]);
-
-
-        $subbagianUmum = UnitKerja::create([
-            'name' => 'subbagian umum',
-            'jabatan_berwenang_id' => $wadir2->id,
-            'atasan_langsung_id' => $wadir2->id,
-        ]);
-        // UnitKerjaHasAtasanBerwenang::create([
-        //     'unit_kerja_id' => $subbagianUmum->id,
-        //     'jabatan_struktural_id' => $wadir2->id
-        // ]);
-
-
-
 
         $akademikdankemahasiswaan = UnitKerja::create([
             'name' => 'bagian akademik dan kemahasiswaan',
             'jabatan_berwenang_id' => $wadir2->id,
             'atasan_langsung_id' => $wadir2->id,
         ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Kepala Bagian Akademik dan Kemahasiswaan',
+            'unit_kerja_id' => $akademikdankemahasiswaan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Kepala Subbagian Akademik',
+            'unit_kerja_id' => $akademikdankemahasiswaan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Arsiparis Ahli Muda',
+            'unit_kerja_id' => $akademikdankemahasiswaan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata Komputer Ahli Muda',
+            'unit_kerja_id' => $akademikdankemahasiswaan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata Komputer  Ahli Pertama',
+            'unit_kerja_id' => $akademikdankemahasiswaan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Arsiparis Ahli Pertama',
+            'unit_kerja_id' => $akademikdankemahasiswaan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Penelaah Teknis Kebijakan',
+            'unit_kerja_id' => $akademikdankemahasiswaan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Arsiparis Mahir',
+            'unit_kerja_id' => $akademikdankemahasiswaan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Arsiparis Terampil',
+            'unit_kerja_id' => $akademikdankemahasiswaan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pranata Komputer Terampil',
+            'unit_kerja_id' => $akademikdankemahasiswaan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengolah Data dan Informasi',
+            'unit_kerja_id' => $akademikdankemahasiswaan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengelola Informasi Akademik',
+            'unit_kerja_id' => $akademikdankemahasiswaan->id
+        ]);
+        UnitKerjaHasJabatanFungsional::create([
+            'name' => 'Pengadministrasi Perkantoran',
+            'unit_kerja_id' => $akademikdankemahasiswaan->id
+        ]);
         // UnitKerjaHasAtasanBerwenang::create([
         //     'unit_kerja_id' => $akademikdankemahasiswaan->id,
         //     'jabatan_struktural_id' => $wadir2->id
-        // ]);
-
-
-
-        $subbagianAkademik = UnitKerja::create([
-            'name' => 'subbagian akademik',
-            'jabatan_berwenang_id' => $wadir2->id,
-            'atasan_langsung_id' => $wadir2->id,
-        ]);
-        // UnitKerjaHasAtasanBerwenang::create([
-        //     'unit_kerja_id' => $subbagianAkademik->id,
-        //     'jabatan_struktural_id' => $wadir2->id
-        // ]);
-        
-        
+        // ]);        
     }
 }
