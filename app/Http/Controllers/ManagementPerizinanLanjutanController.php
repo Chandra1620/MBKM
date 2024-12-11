@@ -72,6 +72,7 @@ class ManagementPerizinanLanjutanController extends Controller
                 ->where("id", "=", $id_perizinan)
                 ->first();
 
+            // Decrement Cuti
             if ($checkJenisCuti && $checkJenisCuti->jenis_cuti_id == 1) {
                 DB::table("cuti_sisas")
                     ->where("user_id", "=", $id_pegawai)
