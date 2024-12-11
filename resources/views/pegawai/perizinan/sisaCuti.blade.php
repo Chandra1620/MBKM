@@ -31,7 +31,7 @@
                         <td class="px-6 py-4 border-b text-center">{{ $cuti->n_minus_1 }}</td>
                         <td class="px-6 py-4 border-b text-center">{{ $cuti->n_minus_2 }}</td>
                         <td class="px-6 py-4 border-b text-center">{{ $cuti->n + $cuti->n_minus_1 + $cuti->n_minus_2 }}</td>
-                        <td class="px-6 py-4 border-b text-center">1</td>
+                        <td class="px-6 py-4 border-b text-center">{{ $cuti->cuti_dipakai }}</td>
                     </tr>
                 @endforeach
             </tbody>

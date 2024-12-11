@@ -197,7 +197,7 @@
                                                         </svg>
                                                         Overview
                                                     </a>
-                                                    <a href="{{ route('perizinan-cuti.pdfExporting', ['id' => $izin->id]) }}"
+                                                    <a href="{{ route('perizinan-cuti.pdfExporting', ['id' => $izin->id, 'id_pegawai' => $izin->user_id]) }}"
                                                         class="flex justify-center items-center gap-3 px-3 py-4 me-2 rounded-md border-2 border-green-200 font-semibold text-green-500 hover:text-white hover:bg-green-500 hover:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16"
                                                             height="16" fill="currentColor" class="bi bi-download"

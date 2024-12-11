@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('n')->default(12)->comment('Sisa cuti tahun N');
             $table->integer('n_minus_1')->default(0)->comment('Sisa cuti tahun N-1');
             $table->integer('n_minus_2')->default(0)->comment('Sisa cuti tahun N-2');
+            $table->integer("cuti_dipakai")->default(0);
             $table->timestamp("waktu_mulai_pergantian")->nullable()->useCurrent();
             $table->timestamp("waktu_selesai_pergantian")->nullable();
         });

@@ -46,10 +46,10 @@ class SisaCutiController extends Controller
 
                 if ($carbonNow->timestamp >= $carbonEnd->timestamp) {
 
-                    $newStart = $carbonStart->copy()->addMinutes(5);
+                    $newStart = $carbonStart->copy()->addHours(1);
                     // dd($newStart);
 
-                    $newEnd = $newStart->copy()->addMinutes(5);
+                    $newEnd = $newStart->copy()->addHours(1);
                     // dd($newEnd);
 
                     // dd($newStart->timestamp, $newEnd->timestamp);
@@ -59,7 +59,7 @@ class SisaCutiController extends Controller
                     $n_minus_1 = $sisaCutiPerson->n_minus_1;     // Nilai n_minus_1 (1 periode sebelumnya)
                     $n_minus_2 = $sisaCutiPerson->n_minus_2;     // Nilai n_minus_2 (2 periode sebelumnya)
 
-                    // Simulasikan tambahan cuti baru (12)
+                    // Simulasi tambahan cuti baru (12)
                     $tambahanCuti = 12;
 
                     $n_new = $n_previous + $tambahanCuti;
@@ -69,7 +69,8 @@ class SisaCutiController extends Controller
                         "waktu_selesai_pergantian" => $newEnd->toDateTimeString(),
                         "n" => $n_new,
                         "n_minus_1" => $n_previous,
-                        "n_minus_2" => $n_minus_1
+                        "n_minus_2" => $n_minus_1,
+                        "cuti_dipakai" => 0
                     ]);
                 }
             }
