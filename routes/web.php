@@ -54,6 +54,7 @@ use App\Http\Controllers\Pegawai\SuratMeyuratController;
 use App\Http\Controllers\Pegawai\TesController;
 use App\Http\Controllers\SisaCutiController;
 use App\Http\Controllers\Wadir\RequestPerizinanWadirController;
+use App\Http\Controllers\WakilDirekturController;
 use App\Models\RiwayatFungsional;
 use App\Models\RiwayatPekerjaan;
 use Illuminate\Support\Facades\Route;
@@ -94,6 +95,7 @@ Route::middleware('auth')->group(function () {
         Route::put('/admin/admin-pegawai/{id}/update', [AdminPegawaiController::class, 'update'])->name('admin-pegawai.update');
 
         Route::get('/admin/atasan-langsung', [AtasanLangsungController::class, 'index'])->name('atasan-langsung.index');
+        Route::get('/admin/wakil-direktur', [WakilDirekturController::class, 'index'])->name("wakil-direktur.index");
     });
     //!: admin
     //!: ROLE PERMISSIN
