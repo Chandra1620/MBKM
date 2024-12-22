@@ -70,6 +70,15 @@ class ManualPerizinanController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->alasan);
+        dd($request->alamat_selama_cuti);
+        dd($request->jenis_cuti);
+        dd($request->tgl_mulai);
+        dd($request->tgl_selesai);
+        dd($request->no_telp_bisa_dihubungi);
+        dd($request->user_id);
+        dd($request->unit_kerja_id);
+
         // Validasi Input
         $attrs = $request->validate([
             'alasan' => 'required|string',
@@ -81,6 +90,8 @@ class ManualPerizinanController extends Controller
             'user_id' => 'required|exists:users,id',
             'unit_kerja_id' => 'required|exists:unit_kerjas,id',
         ]);
+
+        dd($attrs);
 
         // Hitung jumlah hari cuti yang diajukan
         $jumlahHariCuti = Carbon::parse($attrs['tgl_selesai'])->diffInDays(Carbon::parse($attrs['tgl_mulai'])) + 1;
