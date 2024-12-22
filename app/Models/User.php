@@ -106,6 +106,7 @@ class User extends Authenticatable implements JWTSubject
     }
     public function sisaCuti()
     {
-        return $this->hasOne(SisaCuti::class, 'users_id' );
+        return $this->hasOne(SisaCutiHistory::class, 'users_id' );
     }
+    
 }

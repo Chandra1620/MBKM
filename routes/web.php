@@ -11,6 +11,7 @@ use App\Http\Controllers\AdminKepegawaian\ManagementPerizinanAdminController;
 use App\Http\Controllers\AdminKepegawaian\ManagementSuratKeputusanController;
 use App\Http\Controllers\AdminKepegawaian\ManagementSuratTugasController;
 use App\Http\Controllers\AdminKepegawaian\ManagementSuratTugasDinasController;
+use App\Http\Controllers\AdminKepegawaian\ManualPerizinanController;
 use App\Http\Controllers\AdminKepegawaian\PegawaiFungsoinalController;
 use App\Http\Controllers\AdminKepegawaian\PegawaiStrukturalController;
 use App\Http\Controllers\AdminKepegawaian\PerizinanManualController;
@@ -209,11 +210,6 @@ Route::middleware('auth')->group(function () {
     });
 
 
-    Route::get('/perizinan-manual', [PerizinanManualController::class, 'index'])->name('perizinan-manual.index');
-    Route::get('/perizinan-manual/create', [PerizinanManualController::class, 'create'])->name('perizinan-manual.create');
-    Route::post('/perizinan-manual/store', [PerizinanManualController::class, 'store'])->name('perizinan-manual.store');
- 
-
     Route::middleware(['checkUserRole:admin-pegawai'])->group(function () {
         // Data Pegawai
         Route::get('/data-pegawai', [DataPegawaiController::class, 'index'])->name('data-pegawai.index');
@@ -380,6 +376,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/management-update-riwayat-pekerjaan/{id}/ditolak', [UpdateRiwayatPekerjaanController::class, 'ditolak'])->name('update-riwayatpekerjaan.ditolak');
 
     //? belum ada permission yg bener
+
+    Route::middleware(['checkUserRole:admin-pegawai'])->prefix('perizinan-manual')->group(function () {
+        Route::get('/', [ManualPerizinanController::class, 'index'])->name('perizinan-manual.index');
+        Route::get('/create', [ManualPerizinanController::class, 'create'])->name('perizinan-manual.create');
+        Route::post('/store', [ManualPerizinanController::class, 'store'])->name('perizinan-manual.store');
+        Route::delete('/delete/{id}', [ManualPerizinanController::class, 'destroy'])->name('perizinan-manual.delete');
+    });
 
     Route::middleware(['checkUserRole:atasan-langsung,admin-pegawai,pegawai,wadir,direktur,admin'])->group(function () {
         Route::get('/pangkat-golongan', [PangkatGolonganController::class, 'index'])->name('pangkat-golongan.index');

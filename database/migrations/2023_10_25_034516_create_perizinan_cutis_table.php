@@ -24,6 +24,7 @@ return new class extends Migration
             $table->date('verifikasi_admin')->nullable();
             $table->string('pertimbangan_atasan_langsung')->default('proses');
             $table->string('keputusan_pejabat_berwenang')->default('proses');
+            $table->string('status')->default('approved');
             $table->string('file_pendukung')->nullable();
             $table->string('alasan_dari_atasan')->nullable();
             $table->string('ttd_pegawai')->nullable();

@@ -24,6 +24,7 @@ class UnitKerja extends Model
         return $this->belongsTo(JabatanStruktural::class,'atasan_langsung_id');
     }
     
+    
 }
 
 

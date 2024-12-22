@@ -924,7 +924,7 @@ class UserSeeder extends Seeder
                 'name' => 'Halida Nurul Fitri, S.E.',
                 'email' => 'halida.nurulfitri@polindra.ac.id',
                 'nip' => '199602232019032016',
-                'role' => 'pegawai',
+                'role' => 'admin-pegawai',
                 'jabatan' => 'Analis Sumber Daya Manusia Aparatur',
                 'password' => bcrypt('123456')
             ],

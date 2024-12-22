@@ -114,16 +114,6 @@
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tgl
                                             Selesai
                                         </th>
-                                        {{-- <th scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                            Persetujuan Atasan
-                                        </th>
-                                        <th scope="col"
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                            Persetujuan Wadir
-                                        </th> --}}
-
-                                        {{-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Address</th> --}}
                                         <th scope="col"
                                             class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Action
                                         </th>

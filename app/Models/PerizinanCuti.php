@@ -18,6 +18,7 @@ class PerizinanCuti extends Model
         'verifikasi_admin',
         'pertimbangan_atasan_langsung',
         'keputusan_pejabat_berwenang',
+        'status',
         'file_pendukung',
         'alasan_dari_atasan',
         'unit_kerja_id',
