@@ -144,7 +144,16 @@ class PerizinanController extends Controller
             ->whereYear('tgl_mulai', $year)
             ->count();
 
-        if ($totalRiwayatCuti >= 60) {
+        $izinCutiSisa = DB::table("cuti_sisas")
+            ->join("users", "cuti_sisas.user_id", "=", "users.id")
+            ->where('cuti_sisas.user_id', $user->id)
+            ->select(["cuti_sisas.*"])
+            ->get()
+            ->first();
+
+        // dd($izinCutiSisa);
+
+        if ($izinCutiSisa->n == 0) {
             return redirect()
                 ->route('perizinan-cuti.index')
                 ->with('error', 'Anda Sudah Mengambil Jatah Cuti');
@@ -284,7 +293,7 @@ class PerizinanController extends Controller
         $pdf = FacadePdf::loadView('pdf.test', data: $data);
         return $pdf->stream('Form Cuti.pdf');
     }
-    public function pdfExporting($id)
+    public function pdfExporting($id, $id_pegawai)
     {
         $user = Auth::user();
 
@@ -292,13 +301,32 @@ class PerizinanController extends Controller
             ->join('unit_kerja_has_jabatan_fungsionals', 'riwayat_fungsionals.unit_kerja_has_jabatan_fungsional_id', '=', 'unit_kerja_has_jabatan_fungsionals.id')
             ->join("unit_kerjas", "unit_kerja_has_jabatan_fungsionals.unit_kerja_id", "=", "unit_kerjas.id")
             ->select('riwayat_fungsionals.*', 'unit_kerja_has_jabatan_fungsionals.name AS jabatan', 'unit_kerjas.name AS unit_kerja')
-            ->where("riwayat_fungsionals.user_id", "=", "$user->id")
+            ->where("riwayat_fungsionals.user_id", "=", $user->id)
             ->get()
             ->first();
 
         $results2 = DB::table('perizinan_cutis')
             ->join('jenis_cutis', 'jenis_cutis.id', '=', 'perizinan_cutis.jenis_cuti_id')
             ->where('perizinan_cutis.id', '=', $id)
+            ->get()
+            ->first();
+
+        // dd($results2);
+
+        $results3 = DB::table('users')
+            ->join("cuti_sisas", "cuti_sisas.user_id", "=", "users.id")
+            ->where('users.id', '=', $id)
+            ->get()
+            ->first();
+
+        $results4 = DB::table("atasan_langsung")
+            ->join("users", "users.id", "=", "atasan_langsung.user_id")
+            ->where('atasan_langsung.user_id', '=', $id_pegawai)
+            ->get()
+            ->first();
+
+        $results5 = DB::table("users")
+            ->where("id", "=", $results4->user_has_atasan_id)
             ->get()
             ->first();
 
@@ -311,7 +339,7 @@ class PerizinanController extends Controller
             "name" => $user->name,
             'nip' => $user->nip,
             "unit_kerja" => $results->unit_kerja,
-            "tanggal_dibuat" => Carbon::parse($results2->created_at)->format('j F Y'),
+            "tanggal_dibuat" => Carbon::parse($results2->tgl_mulai)->format('j F Y'),
             'jabatan_fungsional' => $results->jabatan,
             'jenis_cuti' => $results2->jenis_cuti_id,
             'alasan' => $results2->alasan,
@@ -320,8 +348,16 @@ class PerizinanController extends Controller
             "no_telp" => $results2->no_telp_bisa_dihubungi,
             'tgl_mulai' => Carbon::createFromFormat('Y-m-d', $results2->tgl_mulai)->format('d-m-Y'),
             'tgl_selesai' => Carbon::createFromFormat('Y-m-d', $results2->tgl_selesai)->format('d-m-Y'),
-            'images' => public_path('assets/test/pngwing.com.png'),
-            'icon' => public_path('assets/icon/check.svg')
+            // 'images' => public_path('assets/test/pngwing.com.png'),
+            'icon' => public_path('assets/icon/check.svg'),
+            "n" => $results3->n,
+            "n_minus_1" => $results3->n_minus_1,
+            "n_minus_2" => $results3->n_minus_2,
+            "ttd_pegawai" => $results2->ttd_pegawai,
+            "atasan_name" => $results5->name,
+            "atasan_nip" => $results5->nip,
+            "atasan_disetujui" => $results2->pertimbangan_atasan_langsung,
+            "ttd_atasan_langsung" => $results2->ttd_atasan,
         ];
 
         // dd($results2);

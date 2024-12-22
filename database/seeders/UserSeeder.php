@@ -1215,6 +1215,10 @@ class UserSeeder extends Seeder
                 'password' => $userData['password']
             ]);
 
+            if ($userData['email'] === 'halida.nurulfitri@polindra.ac.id') {
+                $user->assignRole('admin-pegawai');
+            }
+
             if (isset($userData['role_khusus_1'])) {
                 $user->role_khusus_1 = $userData['role_khusus_1'];
                 $user->save();

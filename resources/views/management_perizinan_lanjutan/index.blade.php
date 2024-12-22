@@ -202,7 +202,7 @@
                                                     </a>
                                                     @if ($item->keputusan_pejabat_berwenang == 'proses')
                                                         <form
-                                                            action="{{ route('management-perizinan.ditolak', ['id' => $item->user_id]) }}"
+                                                            action="{{ route('management-perizinan-lanjutan.ditolak', ['id' => $item->perizinan_cuti_id]) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')

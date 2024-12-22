@@ -124,7 +124,7 @@ class ManagementPerizinanAtasanController extends Controller
                 ->get()
                 ->first();
         } else {
-            $results6 = (object)[
+            $results6 = (object) [
                 "name" => null,
                 "nip" => null
             ];
@@ -173,6 +173,13 @@ class ManagementPerizinanAtasanController extends Controller
     }
     public function ditolak($id)
     {
+        DB::table("perizinan_cutis")
+            ->where("id", "=", $id)
+            ->update([
+                "pertimbangan_atasan_langsung" => "ditolak",
+                "keputusan_pejabat_berwenang" => "ditolak"
+            ]);
 
+        return redirect()->route("management-perizinan-atasan.index");
     }
 }

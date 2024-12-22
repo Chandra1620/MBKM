@@ -55,6 +55,7 @@ use App\Http\Controllers\Pegawai\SuratMeyuratController;
 use App\Http\Controllers\Pegawai\TesController;
 use App\Http\Controllers\SisaCutiController;
 use App\Http\Controllers\Wadir\RequestPerizinanWadirController;
+use App\Http\Controllers\WakilDirekturController;
 use App\Models\RiwayatFungsional;
 use App\Models\RiwayatPekerjaan;
 use Illuminate\Support\Facades\Route;
@@ -95,6 +96,7 @@ Route::middleware('auth')->group(function () {
         Route::put('/admin/admin-pegawai/{id}/update', [AdminPegawaiController::class, 'update'])->name('admin-pegawai.update');
 
         Route::get('/admin/atasan-langsung', [AtasanLangsungController::class, 'index'])->name('atasan-langsung.index');
+        Route::get('/admin/wakil-direktur', [WakilDirekturController::class, 'index'])->name("wakil-direktur.index");
     });
     //!: admin
     //!: ROLE PERMISSIN
@@ -289,7 +291,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/perizinan-cuti-overview', [PerizinanController::class, 'overview'])->name('perizinan-cuti.overview');
 
     Route::get('/perizinan-cuti/{id}/user/{id_pegawai}/stream', [PerizinanController::class, 'pdfStream'])->name('perizinan-cuti.pdfStream');
-    Route::get('/perizinan-cuti/{id}/download', [PerizinanController::class, 'pdfExporting'])->name('perizinan-cuti.pdfExporting');
+    Route::get('/perizinan-cuti/{id}/{id_pegawai}/download', [PerizinanController::class, 'pdfExporting'])->name('perizinan-cuti.pdfExporting');
 
     Route::get('/perizinan-cuti/{id}/edit', [PerizinanController::class, 'edit'])->name('perizinan-cuti.edit');
     Route::put('/perizinan-cuti/{id}/update', [PerizinanController::class, 'update'])->name('perizinan-cuti.update');
@@ -334,6 +336,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get("/management-perizinan-lanjutan", [ManagementPerizinanLanjutanController::class, 'index'])->name("management-perizinan-lanjutan.index");
     Route::post("/management-perizinan-lanjutan/{id_perizinan}/verifikasi/{id_pegawai}", [ManagementPerizinanLanjutanController::class, 'verifikasi'])->name("management-perizinan-lanjutan.verifikasi");
+    Route::delete('/management-perizinan-lanjutan/{id}/denied', [ManagementPerizinanLanjutanController::class, 'ditolak'])->name('management-perizinan-lanjutan.ditolak');
+
     //!
 
     //? belum ada permission yg bener

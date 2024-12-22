@@ -41,6 +41,10 @@ class ManagementPerizinanAdminController extends Controller
             $perizinan->pertimbangan_atasan_langsung = 'diizinkan';
         }
 
+        DB::table("periznan_cutis")
+            ->where("id", "=", $id)
+            ->update(["perizinan_admin_pegawai" == "disetujui"]);
+
         $perizinan->verifikasi_admin = Carbon::now();
 
         // Menyimpan perubahan pada model
@@ -49,9 +53,17 @@ class ManagementPerizinanAdminController extends Controller
         return redirect()->route('management-perizinan.index')->with('success', 'Perizinan diverifikasi');
     }
 
-    public function ditolak(Request $request)
+    public function ditolak($id)
     {
-        dd($request->all());
+        DB::table("perizinan_cutis")
+            ->where("id", "=", $id)
+            ->update([
+                "perizinan_admin_pegawai" => "ditolak",
+                "pertimbangan_atasan_langsung" => "ditolak",
+                "keputusan_pejabat_berwenang" => "ditolak"
+            ]);
+
+        return redirect()->route("management-perizinan.index");
     }
 
 

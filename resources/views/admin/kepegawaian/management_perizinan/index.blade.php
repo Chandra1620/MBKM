@@ -103,7 +103,7 @@
                                             </td>
                                             {{-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">New York No. 1 Lake Park</td> --}}
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium ">
-                                                <div class="flex justify-end">
+                                                <div class="flex justify-end gap-1">
                                                     @if ($item->verifikasi_admin == '')
                                                         <form
                                                             action="{{ route('management-perizinan.verifikasi', ['id' => $item->id]) }}"
@@ -123,20 +123,22 @@
                                                 </a> --}}
                                                     
                                                     <a
-                                                        href="{{ route('perizinan-cuti.pdfStream', ['id' => $item->id, 'id_pegawai' => $item->user_id]) }}"
+                                                        href="{{ route('perizinan-cuti-atasan.pdfStream', ['id' => $item->user_id, "id_perizinan" => $item->id]) }}"
                                                         class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-yellow-200 font-semibold text-yellow-500 hover:text-white hover:bg-yellow-500 hover:border-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
-                                                            overview
+                                                            Overview
                                                     </a>
-                                                    <form
-                                                        action="{{ route('management-perizinan.ditolak', ['id' => $item->id]) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit"
-                                                            class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-red-200 font-semibold text-red-500 hover:text-white hover:bg-red-500 hover:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
-                                                            Hapus
-                                                        </button>
-                                                    </form>
+                                                    @if ($item->perizinan_admin_pegawai == null)
+                                                        <form
+                                                            action="{{ route('management-perizinan.ditolak', ['id' => $item->id]) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-red-200 font-semibold text-red-500 hover:text-white hover:bg-red-500 hover:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+                                                                Ditolak
+                                                            </button>
+                                                        </form>
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>

@@ -68,10 +68,24 @@ class ManagementPerizinanLanjutanController extends Controller
                 ;
             }
 
-            DB::table("cuti_sisas")
-                ->where("user_id", "=", $id_pegawai)
-                ->decrement("n", "1");
+            $checkJenisCuti = DB::table("perizinan_cutis")
+                ->where("id", "=", $id_perizinan)
+                ->first();
+
+            // Decrement Cuti
+            if ($checkJenisCuti && $checkJenisCuti->jenis_cuti_id == 1) {
+                DB::table("cuti_sisas")
+                    ->where("user_id", "=", $id_pegawai)
+                    ->decrement("n", 1);
+            }
         });
+
+        return redirect()->route("management-perizinan-lanjutan.index");
+    }
+    public function ditolak($id){
+        DB::table("perizinan_cutis")
+            ->where("id", "=", $id)
+            ->update(["keputusan_pejabat_berwenang" => "ditolak"]);
 
         return redirect()->route("management-perizinan-lanjutan.index");
     }
