@@ -315,15 +315,21 @@
                                                 <span>Status Persetujuan:</span>
                                                 <div id="approval-status" class="flex">
                                                     <div id="admin-kepegawaian" class="flex items-center">
-                                                        @if ($izin->verifikasi_admin == null)
+                                                        @if ($izin->perizinan_admin_pegawai == null)
                                                             <div class="w-4 h-4 border outline-2 outline outline-slate-300 rounded-full bg-slate-200"></div>
                                                             <div class="bg-slate-300 borderline h-1 w-3"></div>
                                                             <div class="bg-slate-300 borderline h-1 w-3"></div>
+                                                        @elseif ($izin->perizinan_admin_pegawai == "ditolak")
+                                                            <div class="w-4 h-4 border outline-2 outline outline-red-700 rounded-full bg-red-700"></div>
+                                                            <div class="bg-red-700 borderline h-1 w-3"></div>
+                                                            <div class="bg-red-700 borderline h-1 w-3"></div>
                                                         @else   
                                                             <div class="w-4 h-4 border outline-2 outline outline-blue-700 rounded-full bg-blue-700"></div>
                                                             <div class="bg-blue-700 borderline h-1 w-3"></div>
                                                             @if ($izin->pertimbangan_atasan_langsung == "disetujui")
                                                                 <div class="bg-blue-700 borderline h-1 w-3"></div>
+                                                            @elseif ($izin->pertimbangan_atasan_langsung == "ditolak")
+                                                                <div class="bg-red-700 borderline h-1 w-3"></div>
                                                             @else
                                                                 <div class="bg-slate-300 borderline h-1 w-3"></div>
                                                             @endif
@@ -334,11 +340,17 @@
                                                             <div class="w-4 h-4 border outline-2 outline outline-slate-300 rounded-full bg-slate-200"></div>
                                                             <div class="bg-slate-300 borderline h-1 w-3"></div>
                                                             <div class="bg-slate-300 borderline h-1 w-3"></div>
+                                                        @elseif ($izin->pertimbangan_atasan_langsung == "ditolak")
+                                                            <div class="w-4 h-4 border outline-2 outline outline-red-700 rounded-full bg-red-700"></div>
+                                                            <div class="bg-red-700 borderline h-1 w-3"></div>
+                                                            <div class="bg-red-700 borderline h-1 w-3"></div>
                                                         @else
                                                             <div class="w-4 h-4 border outline-2 outline outline-blue-700 rounded-full bg-blue-700"></div>
                                                             <div class="bg-blue-700 borderline h-1 w-3"></div>
                                                             @if ($izin->keputusan_pejabat_berwenang == "disetujui")
                                                                 <div class="bg-blue-700 borderline h-1 w-3"></div>
+                                                            @elseif ($izin->keputusan_pejabat_berwenang == "ditolak")
+                                                                <div class="bg-red-700 borderline h-1 w-3"></div>
                                                             @else
                                                                 <div class="bg-slate-300 borderline h-1 w-3"></div>
                                                             @endif
@@ -347,6 +359,8 @@
                                                     <div id="wakil-direktur" class="flex items-center">
                                                         @if ($izin->keputusan_pejabat_berwenang == "proses")
                                                             <div class="w-4 h-4 border outline-2 outline outline-slate-300 rounded-full bg-slate-200"></div>
+                                                        @elseif ($izin->keputusan_pejabat_berwenang == "ditolak")
+                                                            <div class="w-4 h-4 border outline-2 outline outline-red-700 rounded-full bg-red-700"></div>
                                                         @else   
                                                             <div class="w-4 h-4 border outline-2 outline outline-blue-700 rounded-full bg-blue-700"></div>
                                                         @endif

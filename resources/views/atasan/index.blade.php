@@ -199,7 +199,7 @@
                                                     </a>
                                                     @if ($item->pertimbangan_atasan_langsung == 'proses')
                                                         <form
-                                                            action="{{ route('management-perizinan.ditolak', ['id' => $item->user_id]) }}"
+                                                            action="{{ route('management-perizinan-atasan.ditolak', ['id' => $item->id_perizinan]) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')

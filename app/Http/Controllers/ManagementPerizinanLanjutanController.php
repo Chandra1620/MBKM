@@ -82,4 +82,11 @@ class ManagementPerizinanLanjutanController extends Controller
 
         return redirect()->route("management-perizinan-lanjutan.index");
     }
+    public function ditolak($id){
+        DB::table("perizinan_cutis")
+            ->where("id", "=", $id)
+            ->update(["keputusan_pejabat_berwenang" => "ditolak"]);
+
+        return redirect()->route("management-perizinan-lanjutan.index");
+    }
 }
