@@ -104,7 +104,7 @@
                                             {{-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">New York No. 1 Lake Park</td> --}}
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium ">
                                                 <div class="flex justify-end gap-1">
-                                                    @if ($item->verifikasi_admin == '')
+                                                    @if ($item->perizinan_admin_pegawai == null)
                                                         <form
                                                             action="{{ route('management-perizinan.verifikasi', ['id' => $item->id]) }}"
                                                             method="POST">
