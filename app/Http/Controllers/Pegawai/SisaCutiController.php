@@ -88,44 +88,43 @@ class SisaCutiController extends Controller
         return view('pegawai.perizinan.sisaCuti', compact("sisaCuti", "year", "carbonStart", "carbonEnd"));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
+   
     public function edit(string $id)
     {
-        //
+        $year = Carbon::now()->year;
+        
+        $cuti = DB::table("cuti_sisas")
+            ->join("users", "cuti_sisas.user_id", "=", "users.id")
+            ->where("cuti_sisas.id", $id)
+            ->select("cuti_sisas.*", "users.name", "users.nip")
+            ->first();
+        
+        if (!$cuti) {
+            return redirect()->route('sisa-cuti.index')->withErrors('Data tidak ditemukan.');
+        }
+
+        return view('pegawai.perizinan.editSisaCuti', compact('cuti' ,'year'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'n' => 'required|numeric|min:0',
+            'n_minus_1' => 'required|numeric|min:0',
+            'n_minus_2' => 'required|numeric|min:0',
+        ]);
+
+        $updated = DB::table("cuti_sisas")->where("id", $id)->update([
+            "n" => $request->input("n"),
+            "n_minus_1" => $request->input("n_minus_1"),
+            "n_minus_2" => $request->input("n_minus_2"),
+        ]);
+
+        if ($updated) {
+            return redirect()->route('sisa-cuti.index')->with('success', 'Data Sisa Cuti berhasil diperbarui.');
+        } else {
+            return redirect()->route('sisa-cuti.index')->withErrors('Gagal memperbarui data.');
+        }
     }
 
     /**

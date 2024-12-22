@@ -284,6 +284,8 @@ Route::middleware('auth')->group(function () {
     // Route::get('/overview/{id}', [PerizinanController::class, 'overview'])->name('perizinan-cuti.overview');
 
     Route::get('/sisa-cuti', [PegawaiSisaCutiController::class, 'index'])->name('sisa-cuti.index');
+    Route::get('/sisa-cuti/{id}/edit', [PegawaiSisaCutiController::class, 'edit'])->name('sisa-cuti.edit');
+    Route::put('/sisa-cuti/{id}', [PegawaiSisaCutiController::class, 'update'])->name('sisa-cuti.update');
 
     Route::get('/perizinan-cuti', [PerizinanController::class, 'index'])->name('perizinan-cuti.index');
     Route::get('/perizinan-cuti/create', [PerizinanController::class, 'create'])->name('perizinan-cuti.create');
