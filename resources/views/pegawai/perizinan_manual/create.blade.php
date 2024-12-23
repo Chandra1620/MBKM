@@ -16,7 +16,7 @@
                 </div>
 
                 <!-- Form -->
-                <form method="POST" action="{{ route('perizinan-manual.store') }}">
+                <form method="POST" action="{{ route('perizinan-manual.store') }}" enctype="multipart/form-data">
                     @csrf
 
                     <!-- Pilih Pegawai -->
@@ -96,6 +96,15 @@
                             class="py-2 px-3 block w-full border-gray-200 rounded-md shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
                     </div>
 
+                    <!-- Alamat Selama Cuti -->
+                    <div class="mb-4">
+                        <label class="inline-block text-sm font-medium text-gray-800 dark:text-white">
+                            Alamat Selama Cuti
+                        </label>
+                        <input name="alamat_selama_cuti" type="text"
+                            class="py-2 px-3 block w-full border-gray-200 rounded-md shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
+                    </div>
+
                     <!-- Nomor Telepon-->
                     <div class="mb-4">
                         <label class="inline-block text-sm font-medium text-gray-800 dark:text-white">
@@ -104,6 +113,15 @@
                         <input name="no_telp_bisa_dihubungi" type="text"
                             class="py-2 px-3 block w-full border-gray-200 rounded-md shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
                     </div>
+
+                    {{-- TTD Pegawai --}}
+                    <label class="inline-block text-sm font-medium dark:text-white">
+                            Tanda Tangan Pegawai
+                    </label>
+                    <div class="my-1 space-y-3">
+                            <input name="ttd_pegawai" type="file"
+                                class="py-2 px-3 pr-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
+                        </div>
 
                     <!-- Tombol Simpan -->
                     <div class="mt-5 flex justify-end gap-2">

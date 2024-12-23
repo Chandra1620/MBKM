@@ -9,6 +9,7 @@ use App\Models\PerizinanCuti;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ManualPerizinanController extends Controller
 {
@@ -71,72 +72,136 @@ class ManualPerizinanController extends Controller
     public function store(Request $request)
     {
         // dd($request->alasan);
-        dd($request->alamat_selama_cuti);
-        dd($request->jenis_cuti);
-        dd($request->tgl_mulai);
-        dd($request->tgl_selesai);
-        dd($request->no_telp_bisa_dihubungi);
-        dd($request->user_id);
-        dd($request->unit_kerja_id);
+        // dd($request->alamat_selama_cuti);
+        // dd($request->jenis_cuti);
+        // dd($request->tgl_mulai);
+        // dd($request->tgl_selesai);
+        // dd($request->no_telp_bisa_dihubungi);
+        // dd($request->user_id);
+        // dd($request->unit_kerja_id);
+
+        // Validasi Input
+//         $attrs = $request->validate([
+//             'alasan' => 'required|string',
+//             'alamat_selama_cuti' => 'required|string',
+//             'jenis_cuti' => 'required|exists:jenis_cutis,id',
+//             'tgl_mulai' => 'required|date',
+//             'tgl_selesai' => 'required|date|after_or_equal:tgl_mulai',
+//             'no_telp_bisa_dihubungi' => 'required|string',
+//             'user_id' => 'required|exists:users,id',
+//             'unit_kerja_id' => 'required|exists:unit_kerjas,id',
+//         ]);
+// // 
+//         // dd($attrs);
+
+//         // Hitung jumlah hari cuti yang diajukan
+//         $jumlahHariCuti = Carbon::parse($attrs['tgl_selesai'])->diffInDays(Carbon::parse($attrs['tgl_mulai'])) + 1;
+
+//         // Ambil data sisa cuti pengguna
+//         $sisaCuti = \App\Models\CutiSisa::where('user_id', $attrs['user_id'])->first();
+
+//         if (!$sisaCuti) {
+//             return redirect()->route('perizinan-manual.index')
+//                 ->with('error', 'Data sisa cuti pengguna tidak ditemukan.');
+//         }
+
+//         // Cek ketersediaan cuti
+//         $totalSisaCuti = $sisaCuti->n + $sisaCuti->n_minus_1 + $sisaCuti->n_minus_2;
+
+//         if ($jumlahHariCuti > $totalSisaCuti) {
+//             return redirect()->route('perizinan-manual.index')
+//                 ->with('error', 'Jumlah hari cuti melebihi sisa cuti yang tersedia.');
+//         }
+
+//         // Prioritaskan pengurangan cuti tahun N, lalu N-1, lalu N-2
+//         $hariCutiTersisa = $jumlahHariCuti;
+
+//         if ($hariCutiTersisa <= $sisaCuti->n) {
+//             $sisaCuti->n -= $hariCutiTersisa;
+//         } else {
+//             $hariCutiTersisa -= $sisaCuti->n;
+//             $sisaCuti->n = 0;
+
+//             if ($hariCutiTersisa <= $sisaCuti->n_minus_1) {
+//                 $sisaCuti->n_minus_1 -= $hariCutiTersisa;
+//             } else {
+//                 $hariCutiTersisa -= $sisaCuti->n_minus_1;
+//                 $sisaCuti->n_minus_1 = 0;
+
+//                 $sisaCuti->n_minus_2 -= $hariCutiTersisa;
+//             }
+//         }
+
+//         $sisaCuti->save();
+
+//         // Simpan Data Cuti
+//         $perizinanCuti = new PerizinanCuti();
+//         $perizinanCuti->user_id = $attrs['user_id'];
+//         $perizinanCuti->unit_kerja_id = $attrs['unit_kerja_id'];
+//         $perizinanCuti->alasan = $attrs['alasan'];
+//         $perizinanCuti->alamat_selama_cuti = $attrs['alamat_selama_cuti'];
+//         $perizinanCuti->jenis_cuti_id = $attrs['jenis_cuti'];
+//         $perizinanCuti->tgl_mulai = $attrs['tgl_mulai'];
+//         $perizinanCuti->tgl_selesai = $attrs['tgl_selesai'];
+//         $perizinanCuti->no_telp_bisa_dihubungi = $attrs['no_telp_bisa_dihubungi'];
+
+//         // Set Status dan Keputusan Otomatis
+//         $perizinanCuti->perizinan_admin_pegawai = 'disetujui';
+
+//         $perizinanCuti->save();
+
+//         return redirect()->route('perizinan-manual.index')
+//             ->with('success', 'Pengajuan cuti berhasil diajukan.');
 
         // Validasi Input
         $attrs = $request->validate([
-            'alasan' => 'required|string',
-            'alamat_selama_cuti' => 'required|string',
+            'alasan' => 'required',
+            'alamat_selama_cuti' => 'required',
             'jenis_cuti' => 'required|exists:jenis_cutis,id',
             'tgl_mulai' => 'required|date',
             'tgl_selesai' => 'required|date|after_or_equal:tgl_mulai',
-            'no_telp_bisa_dihubungi' => 'required|string',
+            'no_telp_bisa_dihubungi' => 'required',
+            'ttd_pegawai' => 'required|mimes:png,image/x-png|max:2048',
             'user_id' => 'required|exists:users,id',
-            'unit_kerja_id' => 'required|exists:unit_kerjas,id',
         ]);
 
-        dd($attrs);
+        $user = $request->user_id;
+        
+        $pegawaiFungsional = PegawaiFungsional::with('unit_kerja_has_jabatan_fungsional.unitkerja')
+            ->where('user_id', "=", $user)
+            ->first();
 
-        // Hitung jumlah hari cuti yang diajukan
-        $jumlahHariCuti = Carbon::parse($attrs['tgl_selesai'])->diffInDays(Carbon::parse($attrs['tgl_mulai'])) + 1;
-
-        // Ambil data sisa cuti pengguna
-        $sisaCuti = \App\Models\CutiSisa::where('user_id', $attrs['user_id'])->first();
-
-        if (!$sisaCuti) {
-            return redirect()->route('perizinan-manual.index')
-                ->with('error', 'Data sisa cuti pengguna tidak ditemukan.');
+        if (!$pegawaiFungsional) {
+            return redirect()
+                ->route('perizinan-cuti.index')
+                ->with('error', 'Dosen atau Pegawai Harus Memiliki Jabatan Fungsional terlebih dahulu');
         }
 
-        // Cek ketersediaan cuti
-        $totalSisaCuti = $sisaCuti->n + $sisaCuti->n_minus_1 + $sisaCuti->n_minus_2;
+        // Hitung Total Cuti Tahunan
+        $year = now()->year;
+        $totalRiwayatCuti = PerizinanCuti::where('user_id', $user)
+            ->whereYear('tgl_mulai', $year)
+            ->count();
 
-        if ($jumlahHariCuti > $totalSisaCuti) {
-            return redirect()->route('perizinan-manual.index')
-                ->with('error', 'Jumlah hari cuti melebihi sisa cuti yang tersedia.');
+        $izinCutiSisa = DB::table("cuti_sisas")
+            ->join("users", "cuti_sisas.user_id", "=", "users.id")
+            ->where('cuti_sisas.user_id', $user)
+            ->select(["cuti_sisas.*"])
+            ->get()
+            ->first();
+
+        // dd($izinCutiSisa);
+
+        if ($izinCutiSisa->n == 0) {
+            return redirect()
+                ->route('perizinan-cuti.index')
+                ->with('error', 'Anda Sudah Mengambil Jatah Cuti');
         }
-
-        // Prioritaskan pengurangan cuti tahun N, lalu N-1, lalu N-2
-        $hariCutiTersisa = $jumlahHariCuti;
-
-        if ($hariCutiTersisa <= $sisaCuti->n) {
-            $sisaCuti->n -= $hariCutiTersisa;
-        } else {
-            $hariCutiTersisa -= $sisaCuti->n;
-            $sisaCuti->n = 0;
-
-            if ($hariCutiTersisa <= $sisaCuti->n_minus_1) {
-                $sisaCuti->n_minus_1 -= $hariCutiTersisa;
-            } else {
-                $hariCutiTersisa -= $sisaCuti->n_minus_1;
-                $sisaCuti->n_minus_1 = 0;
-
-                $sisaCuti->n_minus_2 -= $hariCutiTersisa;
-            }
-        }
-
-        $sisaCuti->save();
 
         // Simpan Data Cuti
         $perizinanCuti = new PerizinanCuti();
-        $perizinanCuti->user_id = $attrs['user_id'];
-        $perizinanCuti->unit_kerja_id = $attrs['unit_kerja_id'];
+        $perizinanCuti->user_id = $user;
+        $perizinanCuti->unit_kerja_id = $pegawaiFungsional->unit_kerja_has_jabatan_fungsional->unitkerja->id;
         $perizinanCuti->alasan = $attrs['alasan'];
         $perizinanCuti->alamat_selama_cuti = $attrs['alamat_selama_cuti'];
         $perizinanCuti->jenis_cuti_id = $attrs['jenis_cuti'];
@@ -144,14 +209,18 @@ class ManualPerizinanController extends Controller
         $perizinanCuti->tgl_selesai = $attrs['tgl_selesai'];
         $perizinanCuti->no_telp_bisa_dihubungi = $attrs['no_telp_bisa_dihubungi'];
 
-        // Set Status dan Keputusan Otomatis
-        $perizinanCuti->status = 'approved';
-        $perizinanCuti->keputusan_pejabat_berwenang = 'disetujui';
+        // Proses Upload Tanda Tangan
+        if ($request->hasFile('ttd_pegawai')) {
+            $file = $request->file('ttd_pegawai');
+            $fileName = 'ttd_pegawai_' . $user . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/ttd_pegawai'), $fileName);
+            $perizinanCuti->ttd_pegawai = 'uploads/ttd_pegawai/' . $fileName;
+        }
 
         $perizinanCuti->save();
 
-        return redirect()->route('pegawai.perizinan-manual.index')
-            ->with('success', 'Pengajuan cuti berhasil diajukan.');
+        return redirect()->route('perizinan_manual.index')
+            ->with('success', 'Pengajuan Cuti berhasil dibuat');
     }
 
 
