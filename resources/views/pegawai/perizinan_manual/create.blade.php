@@ -8,7 +8,7 @@
                 <!-- Header -->
                 <div class="text-center mb-8">
                     <h2 class="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-200">
-                        Perizinan Cuti
+                        Perizinan Cuti Manual
                     </h2>
                     <p class="text-sm text-gray-600 dark:text-gray-400">
                         Politeknik Negeri Indramayu
@@ -53,6 +53,8 @@
                         @enderror
                     </div>
 
+                    <!-- Jenis Perizinan (Hidden) -->
+                    <input type="hidden" name="jenis_perizinan" value="manual">
 
                     <!-- Jenis Cuti -->
                     <div class="mb-4">

@@ -41,9 +41,12 @@ class ManagementPerizinanAdminController extends Controller
             $perizinan->pertimbangan_atasan_langsung = 'diizinkan';
         }
 
-        DB::table("periznan_cutis")
+        // dd($id);
+
+
+        DB::table("perizinan_cutis")
             ->where("id", "=", $id)
-            ->update(["perizinan_admin_pegawai" == "disetujui"]);
+            ->update(["perizinan_admin_pegawai" => "disetujui"]);
 
         $perizinan->verifikasi_admin = Carbon::now();
 
